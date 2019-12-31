@@ -1,0 +1,52 @@
+﻿<Project>
+
+	<PropertyGroup>
+		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+		<PackageOutputPath>$(MSBuildThisFileDirectory)..\nuget-output</PackageOutputPath>
+		<!--//-->
+	    <DocumentationFile>$(OutputPath)\$(AssemblyName).xml</DocumentationFile>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<DefineConstants>TRACE</DefineConstants>
+		<DebugType>none</DebugType>
+		<DebugSymbols>false</DebugSymbols>
+	</PropertyGroup>
+	
+	<PropertyGroup Condition="'$(Configuration)'=='Debug'">
+		<AssemblyTitle>$(AssemblyTitle) (debug)</AssemblyTitle>
+		<DefineConstants>TRACE;DEBUG</DefineConstants>
+		<DebugType>full</DebugType>
+		<DebugSymbols>true</DebugSymbols>
+	</PropertyGroup>
+	
+	<PropertyGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
+		<DefineConstants>$(DefineConstants);TRG_NETSTANDARD1_5;TRG_NETSTANDARD2_0</DefineConstants>
+		<AssemblyTitle>$(AssemblyTitle) (netstandard2.0)</AssemblyTitle>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(TargetFramework)'=='netstandard2.1'">
+		<DefineConstants>$(DefineConstants);TRG_NETSTANDARD1_5;TRG_NETSTANDARD2_0;TRG_NETSTANDARD2_1</DefineConstants>
+		<AssemblyTitle>$(AssemblyTitle) (netstandard2.1)</AssemblyTitle>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(TargetFramework)'=='netcoreapp2.2'">
+		<DefineConstants>$(DefineConstants);TRG_NETSTANDARD1_5;TRG_NETSTANDARD2_0;TRG_NETCORE</DefineConstants>
+		<AssemblyTitle>$(AssemblyTitle) (netcoreapp2.2)</AssemblyTitle>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(TargetFramework)'=='netcoreapp3.0'">
+		<DefineConstants>$(DefineConstants);TRG_NETSTANDARD1_5;TRG_NETSTANDARD2_0;TRG_NETSTANDARD2_1;TRG_NETCORE</DefineConstants>
+		<AssemblyTitle>$(AssemblyTitle) (netcoreapp3.0)</AssemblyTitle>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(TargetFramework)'=='net472'">
+		<DefineConstants>$(DefineConstants);TRG_NETSTANDARD1_5;TRG_NETSTANDARD2_0;TRG_NETFRAMEWORK</DefineConstants>
+		<AssemblyTitle>$(AssemblyTitle) (net472)</AssemblyTitle>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Eon-PublishNuGetPackages)'=='True'">
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	</PropertyGroup>
+
+</Project>

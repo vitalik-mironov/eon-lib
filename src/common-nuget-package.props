@@ -1,0 +1,26 @@
+﻿<Project>
+
+	<ItemGroup>
+		<None Include="$(MSBuildThisFileDirectory)\..\LICENSE.txt" Pack="true" PackagePath="" />
+	</ItemGroup>
+
+	<PropertyGroup>
+		<IncludeContentInPack>true</IncludeContentInPack>
+		<IncludeSource>false</IncludeSource>
+		<IncludeSymbols>false</IncludeSymbols>
+		<PackageTags>$(PackageTags) eon framework library extension lib ion</PackageTags>
+		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+		<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+		<PackageProjectUrl>https://github.com/vitalik-mironov/eon-lib</PackageProjectUrl>
+		<PackageDescription>$(Description)</PackageDescription>
+		<RepositoryUrl>https://github.com/vitalik-mironov/eon-lib.git</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<!--<MinClientVersion>4.7.1</MinClientVersion>-->
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+	</PropertyGroup>
+
+</Project>
