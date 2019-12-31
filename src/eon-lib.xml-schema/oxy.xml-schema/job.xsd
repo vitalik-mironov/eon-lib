@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+					 targetNamespace="urn:df:ox-2019:job"
+					 attributeFormDefault="unqualified"
+					 elementFormDefault="qualified"
+					 version="1.0"
+					 xmlns:me="urn:df:ox-2019:job"
+					 xmlns:ms-serialization-arrays="http://schemas.microsoft.com/2003/10/Serialization/Arrays"
+					 xmlns:ox="urn:df:ox-2019:core"
+					 xmlns:ox.diagnostics="urn:df:ox-2019:diagnostics"
+					 xmlns:ox.dependencies="urn:df:ox-2019:component-model:dependencies">
+
+	<xs:import namespace="urn:df:ox-2019:core"/>
+	<xs:import namespace="urn:df:ox-2019:diagnostics"/>
+	<xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+	<xs:import namespace="urn:df:ox-2019:component-model:dependencies"/>
+
+	<xs:complexType name="JobDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox.dependencies:DependencySupportDescriptionBase">
+				<xs:sequence>
+					<xs:element name="DisplayName" type="ox:ST_NonEmptyString" nillable="true" minOccurs="0" />
+					<xs:element name="ExplanationText" type="ox:ST_NonEmptyString" nillable="true" minOccurs="0" />
+					<xs:element name="IsDisabled" type="xs:boolean" />
+					<xs:element name="MaxSimultaneousExecutionsCount" type="ox:ST_PositiveInt" />
+					<xs:element name="RunTriggersRefSet" type="ox:MetadataRefSet" nillable="true"/>
+					<xs:element name="StepsRefSet" type="ox:MetadataRefSet" nillable="true"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="JobSetDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox:DescriptionBase">
+				<xs:sequence>
+					<xs:element name="IsAutoActivationEnabled" type="xs:boolean"  />
+					<xs:element name="JobsRefSet" type="ox:MetadataRefSet" nillable="true" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="JobStepDescriptionBase" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox.dependencies:DependencySupportDescriptionBase">
+				<xs:sequence>
+					<xs:element name="DisplayName" type="ox:ST_NonEmptyString" nillable="true" />
+					<xs:element name="ExplanationText" type="ox:ST_NonEmptyString" nillable="true" />
+					<xs:element name="DefaultExecutionErrorSeverityLevel" type="ox.diagnostics:ST_SeverityLevel" nillable="true" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="DelayJobStepDescription" mixed="false" final="#all">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:JobStepDescriptionBase">
+				<xs:sequence>
+					<xs:element name="DelayDuration" type="ox:TimeoutDuration" nillable="true" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="DiagnosticsJobStepDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:JobStepDescriptionBase">
+				<xs:sequence>
+					<xs:element name="DiagnosticsExecutorRef" type="ox:MetadataRef" nillable="true" />
+					<xs:element name="FullDiagnostics" type="xs:boolean"  />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="EnvironmentStateSnapshotJobStepDescription" mixed="false" final="#all">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:JobStepDescriptionBase">
+				<xs:sequence>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="DelegateJobProviderDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox:DescriptionBase">
+				<xs:sequence>
+					<xs:element name="MaxDop" type="ox:ST_PositiveInt"  />
+					<xs:element name="JobExecutionAfterCompletionTtl" type="ox:TimeoutDuration" nillable="true" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="WorkExecutorJobStepDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:JobStepDescriptionBase">
+				<xs:sequence>
+					<xs:element name="ExecutorType" type="ox:TypeNameRef" nillable="true" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="FilesCleanupJobStepDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:JobStepDescriptionBase">
+				<xs:sequence>
+					<xs:element name="RootDirectoriesPaths" type="ms-serialization-arrays:ArrayOfstring" nillable="true" />
+					<xs:element name="CleanupSubdirectories" type="xs:boolean" />
+					<xs:element name="FileNameRegexPattern" type="ox:ST_NonEmptyString" nillable="true"/>
+					<xs:element name="FileNameRegexOptions" type="ox:ST_System.Text.RegularExpressions.RegexOptions"/>
+					<xs:element name="MaxFileChangeAge" type="xs:duration" nillable="true"/>
+					<xs:element name="RootDirectoryMaxSize" type="ox:ST_NonNegativeLong" nillable="true"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="FilesArchivationJobStepDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:JobStepDescriptionBase">
+				<xs:sequence>
+					<xs:element name="ArchivationOptionsSet" nillable="true">
+						<xs:complexType>
+							<xs:complexContent mixed="false">
+								<xs:extension base="ox:Collection2">
+									<xs:sequence>
+										<xs:element ref="ox:FilesArchivationOptions" minOccurs="0" maxOccurs="unbounded"/>
+									</xs:sequence>
+								</xs:extension>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+</xs:schema>

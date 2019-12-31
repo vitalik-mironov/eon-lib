@@ -1,0 +1,230 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+					 targetNamespace="urn:df:ox-2019:security:authentication"
+					 attributeFormDefault="unqualified"
+					 elementFormDefault="qualified"
+					 version="1.0"
+					 xmlns:me="urn:df:ox-2019:security:authentication"
+					 xmlns:ox="urn:df:ox-2019:core"
+					 xmlns:ox.dependencies="urn:df:ox-2019:component-model:dependencies"
+					 xmlns:ox-security="urn:df:ox-2019:security"
+					 xmlns:ox-security-tokens="urn:df:ox-2019:security:tokens"
+					 xmlns:ox-security-crypto="urn:df:ox-2019:security:cryptography">
+
+	<xs:import namespace="urn:df:ox-2019:core"/>
+	<xs:import namespace="urn:df:ox-2019:component-model:dependencies"/>
+	<xs:import namespace="urn:df:ox-2019:security:tokens"/>
+	<xs:import namespace="urn:df:ox-2019:security:cryptography"/>
+	<xs:import namespace="urn:df:ox-2019:security"/>
+
+	<xs:complexType name="ISubjectCredential" mixed="false" abstract="true">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox:Object">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="ISubjectCredentialLocator" mixed="false" abstract="true">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox:Object">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="IBearerTokenCredential" mixed="false" abstract="true">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:ISubjectCredential">
+				<xs:sequence>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="IPlainTextSecretKeyCredential" mixed="false" abstract="true">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:ISubjectCredential">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="IX509CertificateCredential" mixed="false" abstract="true">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:ISubjectCredential">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="BearerTokenCredential" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:IBearerTokenCredential">
+				<xs:sequence>
+					<xs:element name="IdentityNameScopeId" type="ox:ST_UriBasedIdentifier" nillable="true" />
+					<xs:element name="IdentityName" type="ox:ST_String" nillable="true" />
+					<xs:element name="BearerToken" type="ox-security-tokens:BearerTokenData" nillable="true" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="PlainTextSecretKeyCredential" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:IPlainTextSecretKeyCredential">
+				<xs:sequence>
+					<xs:element name="IdentityNameScopeId" type="ox:ST_UriBasedIdentifier" nillable="true" />
+					<xs:element name="IdentityName" type="ox:ST_String" nillable="true" />
+					<xs:element name="SecretKey" type="ox:ST_String" nillable="true" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="X509CertificateCredential" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:IX509CertificateCredential">
+				<xs:sequence>
+					<xs:element name="IdentityNameScopeId" type="ox:ST_UriBasedIdentifier" nillable="true" />
+					<xs:element name="Certificate" type="ox:ST_NonEmptyBase64Binary" nillable="true" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="SubjectCredentialDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox:DescriptionBase">
+				<xs:sequence>
+					<xs:element name="Credential" type="me:ISubjectCredential" nillable="true"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="SubjectCredentialLocatorDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox:DescriptionBase">
+				<xs:sequence>
+					<xs:element name="Locator" type="me:ISubjectCredentialLocator" nillable="true"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="FixedCredentialLocator" mixed="false" final="#all">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:ISubjectCredentialLocator">
+				<xs:sequence>
+					<xs:element name="Fixed" type="me:ISubjectCredential" nillable="true" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="X509CertificateCredentialLocator" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:ISubjectCredentialLocator">
+				<xs:sequence>
+					<xs:element name="CertificateLocator" type="ox-security:X509CertificateLocatorBase" nillable="true" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="FromContextCredentialLocator" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:ISubjectCredentialLocator">
+				<xs:sequence />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="AuthenticatorDescriptionBase" abstract="true" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox.dependencies:DependencySupportDescriptionBase">
+				<xs:sequence>
+					<xs:element name="BypassAuthentication" type="xs:boolean" nillable="false" />
+					<xs:element name="DefaultCredentialIssuerId" type="ox:UriBasedIdentifier" nillable="true" />
+					<xs:element name="DefaultIdentityNameScopeId" type="ox:UriBasedIdentifier" nillable="true" />
+					<xs:element name="UseBackendStore" type="xs:boolean" nillable="false" />
+					<xs:element name="BackendStoreContextProvider" type="ox:MetadataRef" nillable="true" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="PlainTextSecretKeyAuthenticatorDescriptionBase" abstract="true" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:AuthenticatorDescriptionBase">
+				<xs:sequence>
+					<xs:element name="RequireIdentityNameScopeId" type="xs:boolean" nillable="false" />
+					<xs:element name="SecretKeyMaxLength" type="ox:ST_PositiveInt" nillable="false" />
+					<xs:element name="SecretKeyEncodingName" type="ox:ST_NonEmptyString" />
+					<xs:element name="IssueToken" type="xs:boolean"/>
+					<xs:element name="TokenProvider" type="ox:MetadataRef" nillable="true"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="PasswordHashAuthenticatorDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:PlainTextSecretKeyAuthenticatorDescriptionBase">
+				<xs:sequence>
+					<xs:element name="AllowedHashAlgorithmIdSet" type="ox:UriBasedIdentifierSet" nillable="true"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="BearerTokenAuthenticatorDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:AuthenticatorDescriptionBase">
+				<xs:sequence>
+					<xs:element name="IssuerPublicKeys">
+						<xs:complexType mixed="false">
+							<xs:complexContent mixed="false">
+								<xs:extension base="ox:Collection2">
+									<xs:sequence>
+										<xs:element ref="ox-security-crypto:CryptographicKeyClause" minOccurs="0" maxOccurs="unbounded"/>
+									</xs:sequence>
+								</xs:extension>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="DefaultIssuerPublicKeyId" type="ox:UriBasedIdentifier" nillable="true"/>
+					<xs:element name="RequireTokenUid" type="xs:boolean" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="JwtAuthenticatorDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:BearerTokenAuthenticatorDescription">
+				<xs:sequence>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="X509CertificateValidatorDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox:DescriptionBase">
+				<xs:sequence>
+					<xs:element name="BypassValidation" type="xs:boolean" />
+					<xs:element name="RevocationCheckMode" type="ox-security-crypto:ST_System.Security.Cryptography.X509Certificates.X509RevocationMode" />
+					<xs:element name="RevocationCheckFlag" type="ox-security-crypto:ST_System.Security.Cryptography.X509Certificates.X509RevocationFlag" />
+					<xs:element name="VerificationFlags" type="ox-security-crypto:ST_System.Security.Cryptography.X509Certificates.X509VerificationFlags" />
+					<xs:element name="IsCommonNameMatchRequired" type="xs:boolean" />
+					<xs:element name="CommonNameRegex" type="ox:RegexConstructParameters" />
+					<xs:element name="IsIssuerCommonNameMatchRequired" type="xs:boolean" />
+					<xs:element name="IssuerCommonNameRegex" type="ox:RegexConstructParameters" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+</xs:schema>

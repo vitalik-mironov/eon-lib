@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+						targetNamespace="urn:df:ox-2019:net:http"
+						attributeFormDefault="unqualified"
+						elementFormDefault="qualified"
+						version="1.0"
+						xmlns:me="urn:df:ox-2019:net:http"
+						xmlns:ox="urn:df:ox-2019:core"
+						xmlns:ox.dependency="urn:df:ox-2019:component-model:dependencies">
+
+	<xs:import namespace="urn:df:ox-2019:core"/>
+	<xs:import namespace="urn:df:ox-2019:component-model:dependencies"/>
+
+	<xs:simpleType name="ST_HeaderName">
+		<xs:restriction base="ox:ST_NonEmptyString">
+			<xs:maxLength value="96"/>
+			<xs:pattern value="[^\s]+" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="ST_XHeaderName">
+		<xs:restriction base="me:ST_HeaderName">
+			<xs:pattern value="X\-[^\s]+" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="ST_HeaderValue">
+		<xs:restriction base="ox:ST_String">
+			<xs:maxLength value="16384"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="HandlerDescriptionBase" mixed="false" abstract="true">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox.dependency:DependencySupportDescriptionBase">
+				<xs:sequence>
+					<xs:element name="RequestUriPathRegex" type="ox:RegexConstructParameters" nillable="true"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="HttpClientDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox.dependency:DependencySupportDescriptionBase">
+				<xs:sequence>
+					<xs:element name="BaseUri" type="xs:anyURI" nillable="true" />
+					<xs:element name="RequestTimeout" type="ox:TimeoutDuration" nillable="true" />
+					<xs:element name="ResponseMessageQuotas" type="me:HttpMessageQuotas" nillable="true"  />
+					<xs:element name="ClientCredentialLocator" type="ox:MetadataRef" nillable="true"  />
+					<xs:element name="MessageHandlers" type="ox:MetadataRefSet" nillable="true" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="ClientSideHandlerDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:HandlerDescriptionBase">
+				<xs:sequence />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="HttpMessageQuotas" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox:Object">
+				<xs:sequence>
+					<xs:element name="MaxContentLength" type="ox:ST_NonNegativeInt" nillable="true" minOccurs="0" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="Header" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox:Object">
+				<xs:sequence>
+					<xs:element name="Name" type="me:ST_HeaderName" nillable="true" />
+					<xs:element name="Value" type="me:ST_HeaderValue" nillable="true"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="Header" type="me:Header" nillable="true" />
+	<xs:complexType name="HeaderCollection" mixed="false" final="#all">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox:Collection2">
+				<xs:sequence>
+					<xs:element ref="me:Header" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="XHeader" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:restriction base="me:Header">
+				<xs:sequence>
+					<xs:element name="Name" type="me:ST_XHeaderName" nillable="true"/>
+					<xs:element name="Value" type="me:ST_HeaderValue" nillable="true"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="XHeader" type="me:XHeader" nillable="true" />
+	<xs:complexType name="XHeaderCollection" mixed="false" final="#all">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox:Collection2">
+				<xs:sequence>
+					<xs:element ref="me:XHeader" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="EchoHandlerDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:HandlerDescriptionBase">
+				<xs:sequence>
+					<xs:element name="ResponseTextTemplate" type="ox:ST_NonEmptyString" nillable="true"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="RoutingHandlerDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:HandlerDescriptionBase">
+				<xs:sequence>
+					<xs:element name="MessageHandlers" type="ox:MetadataRefSet" nillable="true" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+</xs:schema>

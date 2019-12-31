@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+					 targetNamespace="urn:df:ox-2019:business-app"
+					 attributeFormDefault="unqualified"
+					 elementFormDefault="qualified"
+					 version="1.0"
+					 xmlns:d="urn:df:ox-2019:core"
+					 xmlns:me="urn:df:ox-2019:business-app"
+					 xmlns:ox.data="urn:df:ox-2019:data"
+					 xmlns:ox.diag="urn:df:ox-2019:diagnostics"
+					 xmlns:ox.service-process="urn:df:ox-2019:service-process"
+					 xmlns:ox.soa="urn:df:ox-2019:soa">
+
+	<xs:import namespace="urn:df:ox-2019:ui"/>
+	<xs:import namespace="urn:df:ox-2019:core"/>
+	<xs:import namespace="urn:df:ox-2019:data"/>
+	<xs:import namespace="urn:df:ox-2019:soa"/>
+	<xs:import namespace="urn:df:ox-2019:diagnostics"/>
+	<xs:import namespace="urn:df:ox-2019:service-process"/>
+
+	<xs:complexType name="ODataServiceClientDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="d:DescriptionBase">
+				<xs:sequence>
+					<xs:element name="ServiceRootUri" type="xs:anyURI" nillable="true" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="ODataContainerDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox.data:DataContainerDescriptionBase">
+				<xs:sequence>
+					<xs:element name="ODataServiceClient" type="d:MetadataRef" nillable="true"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="ClientXAppDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox.data:DataXAppDescription">
+				<xs:sequence>
+					<xs:element name="UI" type="d:MetadataRef" nillable="true"/>
+					<xs:element name="PreventAutoCheckUpdates" type="xs:boolean" nillable="false"/>
+					<xs:element name="IsDemoVersion" type="xs:boolean" nillable="false"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="BusinessAppRemoteServiceDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox.soa:ServiceDescriptionBase">
+				<xs:sequence>
+					<xs:element name="DefaultSmtpClient" type="d:MetadataRef" nillable="true"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="ClientAppUpdateServiceDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox.soa:ServiceDescriptionBase">
+				<xs:sequence>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="BusinessAppSqlStoreLoggingSubscriberDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox.diag:LoggingSubscriberDescriptionBase">
+				<xs:sequence>
+					<xs:element name="SqlStore" type="d:MetadataRef" nillable="true"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="BusinessServerXAppDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox.data:DataXAppDescription">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="BusinessServiceProcessXAppDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox.service-process:ServiceProcessXAppDescription">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+</xs:schema>

@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+					 targetNamespace="urn:df:ox-2019:job:http:server:filters"
+					 attributeFormDefault="unqualified"
+					 elementFormDefault="qualified"
+					 version="1.0"
+					 xmlns:me="urn:df:ox-2019:job:http:server:filters"
+					 xmlns:ox.http.filters="urn:df:ox-2019:net:http:server:filters">
+
+	<xs:import namespace="urn:df:ox-2019:net:http:server:filters"/>
+
+	<xs:complexType name="JobResultHttpFilterDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox.http.filters:HttpFilterDescriptionBase">
+				<xs:sequence />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+</xs:schema>

@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+					 targetNamespace="urn:df:ox-2019:reflection"
+					 attributeFormDefault="unqualified"
+					 elementFormDefault="qualified"
+					 version="1.0"
+					 xmlns:me="urn:df:ox-2019:reflection"
+					 xmlns:d="urn:df:ox-2019:core">
+
+	<xs:import namespace="urn:df:ox-2019:core"/>
+	<xs:import namespace="urn:df:ox-2019:data:filters:criteria:operators"/>
+	<xs:import namespace="urn:df:ox-2019:diagnostics"/>
+
+	<!--•••••••••••••••••••••••••••••••••••••••••-->
+	<!--••••••••••••• SIMPLE TYPES ••••••••••••••-->
+	<!--•••••••••••••••••••••••••••••••••••••••••-->
+
+	<xs:simpleType name="ST_TypeNameQualification" final="#all">
+		<xs:restriction base="d:ST_String">
+			<xs:enumeration value="Type" />
+			<xs:enumeration value="Namespace" />
+			<xs:enumeration value="Assembly" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!--•••••••••••••••••••••••••••••••••••••••••-->
+	<!--••••••••••••• COMPLEX TYPES •••••••••••••-->
+	<!--•••••••••••••••••••••••••••••••••••••••••-->
+
+</xs:schema>

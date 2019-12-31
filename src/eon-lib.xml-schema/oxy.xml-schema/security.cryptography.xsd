@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+					 targetNamespace="urn:df:ox-2019:security:cryptography"
+					 attributeFormDefault="unqualified"
+					 elementFormDefault="qualified"
+					 version="1.0"
+					 xmlns:me="urn:df:ox-2019:security:cryptography"
+					 xmlns:ox="urn:df:ox-2019:core"
+					 xmlns:ox-security="urn:df:ox-2019:security">
+
+	<xs:import namespace="urn:df:ox-2019:core"/>
+	<xs:import namespace="urn:df:ox-2019:security"/>
+
+	<xs:simpleType name="ST_System.Security.Cryptography.X509Certificates.X509RevocationMode" final="#all">
+		<xs:restriction base="ox:ST_String">
+			<xs:enumeration value="NoCheck" />
+			<xs:enumeration value="Online" />
+			<xs:enumeration value="Offline" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="ST_System.Security.Cryptography.X509Certificates.X509RevocationFlag" final="#all">
+		<xs:restriction base="ox:ST_String">
+			<xs:enumeration value="EndCertificateOnly" />
+			<xs:enumeration value="EntireChain" />
+			<xs:enumeration value="ExcludeRoot" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="ST_System.Security.Cryptography.X509Certificates.X509VerificationFlags" final="#all">
+		<xs:restriction>
+			<xs:simpleType>
+				<xs:list>
+					<xs:simpleType>
+						<xs:restriction base="ox:ST_String">
+							<xs:enumeration value="NoFlag" />
+							<xs:enumeration value="IgnoreNotTimeValid" />
+							<xs:enumeration value="IgnoreCtlNotTimeValid" />
+							<xs:enumeration value="IgnoreNotTimeNested" />
+							<xs:enumeration value="IgnoreInvalidBasicConstraints" />
+							<xs:enumeration value="AllowUnknownCertificateAuthority" />
+							<xs:enumeration value="IgnoreWrongUsage" />
+							<xs:enumeration value="IgnoreInvalidName" />
+							<xs:enumeration value="IgnoreInvalidPolicy" />
+							<xs:enumeration value="IgnoreEndRevocationUnknown" />
+							<xs:enumeration value="IgnoreCtlSignerRevocationUnknown" />
+							<xs:enumeration value="IgnoreCertificateAuthorityRevocationUnknown" />
+							<xs:enumeration value="IgnoreRootRevocationUnknown" />
+							<xs:enumeration value="AllFlags" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:list>
+			</xs:simpleType>
+			<xs:maxLength value="14" />
+			<xs:minLength value="1" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- ••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• -->
+	<!-- ••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• -->
+	<!-- •••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• COMPLEX TYPES •••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• -->
+	<!-- ••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• -->
+	<!-- ••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• -->
+
+	<xs:complexType name="ICryptographicKeyClause" abstract="true" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox:Object">
+				<xs:sequence />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="CryptographicKeyClauseBase" mixed="false" abstract="true">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:ICryptographicKeyClause">
+				<xs:sequence>
+					<xs:element name="KeyAlgorithmId" type="ox:UriBasedIdentifier" nillable="true" />
+					<xs:element name="KeyId" type="ox:UriBasedIdentifier160" nillable="true" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="CryptographicKeyClause" type="me:CryptographicKeyClauseBase" nillable="true" />
+
+	<xs:complexType name="CngKeyClause" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:CryptographicKeyClauseBase">
+				<xs:sequence>
+					<xs:element name="ProviderImplementationId" type="ox:UriBasedIdentifier" nillable="true"/>
+					<xs:element name="IsMachineWide" type="xs:boolean" />
+					<xs:element name="IsUIDisallowed" type="xs:boolean" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="CngAsymmetricKeyClause" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:CngKeyClause">
+				<xs:sequence>
+					<xs:element name="IsPrivate" type="xs:boolean" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="CryptographicKeyBlob" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:CryptographicKeyClauseBase">
+				<xs:sequence>
+					<xs:element name="BlobStyleId" type="ox:UriBasedIdentifier" nillable="true" />
+					<xs:element name="Blob" type="ox:ST_NonEmptyBase64Binary" nillable="true" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="CryptographicKeyBlob" type="me:CryptographicKeyBlob" nillable="true" />
+
+	<xs:complexType name="X509KeyClause" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:CryptographicKeyClauseBase">
+				<xs:sequence>
+					<xs:element name="IsPrivate" type="xs:boolean" />
+					<xs:element name="Certificate" type="ox-security:X509CertificateLocator" nillable="true"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+</xs:schema>

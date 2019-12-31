@@ -1,0 +1,134 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.1</TargetFrameworks>
+    <AssemblyName>$(MSBuildProjectName)</AssemblyName>
+	<AssemblyTitle>$(AssemblyName)</AssemblyTitle>
+	<Title>EonLib.XmlSchema</Title>
+	<Description>EonLib. XML schemas.</Description>
+  </PropertyGroup>
+
+	<Import Project="..\common-build.props"/>
+
+  <Import Project="nuget-package.props" />
+
+  <ItemGroup>
+    <None Remove="eon.xml-schema\build.nuget.xsd" />
+    <None Remove="eon.xml-schema\business-app.data.xsd" />
+    <None Remove="eon.xml-schema\business-app.xsd" />
+    <None Remove="eon.xml-schema\component-model.dependencies.xsd" />
+    <None Remove="eon.xml-schema\configuration.install.xsd" />
+    <None Remove="eon.xml-schema\core.xsd" />
+    <None Remove="eon.xml-schema\data.ef6.xsd" />
+    <None Remove="eon.xml-schema\data.filters.criteria.operators.xsd" />
+    <None Remove="eon.xml-schema\data.filters.criteria.xsd" />
+    <None Remove="eon.xml-schema\data.job.xsd" />
+    <None Remove="eon.xml-schema\data.persistence.xsd" />
+    <None Remove="eon.xml-schema\data.xsd" />
+    <None Remove="eon.xml-schema\dataflow.xsd" />
+    <None Remove="eon.xml-schema\description.package.xsd" />
+    <None Remove="eon.xml-schema\device.proximity-card.win-forms.xsd" />
+    <None Remove="eon.xml-schema\device.proximity-card.xsd" />
+    <None Remove="eon.xml-schema\device.xsd" />
+    <None Remove="eon.xml-schema\diagnostics.logging.filters.xsd" />
+    <None Remove="eon.xml-schema\diagnostics.triggers.xsd" />
+    <None Remove="eon.xml-schema\diagnostics.xsd" />
+    <None Remove="eon.xml-schema\interaction.xsd" />
+    <None Remove="eon.xml-schema\io.ports.serial-port.xsd" />
+    <None Remove="eon.xml-schema\job.http.servers.filters.xsd" />
+    <None Remove="eon.xml-schema\job.xsd" />
+    <None Remove="eon.xml-schema\message-flow.local.xsd" />
+    <None Remove="eon.xml-schema\message-flow.xsd" />
+    <None Remove="eon.xml-schema\metadata.tree.xsd" />
+    <None Remove="eon.xml-schema\ms-data-contract-system-2004-07.xsd" />
+    <None Remove="eon.xml-schema\ms-serialization-2003-10.xsd" />
+    <None Remove="eon.xml-schema\ms-serialization-arrays-2003-10.xsd" />
+    <None Remove="eon.xml-schema\net.http.compression.xsd" />
+    <None Remove="eon.xml-schema\net.http.diagnostics.xsd" />
+    <None Remove="eon.xml-schema\net.http.output-cache.xsd" />
+    <None Remove="eon.xml-schema\net.http.security.authentication.xsd" />
+    <None Remove="eon.xml-schema\net.http.server.filters.xsd" />
+    <None Remove="eon.xml-schema\net.http.server.xsd" />
+    <None Remove="eon.xml-schema\net.http.xsd" />
+    <None Remove="eon.xml-schema\net.mail.xsd" />
+    <None Remove="eon.xml-schema\net.security.xsd" />
+    <None Remove="eon.xml-schema\rabbitmq.xsd" />
+    <None Remove="eon.xml-schema\reflection.xsd" />
+    <None Remove="eon.xml-schema\schedule.xsd" />
+    <None Remove="eon.xml-schema\security.authentication.xsd" />
+    <None Remove="eon.xml-schema\security.cryptography.xsd" />
+    <None Remove="eon.xml-schema\security.tokens.xsd" />
+    <None Remove="eon.xml-schema\security.xsd" />
+    <None Remove="eon.xml-schema\service.process.xsd" />
+    <None Remove="eon.xml-schema\soa.xsd" />
+    <None Remove="eon.xml-schema\triggers.xsd" />
+    <None Remove="eon.xml-schema\ui.xsd" />
+    <None Remove="eon.xml-schema\xdatacontract.xsd" />
+    <None Remove="eon.xml-schema\xresource-tree.xsd" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="eon.xml-schema\build.nuget.xsd" />
+    <Content Include="eon.xml-schema\business-app.data.xsd" />
+    <Content Include="eon.xml-schema\business-app.xsd" />
+    <Content Include="eon.xml-schema\component-model.dependencies.xsd" />
+    <Content Include="eon.xml-schema\configuration.install.xsd" />
+    <Content Include="eon.xml-schema\core.xsd" />
+    <Content Include="eon.xml-schema\data.ef6.xsd" />
+    <Content Include="eon.xml-schema\data.filters.criteria.operators.xsd" />
+    <Content Include="eon.xml-schema\data.filters.criteria.xsd" />
+    <Content Include="eon.xml-schema\data.job.xsd" />
+    <Content Include="eon.xml-schema\data.persistence.xsd" />
+    <Content Include="eon.xml-schema\data.xsd" />
+    <Content Include="eon.xml-schema\dataflow.xsd" />
+    <Content Include="eon.xml-schema\description.package.xsd" />
+    <Content Include="eon.xml-schema\device.proximity-card.win-forms.xsd" />
+    <Content Include="eon.xml-schema\device.proximity-card.xsd" />
+    <Content Include="eon.xml-schema\device.xsd" />
+    <Content Include="eon.xml-schema\diagnostics.logging.filters.xsd" />
+    <Content Include="eon.xml-schema\diagnostics.triggers.xsd" />
+    <Content Include="eon.xml-schema\diagnostics.xsd" />
+    <Content Include="eon.xml-schema\interaction.xsd" />
+    <Content Include="eon.xml-schema\io.ports.serial-port.xsd" />
+    <Content Include="eon.xml-schema\job.http.servers.filters.xsd" />
+    <Content Include="eon.xml-schema\job.xsd" />
+    <Content Include="eon.xml-schema\message-flow.local.xsd" />
+    <Content Include="eon.xml-schema\message-flow.xsd" />
+    <Content Include="eon.xml-schema\metadata.tree.xsd" />
+    <Content Include="eon.xml-schema\ms-data-contract-system-2004-07.xsd" />
+    <Content Include="eon.xml-schema\ms-serialization-2003-10.xsd" />
+    <Content Include="eon.xml-schema\ms-serialization-arrays-2003-10.xsd" />
+    <Content Include="eon.xml-schema\net.http.compression.xsd" />
+    <Content Include="eon.xml-schema\net.http.diagnostics.xsd" />
+    <Content Include="eon.xml-schema\net.http.output-cache.xsd" />
+    <Content Include="eon.xml-schema\net.http.security.authentication.xsd" />
+    <Content Include="eon.xml-schema\net.http.server.filters.xsd" />
+    <Content Include="eon.xml-schema\net.http.server.xsd" />
+    <Content Include="eon.xml-schema\net.http.xsd" />
+    <Content Include="eon.xml-schema\net.mail.xsd" />
+    <Content Include="eon.xml-schema\net.security.xsd" />
+    <Content Include="eon.xml-schema\rabbitmq.xsd" />
+    <Content Include="eon.xml-schema\reflection.xsd" />
+    <Content Include="eon.xml-schema\schedule.xsd" />
+    <Content Include="eon.xml-schema\security.authentication.xsd" />
+    <Content Include="eon.xml-schema\security.cryptography.xsd" />
+    <Content Include="eon.xml-schema\security.tokens.xsd" />
+    <Content Include="eon.xml-schema\security.xsd" />
+    <Content Include="eon.xml-schema\service.process.xsd" />
+    <Content Include="eon.xml-schema\soa.xsd" />
+    <Content Include="eon.xml-schema\triggers.xsd" />
+    <Content Include="eon.xml-schema\ui.xsd" />
+    <Content Include="eon.xml-schema\xdatacontract.xsd" />
+    <Content Include="eon.xml-schema\xresource-tree.xsd" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Build.Tasks.Git" Version="1.0.0-beta2-19367-01">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime;build;native;contentfiles;analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <Import Project="nuget-package.targets" />
+
+</Project>

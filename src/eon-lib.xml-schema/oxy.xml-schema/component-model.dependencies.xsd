@@ -1,0 +1,178 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+					 targetNamespace="urn:df:ox-2019:component-model:dependencies"
+					 attributeFormDefault="unqualified"
+					 elementFormDefault="qualified"
+					 version="1.0"
+					 xmlns:me="urn:df:ox-2019:component-model:dependencies"
+					 xmlns:ox="urn:df:ox-2019:core">
+
+	<xs:import namespace="urn:df:ox-2019:core"/>
+
+	<xs:complexType name="DependencyId" mixed="false" abstract="true">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox:Object">
+				<xs:sequence>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="TypeDependencyId" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:DependencyId">
+				<xs:sequence>
+					<xs:element name="Type" type="ox:TypeNameRef" nillable="true" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="DependencyTarget" mixed="false" abstract="true">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox:Object">
+				<xs:sequence>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="DependencyId" type="me:DependencyId" nillable="true" />
+
+	<xs:complexType name="NewInstanceDependencyTarget" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:DependencyTarget">
+				<xs:sequence>
+					<xs:element name="TargetType" type="ox:TypeNameRef" nillable="true" />
+					<xs:element name="ConstructorSignature" nillable="true" minOccurs="0">
+						<xs:complexType>
+							<xs:complexContent mixed="false">
+								<xs:extension base="ox:Collection2">
+									<xs:sequence>
+										<xs:element ref="ox:TypeNameRef" minOccurs="0" maxOccurs="unbounded" />
+									</xs:sequence>
+								</xs:extension>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="DependenciesDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox:DescriptionBase">
+				<xs:sequence>
+					<xs:element name="BindingsGroups" type="ox:MetadataRefSet" nillable="true" minOccurs="0" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="DependencyBindingDescriptionBase" mixed="false" abstract="true">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox:DescriptionBase">
+				<xs:sequence>
+					<xs:element name="DependencyIdSet" nillable="true">
+						<xs:complexType mixed="false">
+							<xs:complexContent mixed="false">
+								<xs:extension base="ox:Collection2">
+									<xs:sequence>
+										<xs:element ref="me:DependencyId" minOccurs="0" maxOccurs="unbounded"/>
+									</xs:sequence>
+								</xs:extension>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="DependencyBindingDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:DependencyBindingDescriptionBase">
+				<xs:sequence>
+					<xs:element name="DependencyTarget" type="me:DependencyTarget" nillable="true" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="XInstanceContractDependencyBindingDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:DependencyBindingDescriptionBase">
+				<xs:sequence>
+					<xs:element name="DependencyTargetDescription" type="ox:MetadataRef" nillable="true" />
+					<xs:element name="IsDependencyTargetSharingDisabled" type="xs:boolean" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="DependenciesBindingsGroupDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox:DescriptionBase">
+				<xs:sequence>
+					<xs:element name="IsDisabled" type="xs:boolean" />
+					<xs:element name="Bindings" nillable="true">
+						<xs:complexType mixed="false">
+							<xs:complexContent mixed="false">
+								<xs:extension base="ox:Collection2">
+									<xs:sequence>
+										<xs:element ref="me:DependencyBinding" minOccurs="0" maxOccurs="unbounded" />
+									</xs:sequence>
+								</xs:extension>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="BindingsDescriptions" type="ox:MetadataRefSet" nillable="true" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="DependencySupportDescriptionBase" mixed="false" abstract="true">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox:DescriptionBase">
+				<xs:sequence>
+					<xs:element name="Dependencies" type="ox:MetadataRef" nillable="true" minOccurs="0" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="DependencyBinding" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox:Object">
+				<xs:sequence>
+					<xs:element name="DependencyId" type="me:DependencyId" nillable="true" />
+					<xs:element name="Target" type="me:DependencyTarget" nillable="true" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="DependencyBinding" type="me:DependencyBinding" nillable="true" />
+
+	<xs:complexType name="DependencyResolutionSettings" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox:Object">
+				<xs:sequence>
+					<xs:element name="UsageCountLimitPerHandler" type="ox:ST_PositiveInt" />
+					<xs:element name="IsAdvancedLoggingEnabled" type="xs:boolean" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="DependencyResolutionSettingsDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox:DescriptionBase">
+				<xs:sequence>
+					<xs:element name="Settings" type="me:DependencyResolutionSettings" nillable="false" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+</xs:schema>

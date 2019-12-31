@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+					 targetNamespace="urn:df:ox-2019:schedule"
+					 attributeFormDefault="unqualified"
+					 elementFormDefault="qualified"
+					 version="1.0"
+					 xmlns:me="urn:df:ox-2019:schedule"
+					 xmlns:ox="urn:df:ox-2019:core"
+					 xmlns:d="urn:df:ox-2019:core"
+					 xmlns:ox.triggers="urn:df:ox-2019:triggers">
+
+	<xs:import namespace="urn:df:ox-2019:core"/>
+	<xs:import namespace="urn:df:ox-2019:triggers"/>
+
+	<!--•••••••••••••••••••••••••••••••••••••••••-->
+	<!--••••••••••••• SIMPLE TYPES ••••••••••••••-->
+	<!--•••••••••••••••••••••••••••••••••••••••••-->
+
+	<xs:simpleType name="ST_DaylyScheduleOptions" final="#all">
+		<xs:restriction>
+			<xs:simpleType>
+				<xs:list>
+					<xs:simpleType>
+						<xs:restriction base="d:ST_String">
+							<xs:enumeration value="None" />
+							<xs:enumeration value="RepeatMode" />
+							<xs:enumeration value="OnceMode" />
+							<xs:enumeration value="Sunday" />
+							<xs:enumeration value="Monday" />
+							<xs:enumeration value="Tuesday" />
+							<xs:enumeration value="Wednesday" />
+							<xs:enumeration value="Thursday" />
+							<xs:enumeration value="Friday" />
+							<xs:enumeration value="Saturday" />
+							<xs:enumeration value="ExcludeDayOfWeek" />
+							<xs:enumeration value="IncludeDayOfWeek" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:list>
+			</xs:simpleType>
+			<xs:maxLength value="11" />
+			<xs:minLength value="1" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="DaylyScheduleOptions" type="me:ST_DaylyScheduleOptions" />
+
+	<!--•••••••••••••••••••••••••••••••••••••••••-->
+	<!--••••••••••••• COMPLEX TYPES •••••••••••••-->
+	<!--•••••••••••••••••••••••••••••••••••••••••-->
+
+	<xs:complexType name="ISchedule" abstract="true" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox:Object">
+				<xs:sequence>
+					<xs:element name="IsDisabled" type="xs:boolean" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="Schedule" type="me:ISchedule" abstract="true" />
+	<xs:complexType name="ScheduleCollection" mixed="false" final="#all">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox:Collection2">
+				<xs:sequence>
+					<xs:element ref="me:Schedule" minOccurs="0" maxOccurs="unbounded" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="DaylySchedule" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:ISchedule">
+				<xs:sequence>
+					<xs:element name="Options" type="me:ST_DaylyScheduleOptions" />
+					<xs:element name="FromTimeOfDay" type="xs:duration" />
+					<xs:element name="UntilTimeOfDay" type="xs:duration" />
+					<xs:element name="RepeatInterval" type="xs:duration" />
+					<xs:element name="RepeatIntervalVariance" type="xs:duration" />
+					<xs:element name="TimeZone" type="xs:duration"  />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="SchedulesMonitorDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox:DescriptionBase">
+				<xs:sequence>
+					<xs:element name="IsAutoActivationEnabled" type="xs:boolean" nillable="false" />
+					<xs:element name="SchedulesRefSet" type="ox:MetadataRefSet" nillable="true" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="DaylyScheduleDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox:DescriptionBase">
+				<xs:sequence>
+					<xs:sequence>
+						<xs:element name="IsDisabled" type="xs:boolean" />
+						<xs:element name="FromTimeOfDay" type="xs:duration" />
+						<xs:element name="UntilTimeOfDay" type="xs:duration" />
+						<xs:element name="RepeatInterval" type="xs:duration" />
+						<xs:element name="RepeatIntervalVariance" type="xs:duration" />
+						<xs:element name="TimeZone" type="xs:duration"  />
+					</xs:sequence>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="ScheduleTriggerDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox.triggers:TriggerDescriptionBase">
+				<xs:sequence>
+					<xs:element name="Schedule" type="ox:MetadataRef" nillable="true" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="ScheduleLimitTriggerDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox.triggers:AggregateTriggerDescription">
+				<xs:sequence>
+					<xs:element name="Schedules" type="me:ScheduleCollection" nillable="true"/>
+					<xs:element name="SchedulesDescriptions" type="ox:MetadataRefSet" nillable="true" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+</xs:schema>

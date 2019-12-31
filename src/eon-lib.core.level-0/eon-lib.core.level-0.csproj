@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.1</TargetFrameworks>
+	<AssemblyName>$(MSBuildProjectName)</AssemblyName>
+	<AssemblyTitle>$(AssemblyName)</AssemblyTitle>
+	<Title>EonLib.Core.LevelA</Title>
+	<Description>EonLib core components (level A).</Description>
+  </PropertyGroup>
+
+	<Import Project="..\common-build.props" />
+	<Import Project="nuget-package.props" />
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Build.Tasks.Git" Version="1.0.0-beta2-19367-01">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+    <PackageReference Include="System.Collections.Immutable" Version="1.6.0" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.0.0" />
+  </ItemGroup>
+
+  <Import Project="nuget-package.targets" />
+
+</Project>

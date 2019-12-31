@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+					 targetNamespace="urn:df:ox-2019:message-flow"
+					 attributeFormDefault="unqualified"
+					 elementFormDefault="qualified"
+					 version="1.0"
+					 xmlns:me="urn:df:ox-2019:message-flow"
+					 xmlns:ox="urn:df:ox-2019:core">
+
+	<xs:import namespace="urn:df:ox-2019:core"/>
+	
+</xs:schema>

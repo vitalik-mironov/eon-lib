@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.1</TargetFrameworks>
+    <AssemblyName>$(MSBuildProjectName)</AssemblyName>
+	<AssemblyTitle>$(AssemblyName)</AssemblyTitle>
+	<Title>EonLib.Extensions.Options</Title>
+	<Description>EonLib. Extensions of Microsoft.Extensions.Options components.</Description>
+  </PropertyGroup>
+
+	<Import Project="..\common-build.props" />
+
+  <Import Project="nuget-package.props" />
+
+  <ItemGroup>
+    <Compile Remove="Runtime.Options\**" />
+    <EmbeddedResource Remove="Runtime.Options\**" />
+    <None Remove="Runtime.Options\**" />
+  </ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.Options" Version="3.0.0" />
+		<PackageReference Include="Microsoft.Build.Tasks.Git" Version="1.0.0-beta2-19367-01">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+		 </PackageReference>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\eon-lib.extensions.configuration\eon-lib.extensions.configuration.csproj" />
+	</ItemGroup>
+
+	<Import Project="nuget-package.targets" />
+
+</Project>

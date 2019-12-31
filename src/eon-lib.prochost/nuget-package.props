@@ -1,0 +1,9 @@
+﻿<Project>
+
+	<PropertyGroup>
+		<PackageId>digital-flare.$(MSBuildProjectName)</PackageId>
+	</PropertyGroup>
+
+	<Import Project="..\common-nuget-package.props"/>
+
+</Project>

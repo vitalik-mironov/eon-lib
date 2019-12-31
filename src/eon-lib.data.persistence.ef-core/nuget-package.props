@@ -1,0 +1,9 @@
+﻿<Project>
+
+	<PropertyGroup>
+		<PackageId>$(AssemblyName)</PackageId>
+	</PropertyGroup>
+
+	<Import Project="..\common-nuget-package.props"/>
+
+</Project>

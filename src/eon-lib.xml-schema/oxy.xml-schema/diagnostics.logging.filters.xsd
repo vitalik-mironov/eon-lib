@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+					 targetNamespace="urn:df:ox-2019:diagnostics:logging:filters"
+					 attributeFormDefault="unqualified"
+					 elementFormDefault="qualified"
+					 version="1.0"
+					 xmlns:me="urn:df:ox-2019:diagnostics:logging:filters"
+					 xmlns:d="urn:df:ox-2019:core"
+					 xmlns:diagnostics="urn:df:ox-2019:diagnostics"
+					 xmlns:filters.criteria="urn:df:ox-2019:data:filters:criteria"
+					 xmlns:criteria.operators="urn:df:ox-2019:data:filters:criteria:operators">
+
+	<xs:import namespace="urn:df:ox-2019:core"/>
+	<xs:import namespace="urn:df:ox-2019:diagnostics"/>
+	<xs:import namespace="urn:df:ox-2019:data:filters:criteria"/>
+	<xs:import namespace="urn:df:ox-2019:data:filters:criteria:operators"/>
+
+	<!--•••••••••••••••••••••••••••••••••••••••••-->
+	<!--••••••••••••• SIMPLE TYPES ••••••••••••••-->
+	<!--•••••••••••••••••••••••••••••••••••••••••-->
+
+	<xs:simpleType name="ST_SourceTypeLoggingFilterCriteria" final="#all">
+		<xs:restriction>
+			<xs:simpleType>
+				<xs:list>
+					<xs:simpleType>
+						<xs:restriction base="d:ST_String">
+							<xs:enumeration value="None" />
+							<xs:enumeration value="Compatibility" />
+							<xs:enumeration value="NameMatch" />
+							<xs:enumeration value="Any" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:list>
+			</xs:simpleType>
+			<xs:maxLength value="4" />
+			<xs:minLength value="1" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="SourceTypeLoggingFilterCriteria" type="me:ST_SourceTypeLoggingFilterCriteria" />
+
+	<xs:simpleType name="ST_ErrorCodeIdentifierLoggingFilterMode" final="#all">
+		<xs:restriction base="d:ST_String">
+			<xs:enumeration value="SingleBaseException" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="ErrorCodeIdentifierLoggingFilterMode" type="me:ST_ErrorCodeIdentifierLoggingFilterMode" />
+
+	<xs:simpleType name="ST_LoggingFilterGroupMode" final="#all">
+		<xs:restriction base="d:ST_String">
+			<xs:enumeration value="AllFilters" />
+			<xs:enumeration value="AnyFilter" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="LoggingFilterGroupMode" type="me:ST_LoggingFilterGroupMode" />
+
+	<!--•••••••••••••••••••••••••••••••••••••••••-->
+	<!--••••••••••••• COMPLEX TYPES •••••••••••••-->
+	<!--•••••••••••••••••••••••••••••••••••••••••-->
+
+	<xs:complexType name="SourceTypeLoggingFilterDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:LoggingFilterDescriptionBase">
+				<xs:sequence>
+					<xs:element name="Criteria" type="me:ST_SourceTypeLoggingFilterCriteria" />
+					<xs:element name="NameMatchCriterion" nillable="true">
+						<xs:complexType mixed="false">
+							<xs:sequence>
+								<xs:element ref="filters.criteria:TypeNameCriterion" minOccurs="0" maxOccurs="unbounded" />
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="CompatibilityCriterion" nillable="true">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="d:TypeNameRef" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="LoggingFilterDescriptionBase" mixed="false" abstract="true">
+		<xs:complexContent mixed="false">
+			<xs:extension base="d:DescriptionBase">
+				<xs:sequence>
+					<xs:element name="IsDisabled" type="xs:boolean" />
+					<xs:element name="NullCoalesce" type="xs:boolean" nillable="true" />
+					<xs:element name="NotApplyRestOfFilters" type="xs:boolean" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="CategoryLoggingFilterDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:LoggingFilterDescriptionBase">
+				<xs:sequence>
+					<xs:element name="Categories" nillable="true">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="d:NotificationLevel" minOccurs="0" maxOccurs="5"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="SeverityLevelLoggingFilterDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:LoggingFilterDescriptionBase">
+				<xs:sequence>
+					<xs:element name="SeverityLevels" nillable="true">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="diagnostics:SeverityLevel" minOccurs="0" maxOccurs="5"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="LoggingFilterGroupDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:LoggingFilterDescriptionBase">
+				<xs:sequence>
+					<xs:element name="Mode" type="me:ST_LoggingFilterGroupMode" nillable="false" />
+					<xs:element name="Filters" type="d:MetadataRefSet" nillable="true" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="ErrorCodeIdentifierLoggingFilterDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:LoggingFilterDescriptionBase">
+				<xs:sequence>
+					<xs:element name="Mode" type="me:ST_ErrorCodeIdentifierLoggingFilterMode" nillable="false" />
+					<xs:element name="FilterOperator" type="criteria.operators:StringCriterionOperatorBase" nillable="true" />
+					<xs:element name="FilterValue" type="d:ST_String" nillable="true" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+</xs:schema>

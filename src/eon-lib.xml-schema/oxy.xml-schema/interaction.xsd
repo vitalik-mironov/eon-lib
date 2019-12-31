@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+					 targetNamespace="urn:df:ox-2019:interaction"
+					 attributeFormDefault="unqualified"
+					 elementFormDefault="qualified"
+					 version="1.0"
+					 xmlns:me="urn:df:ox-2019:interaction"
+					 xmlns:ox="urn:df:ox-2019:core">
+
+	<xs:import namespace="urn:df:ox-2019:core"/>
+
+	<xs:simpleType name="ST_InteractionRole" final="#all">
+		<xs:restriction base="ox:ST_String">
+			<xs:enumeration value="Caller" />
+			<xs:enumeration value="Callee" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="InteractionRole" type="me:ST_InteractionRole" nillable="true" />
+
+</xs:schema>

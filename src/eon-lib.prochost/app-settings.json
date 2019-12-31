@@ -1,0 +1,15 @@
+{
+	"$type": "DigitalFlare.Prochost.Internal.XClassB, oxy-prochost",
+	"Prop1": 10,
+	"Prop2": null,
+	"Prop4": "Cgo=",
+	"Prop5": 1,
+	"Prop3": {
+		"Prop1": 17,
+		"Prop2": "00-00",
+		"Prop3": null,
+		"Prop4": null,
+		"Prop5": "Second",
+		"Prop6": "17.23:32:22.144"
+	}
+}

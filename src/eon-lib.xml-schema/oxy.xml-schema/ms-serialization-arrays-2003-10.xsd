@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema elementFormDefault="qualified"
+					 targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays"
+					 xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/Arrays"
+					 xmlns:serarr="http://schemas.microsoft.com/2003/10/Serialization/Arrays" 
+					 xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+					 xmlns:xs="http://www.w3.org/2001/XMLSchema"
+					 xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" 
+					 xmlns:ipam="http://Microsoft.Windows.Ipam">
+
+	<xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/"/>
+	
+	<xs:complexType name="ArrayOfunsignedShort">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="unsignedShort" type="xsd:unsignedShort" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ArrayOfanyType">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="anyType" nillable="true" type="xsd:anyType" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ArrayOfunsignedByte">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="unsignedByte" type="xsd:unsignedByte" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ArrayOfKeyValueOfintanyType">
+		<xs:annotation>
+			<xs:appinfo>
+				<IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsDictionary>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="KeyValueOfintanyType">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Key" type="xsd:int" />
+						<xs:element name="Value" nillable="true" type="xsd:anyType" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ArrayOflong">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="long" type="xsd:long" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ArrayOfanyType" nillable="true" type="q3:ArrayOfanyType"/>
+	<xs:complexType name="ArrayOfKeyValueOfstringanyType">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="KeyValueOfstringanyType">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Key" nillable="true" type="xs:string"/>
+						<xs:element name="Value" nillable="true" type="xs:anyType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ArrayOfKeyValueOfstringanyType" nillable="true" type="q3:ArrayOfKeyValueOfstringanyType"/>
+	<xs:complexType name="ArrayOfstring">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ArrayOfstring" nillable="true" type="q3:ArrayOfstring"/>
+	<xs:complexType name="ArrayOfint">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="int" type="xs:int"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ArrayOfint" nillable="true" type="q3:ArrayOfint"/>
+	<xs:complexType name="ArrayOfKeyValueOfstringstring">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="KeyValueOfstringstring">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Key" nillable="true" type="xs:string"/>
+						<xs:element name="Value" nillable="true" type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ArrayOfKeyValueOfstringstring" nillable="true" type="q3:ArrayOfKeyValueOfstringstring"/>
+	<xs:complexType name="ArrayOfguid">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="guid" type="ser:guid"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ArrayOfguid" nillable="true" type="q3:ArrayOfguid"/>
+	<xs:complexType name="ArrayOfanyURI">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="anyURI" nillable="true" type="xs:anyURI"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ArrayOfanyURI" nillable="true" type="q3:ArrayOfanyURI"/>
+	<xs:complexType name="ArrayOfboolean">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="boolean" type="xs:boolean"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ArrayOfboolean" nillable="true" type="q3:ArrayOfboolean"/>
+</xs:schema>

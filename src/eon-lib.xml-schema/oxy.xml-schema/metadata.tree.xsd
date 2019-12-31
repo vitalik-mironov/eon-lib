@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+					 targetNamespace="urn:df:ox-2019:metadata:tree"
+					 attributeFormDefault="unqualified"
+					 elementFormDefault="qualified"
+					 version="1.0"
+					 xmlns:me="urn:df:ox-2019:metadata:tree"
+					 xmlns:ox="urn:df:ox-2019:core"
+					 xmlns:mt="urn:df:ox-2019:metadata:tree">
+
+	<xs:import namespace="urn:df:ox-2019:core"/>
+
+	<xs:complexType name="MetadataTreeElementBase" abstract="true" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox:CopyableReadOnlyScopeBase">
+				<xs:sequence>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="MetadataInclusionTreeElementBase" mixed="false" abstract="true">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:MetadataTreeElementBase">
+				<xs:sequence>
+					<xs:element name="LocationUri" type="xs:anyURI" nillable="true" />
+					<xs:element name="FormatMediaTypeName" type="ox:ST_MediaTypeName" nillable="true" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="EmbeddedMetadataTreeElement" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:MetadataTreeElementBase">
+				<xs:sequence>
+					<xs:element name="EmbeddedMetadata" type="ox:MetadataBase" nillable="true" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="MetadataTreeStructureComponentBase" mixed="false" abstract="true">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox:CopyableReadOnlyScopeBase">
+				<xs:sequence>
+					<xs:element name="Caption" type="xs:string" nillable="true" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="MetadataTreeStructureComponent" type="me:MetadataTreeStructureComponentBase" nillable="true"/>
+
+	<xs:complexType name="MetadataTreeNodeInclusionBase" mixed="false" abstract="true">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:MetadataTreeStructureComponentBase">
+				<xs:sequence>
+					<xs:element name="LocationUri" type="xs:anyURI" nillable="true" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="MetadataTreeNodeInclusion" type="me:MetadataTreeNodeInclusionBase" nillable="true"/>
+
+	<xs:complexType name="MetadataTreeNode" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:MetadataTreeStructureComponentBase">
+				<xs:sequence>
+					<xs:element name="MetadataElement" type="me:MetadataTreeElementBase" nillable="true" />
+					<xs:element name="Nodes" nillable="true" minOccurs="0">
+						<xs:complexType mixed="false">
+							<xs:complexContent mixed="false">
+								<xs:extension base="ox:Collection2">
+									<xs:sequence>
+										<xs:element name="Node" type="me:MetadataTreeNode" minOccurs="0" maxOccurs="unbounded" />
+									</xs:sequence>
+								</xs:extension>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="Inclusions" nillable="true" minOccurs="0">
+						<xs:complexType mixed="false">
+							<xs:complexContent mixed="false">
+								<xs:extension base="ox:Collection2">
+									<xs:sequence>
+										<xs:element name="Inclusion" type="me:MetadataTreeNodeInclusionBase" minOccurs="0" maxOccurs="unbounded" />
+									</xs:sequence>
+								</xs:extension>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="MetadataTreeNode" type="me:MetadataTreeNode" nillable="true" />
+
+	<xs:complexType name="MetadataFileInclusionTreeElement" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="mt:MetadataInclusionTreeElementBase">
+				<xs:sequence />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="MetadataTreeNodeDirectoryInclusion" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="mt:MetadataTreeNodeInclusionBase">
+				<xs:sequence />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+</xs:schema>

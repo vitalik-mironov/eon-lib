@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+					 targetNamespace="urn:df:ox-2019:net:http:security:authentication"
+					 attributeFormDefault="unqualified"
+					 elementFormDefault="qualified"
+					 version="1.0"
+					 xmlns:me="urn:df:ox-2019:net:http:security:authentication"
+					 xmlns:ox="urn:df:ox-2019:core"
+					 xmlns:ox.http="urn:df:ox-2019:net:http"
+					 xmlns:ox-security="urn:df:ox-2019:security">
+
+	<xs:import namespace="urn:df:ox-2019:core"/>
+	<xs:import namespace="urn:df:ox-2019:security"/>
+	<xs:import namespace="urn:df:ox-2019:net:http"/>
+
+	<xs:complexType name="AuthenticationContextProvisionHandlerDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox.http:HandlerDescriptionBase">
+				<xs:sequence>
+					<xs:element name="BasicSchemeAuthenticator" type="ox:MetadataRef" nillable="true"/>
+					<xs:element name="BearerSchemeAuthenticator" type="ox:MetadataRef" nillable="true"/>
+					<xs:element name="BypassAuthentication" type="xs:boolean" />
+					<xs:element name="PreventAnonymous" type="xs:boolean" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+</xs:schema>

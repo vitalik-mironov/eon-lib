@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.1</TargetFrameworks>
+    <AssemblyName>$(MSBuildProjectName)</AssemblyName>
+	<AssemblyTitle>$(AssemblyName)</AssemblyTitle>
+	<Title>EonLib.IO.SubjectMaterializer</Title>
+	<Description>EonLib. Subject materializer.</Description>
+  </PropertyGroup>
+
+	<Import Project="..\common-build.props" />
+
+  <Import Project="nuget-package.props" />
+
+	<ItemGroup>
+		<ProjectReference Include="..\eon-lib.io.context\eon-lib.io.context.csproj" />
+		<ProjectReference Include="..\eon-lib.xml\eon-lib.xml.csproj" />
+		<PackageReference Include="Microsoft.Build.Tasks.Git" Version="1.0.0-beta2-19367-01">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+		 </PackageReference>
+	</ItemGroup>
+
+	<Import Project="nuget-package.targets" />
+
+</Project>

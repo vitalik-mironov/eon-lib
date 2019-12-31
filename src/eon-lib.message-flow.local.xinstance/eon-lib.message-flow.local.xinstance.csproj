@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.1</TargetFrameworks>
+    <AssemblyName>$(MSBuildProjectName)</AssemblyName>
+	<AssemblyTitle>$(AssemblyName)</AssemblyTitle>
+	<Title>EonLib.MessageFlow.Local.XInstance</Title>
+	<Description>EonLib. Message flow. Local flow XInstance-components.</Description>
+  </PropertyGroup>
+
+	<Import Project="..\common-build.props" />
+
+  <Import Project="nuget-package.props" />
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Build.Tasks.Git" Version="1.0.0-beta2-19367-01">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+		 </PackageReference>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\eon-lib.message-flow.local\eon-lib.message-flow.local.csproj" />
+	  <ProjectReference Include="..\eon-lib.xapp-scope-instance\eon-lib.xapp-scope-instance.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="MessageFlow.Local.Description\" />
+	</ItemGroup>
+
+	<Import Project="nuget-package.targets" />
+
+</Project>

@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+					 targetNamespace="urn:df:ox-2019:build:nuget"
+					 attributeFormDefault="unqualified"
+					 elementFormDefault="qualified"
+					 version="1.0"
+					 xmlns:me="urn:df:ox-2019:build:nuget"
+					 xmlns:ox="urn:df:ox-2019:core">
+
+	<xs:import namespace="urn:df:ox-2019:core"/>
+
+	<xs:simpleType name="ST_NuGet.ProjectModel.ProjectStyle" final="#all">
+		<xs:restriction base="ox:ST_NonEmptyString">
+			<xs:enumeration value="Unknown"/>
+			<xs:enumeration value="ProjectJson"/>
+			<xs:enumeration value="PackageReference"/>
+			<xs:enumeration value="DotnetCliTool"/>
+			<xs:enumeration value="Standalone"/>
+			<xs:enumeration value="PackagesConfig"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="PackageBuildTargetSpecs" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox:Object">
+				<xs:sequence>
+					<xs:element name="TargetFramework" type="ox:ST_NonEmptyNonLeadingTrailingWhitespaceString256" nillable="true" />
+					<xs:element name="MSBuildProjectFile" type="ox:ST_String" nillable="true" />
+					<xs:element name="MSBuildProjectStyle" type="me:ST_NuGet.ProjectModel.ProjectStyle" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="PackageBuildTargetSpecs" type="me:PackageBuildTargetSpecs" nillable="true" />
+
+	<xs:complexType name="PackagePublishSpecsBase" mixed="false" abstract="true">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox:Object">
+				<xs:sequence>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="PackagePublishSpecs" type="me:PackagePublishSpecsBase" nillable="true" />
+
+	<xs:complexType name="PackageOfflineFeedPublishSpecs" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:PackagePublishSpecsBase">
+				<xs:sequence>
+					<xs:element name="FeedSource" type="ox:ST_String" nillable="true" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="PackageBuildSpecs" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox:Object">
+				<xs:sequence>
+					<xs:element name="NuSpecFile" type="ox:ST_String" nillable="true" />
+					<xs:element name="Targets">
+						<xs:complexType mixed="false">
+							<xs:complexContent mixed="false">
+								<xs:extension base="ox:Collection2">
+									<xs:sequence>
+										<xs:element ref="me:PackageBuildTargetSpecs" minOccurs="0" maxOccurs="unbounded"/>
+									</xs:sequence>
+								</xs:extension>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="PublishSpecs">
+						<xs:complexType mixed="false">
+							<xs:complexContent mixed="false">
+								<xs:extension base="ox:Collection2">
+									<xs:sequence>
+										<xs:element ref="me:PackagePublishSpecs" minOccurs="0" maxOccurs="unbounded"/>
+									</xs:sequence>
+								</xs:extension>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="PackageBuildSpecs" type="me:PackageBuildSpecs" nillable="true" />
+
+</xs:schema>
