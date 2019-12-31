@@ -1,2 +1,2 @@
-# eon-lib
-.Net extensions library
+# EONLib
+.Net extensions library.
