@@ -1,0 +1,22 @@
+﻿<Project>
+
+	<ItemGroup>
+		<Compile Include="$(MSBuildThisFileDirectory)assembly-attributes\assembly-trademark.cs" />
+		<Compile Include="$(MSBuildThisFileDirectory)assembly-attributes\assembly-neutral-resources-language.cs" />
+		<Compile Include="$(MSBuildThisFileDirectory)assembly-attributes\cls-compliant.cs" />
+	</ItemGroup>
+
+	<Target Name="Eon-PublishNuGetPackageToLocalFeed"
+		AfterTargets="Pack"
+		Condition="'$(Eon-PublishNuGetPackages)'=='True'">
+		<Exec Command="nuget push &quot;$(PackageOutputPath.TrimEnd('\'))\$(PackageId).$(PackageVersion).nupkg&quot; -Source &quot;%NUGET-LOCAL-FEED%&quot;" />
+	</Target>
+
+	<Target Name="Eon-InitializeSourceControlInformation"
+		Condition="'$(IncludeSourceRevisionInInformationalVersion)'=='True'"
+		DependsOnTargets="InitializeSourceControlInformationFromSourceControlManager"
+		BeforeTargets="InitializeSourceControlInformation">
+			<Message Text="Do Eon-InitializeSourceControlInformation" Importance="high" />
+	</Target>
+
+</Project>

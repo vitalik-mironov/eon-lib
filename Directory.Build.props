@@ -1,0 +1,40 @@
+﻿<Project>
+
+	<PropertyGroup>
+		<SignAssembly>true</SignAssembly>
+		<AssemblyOriginatorKeyFile>..\..\my-code-authority.snk</AssemblyOriginatorKeyFile>
+		<DelaySign>false</DelaySign>
+		<LangVersion>latest</LangVersion>
+		<NoWarn>$(NoWarn);1591;CS7035;CS3001;CS3002;CS3003;CS3009;IDE0034;IDE0029;IDE0034;IDE0051;CS3027;IDE1006;CS4014</NoWarn>
+		<OutputPath>bin</OutputPath>
+		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+		<AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
+		<WarningsAsErrors />
+		<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+		<RootNamespace>Eon</RootNamespace>
+		<!--//-->
+		<GenerateNeutralResourcesLanguageAttribute>false</GenerateNeutralResourcesLanguageAttribute>
+		<NeutralLanguage>en</NeutralLanguage>
+		<!--//-->
+		<Deterministic>true</Deterministic>
+		<!--//-->
+		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+		<GenerateAssemblyCompanyAttribute>true</GenerateAssemblyCompanyAttribute>
+		<GenerateAssemblyConfigurationAttribute>true</GenerateAssemblyConfigurationAttribute>
+		<GenerateAssemblyCopyrightAttribute>true</GenerateAssemblyCopyrightAttribute>
+		<GenerateAssemblyDescriptionAttribute>true</GenerateAssemblyDescriptionAttribute>
+		<GenerateAssemblyVersionAttribute>true</GenerateAssemblyVersionAttribute>
+		<GenerateAssemblyFileVersionAttribute>true</GenerateAssemblyFileVersionAttribute>
+		<GenerateAssemblyInformationalVersionAttribute>true</GenerateAssemblyInformationalVersionAttribute>
+		<GenerateAssemblyProductAttribute>true</GenerateAssemblyProductAttribute>
+		<GenerateAssemblyTitleAttribute>true</GenerateAssemblyTitleAttribute>
+		<!--//-->
+		<Product>EonLib</Product>
+		<Company>Vitalik Mironov</Company>
+		<Authors>vitalik-mironov</Authors>
+		<Copyright>Copyright © Vitalik Mironov, 2006-2020. All rights reserved.</Copyright>
+	</PropertyGroup>
+
+	<Import Project="version.props"/>
+
+</Project>

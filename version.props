@@ -1,0 +1,21 @@
+<Project>
+
+	<PropertyGroup>
+		<IncludeSourceRevisionInInformationalVersion>true</IncludeSourceRevisionInInformationalVersion>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<SourceRevisionId></SourceRevisionId>
+		<!--//-->
+		<AssemblyVersion>4.0.0</AssemblyVersion>
+		<FileVersion>4.0.0</FileVersion>
+		<PackageVersion>4.0.0</PackageVersion>
+		<!--//-->
+		<InformationalVersion>$(FileVersion)</InformationalVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<PackageVersion>$(PackageVersion)-debug002</PackageVersion>
+	</PropertyGroup>
+
+</Project>
