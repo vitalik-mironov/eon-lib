@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+					 targetNamespace="urn:eon-2020:soa"
+					 attributeFormDefault="unqualified"
+					 elementFormDefault="qualified"
+					 version="1.0"
+					 xmlns:me="urn:eon-2020:soa"
+					 xmlns:d="urn:eon-2020:core"
+					 xmlns:diag="urn:eon-2020:diagnostics">
+
+  <xs:import namespace="urn:eon-2020:core" />
+  <xs:import namespace="urn:eon-2020:diagnostics" />
+
+  <xs:simpleType name="ST_FaultCodeName" final="#all">
+    <xs:restriction base="d:ST_String">
+      <xs:enumeration value="Unknown"/>
+      <xs:enumeration value="ServiceSecurityFault"/>
+      <xs:enumeration value="DataStorageFault"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="FaultCodeName" type="me:ST_FaultCodeName" nillable="true" />
+
+  <xs:complexType name="FaultCodeNameCollection" mixed="false" final="#all">
+    <xs:complexContent mixed="false">
+      <xs:extension base="d:Collection2">
+        <xs:sequence>
+          <xs:element ref="me:FaultCodeName" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="EndpointAddressUriDescription" mixed="false">
+    <xs:complexContent mixed="false">
+      <xs:extension base="d:DescriptionBase">
+        <xs:sequence>
+          <xs:element name="Uri" type="xs:anyURI" nillable="true"  />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="FailoverEndpointAddressUriDescription" mixed="false">
+    <xs:complexContent mixed="false">
+      <xs:extension base="me:EndpointAddressUriDescription">
+        <xs:sequence>
+          <xs:element name="FailConditionRefSet" type="d:MetadataRefSet" nillable="true"  />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:complexType name="ServiceClientDescriptionBase" mixed="false" abstract="true">
+    <xs:complexContent mixed="false">
+      <xs:extension base="d:DescriptionBase">
+        <xs:sequence>
+          <xs:element name="EndpointAddressUriRef" type="d:MetadataRef" nillable="true"  />
+          <xs:element name="FailoverEndpointAddressUriRefSet" type="d:MetadataRefSet" nillable="true" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="RetryRequestConditionRefSet" type="d:MetadataRefSet" nillable="true" minOccurs="0" maxOccurs="1" />
+          <xs:element name="OperationTimeoutSeconds" type="d:ST_NonNegativeInt" nillable="false"  />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="ServiceDescriptionBase" mixed="false" abstract="true">
+    <xs:complexContent mixed="false">
+      <xs:extension base="d:DescriptionBase">
+        <xs:sequence>
+          <xs:element name="ServiceHostRef" type="d:MetadataRef" nillable="true" minOccurs="0" maxOccurs="1" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="SoaServiceHostDiscription" mixed="false">
+    <xs:complexContent mixed="false">
+      <xs:extension base="d:DescriptionBase">
+        <xs:sequence>
+          <xs:element name="HostXApp" type="d:MetadataRef" nillable="true"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="ODataServiceDescriptionBase" mixed="false" abstract="true">
+    <xs:complexContent mixed="false">
+      <xs:extension base="me:ServiceDescriptionBase">
+				<xs:sequence>
+				</xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="ODataServiceHostDescription" mixed="false">
+    <xs:complexContent mixed="false">
+      <xs:extension base="me:SoaServiceHostDiscription">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+</xs:schema>

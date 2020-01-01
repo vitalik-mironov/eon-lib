@@ -5,7 +5,7 @@ namespace Eon.Data {
 
 	/// <summary>
 	/// Defines the codes <see cref="IErrorCode"/> for data errors.
-	/// <para>'Oxy-2' serires codes.</para>
+	/// <para>'Eon-2' serires codes.</para>
 	/// </summary>
 	// TODO: Put strings into the resources.
 	//

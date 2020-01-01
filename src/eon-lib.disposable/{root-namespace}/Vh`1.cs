@@ -70,7 +70,7 @@ namespace Eon {
 			//
 			var valueStoreInstanceParameter = Expression.Parameter(typeof(Vh<T>));
 			if (typeOfValue.IsValueType()) {
-				if (typeof(IOxyCloneable).IsAssignableFrom(typeOfValue)) {
+				if (typeof(IEonCloneable).IsAssignableFrom(typeOfValue)) {
 					var cloneContextParameter = Expression.Parameter(typeof(ICloneContext));
 					__CloneValue =
 						Expression
@@ -78,7 +78,7 @@ namespace Eon {
 							Expression.Call(
 								instance: valueExpr,
 								method: typeOfValue.GetMethod(
-									nameof(IOxyCloneable.Clone),
+									nameof(IEonCloneable.Clone),
 									parameterTypes: new[ ] { cloneContextParameter.Type },
 									throwIfNotFound: true),
 								arguments: cloneContextParameter),
@@ -90,7 +90,7 @@ namespace Eon {
 					__CloneValue = (locValue, locContext) => locValue;
 			}
 			else {
-				if (typeof(IOxyCloneable).IsAssignableFrom(typeOfValue)) {
+				if (typeof(IEonCloneable).IsAssignableFrom(typeOfValue)) {
 					var cloneContextParameter = Expression.Parameter(typeof(ICloneContext));
 					__CloneValue =
 						Expression
@@ -100,9 +100,9 @@ namespace Eon {
 								valueExpr,
 								Expression.Convert(
 									Expression.Call(
-										Expression.Convert(valueExpr, typeof(IOxyCloneable)),
-										typeof(IOxyCloneable).GetMethod(
-											nameof(IOxyCloneable.Clone),
+										Expression.Convert(valueExpr, typeof(IEonCloneable)),
+										typeof(IEonCloneable).GetMethod(
+											nameof(IEonCloneable.Clone),
 											parameterTypes: new[ ] { cloneContextParameter.Type },
 											throwIfNotFound: true),
 										cloneContextParameter),

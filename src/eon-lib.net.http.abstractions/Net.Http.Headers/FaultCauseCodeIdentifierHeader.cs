@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-
-using Eon.Text;
+using System.Text;
 
 using itrlck = Eon.Threading.InterlockedUtilities;
 
@@ -37,7 +36,7 @@ namespace Eon.Net.Http.Headers {
 			exception.EnsureNotNull(nameof(exception));
 			//
 			delimiter = delimiter ?? " ";
-			using (var acquiredBuffer = StringBuilderUtilities.AcquireBuffer()) {
+			using (var acquiredBuffer = EonStringBuilderUtilities.AcquireBuffer()) {
 				var stringBuilder = acquiredBuffer.StringBuilder;
 				//
 				var notFirstCode = false;

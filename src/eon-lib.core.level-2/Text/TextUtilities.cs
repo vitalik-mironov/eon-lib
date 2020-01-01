@@ -221,7 +221,7 @@ namespace Eon.Text {
 			else {
 				var vars = GetTemplateVariables(openToken: openToken, closeToken: closeToken, template: template);
 				if (vars.Length > 0) {
-					using (var buffer = StringBuilderUtilities.AcquireBuffer()) {
+					using (var buffer = EonStringBuilderUtilities.AcquireBuffer()) {
 						var sb = buffer.StringBuilder;
 						var varsUpperBound = vars.Length - 1;
 						var templateReadPosition = 0;

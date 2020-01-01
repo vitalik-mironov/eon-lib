@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+					 targetNamespace="urn:eon-2020:business-app:data"
+					 attributeFormDefault="unqualified"
+					 elementFormDefault="qualified"
+					 version="1.0"
+					 xmlns:d="urn:eon-2020:core"
+					 xmlns:me="urn:eon-2020:business-app:data"
+					 xmlns:ox.data="urn:eon-2020:data">
+
+	<xs:import namespace="urn:eon-2020:core"/>
+	<xs:import namespace="urn:eon-2020:data"/>
+
+	<xs:complexType name="BusinessAppEf6DataContainerDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox.data:DataContainerDescriptionBase">
+				<xs:sequence>
+					<xs:element name="SqlStore" type="d:MetadataRef" nillable="true" />
+					<xs:element name="IsDataQueryingContextReservationEnabled" type="xs:boolean" nillable="false" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+</xs:schema>

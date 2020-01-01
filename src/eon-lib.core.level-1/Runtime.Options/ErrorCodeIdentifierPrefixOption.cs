@@ -27,7 +27,7 @@ namespace Eon.Runtime.Options {
 			=> __AllowedPrefixCharCategoriesReadOnlyWrap;
 
 		/// <summary>
-		/// Value: 'Oxy' (see <see cref="ErrorCodeIdentifierPrefixOption.Prefix"/>).
+		/// Value: 'Eon' (see <see cref="ErrorCodeIdentifierPrefixOption.Prefix"/>).
 		/// </summary>
 		public static readonly ErrorCodeIdentifierPrefixOption Fallback;
 
@@ -46,7 +46,7 @@ namespace Eon.Runtime.Options {
 				};
 			__AllowedPrefixCharCategoriesReadOnlyWrap = __AllowedPrefixCharCategories.AsCountableEnumerable();
 			//
-			Fallback = new ErrorCodeIdentifierPrefixOption(prefix: "Oxy");
+			Fallback = new ErrorCodeIdentifierPrefixOption(prefix: "Eon");
 			RuntimeOptions.Option<ErrorCodeIdentifierPrefixOption>.SetFallback(option: Fallback);
 		}
 

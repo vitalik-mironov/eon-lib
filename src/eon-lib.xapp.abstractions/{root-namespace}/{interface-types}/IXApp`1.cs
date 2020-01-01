@@ -1,6 +1,6 @@
 ﻿#region Compilation conditional symbols
 
-#define DO_NOT_USE_OXY_LOGGING_API
+#define DO_NOT_USE_EON_LOGGING_API
 
 #endregion
 
@@ -20,7 +20,7 @@ using IXAppInitializationList = Eon.IXAppInitializationList<Eon.Description.IXAp
 namespace Eon {
 
 	/// <summary>
-	/// Компонент <seealso cref="IXAppScopeInstance"/>, представляющий Oxy-приложение.
+	/// Компонент <seealso cref="IXAppScopeInstance"/>, представляющий Eon-приложение.
 	/// </summary>
 	/// <typeparam name="TDescription">Ограничение типа описания (конфигурации) приложения.</typeparam>
 	public interface IXApp<out TDescription>

@@ -1,8 +1,8 @@
 ﻿
 namespace Eon {
 
-	public interface IOxyCloneableOrigin
-		:IOxyCloneable {
+	public interface IEonCloneableOrigin
+		:IEonCloneable {
 
 		bool HasCloneOrigin { get; }
 

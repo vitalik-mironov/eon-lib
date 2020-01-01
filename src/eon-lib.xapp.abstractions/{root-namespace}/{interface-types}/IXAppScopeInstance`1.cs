@@ -5,7 +5,7 @@ using Eon.Description;
 namespace Eon {
 
 	/// <summary>
-	/// Компонент <seealso cref="IXInstance"/>, входящий в скоуп Oxy-приложению <seealso cref="IXApp{TDescription}"/>.
+	/// Компонент <seealso cref="IXInstance"/>, входящий в скоуп Eon-приложению <seealso cref="IXApp{TDescription}"/>.
 	/// </summary>
 	/// <typeparam name="TDescription"></typeparam>
 	public interface IXAppScopeInstance<out TDescription>

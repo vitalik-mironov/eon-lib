@@ -12,7 +12,7 @@ namespace Eon {
 
 	[DataContract]
 	public class Disposable
-		:IOxyDisposable {
+		:IEonDisposable {
 
 		private protected readonly bool NopDispose;
 
@@ -58,7 +58,7 @@ namespace Eon {
 		protected internal void EnsureNotDisposeState()
 			=> _disposableImplementation.EnsureNotDisposeState();
 
-		void IOxyDisposable.EnsureNotDisposeState() => _disposableImplementation.EnsureNotDisposeState();
+		void IEonDisposable.EnsureNotDisposeState() => _disposableImplementation.EnsureNotDisposeState();
 
 		/// <summary>
 		/// Выполняет проверку на предмет состояния выгрузки данного объекта или наличия запроса на его выгрузку (см. <seealso cref="IsDisposeRequested"/>).
@@ -480,9 +480,9 @@ namespace Eon {
 		protected internal (UpdateResult<ImmutableDictionary<TKey, TValue>> updateResult, TValue currentValue) UpdDA<TKey, TValue>(ref ImmutableDictionary<TKey, TValue> location, TKey key, Func<TKey, TValue> factory, string locationName = default, Action<TKey, TValue> cleanup = default)
 			=> _disposableImplementation.UpdDA(location: ref location, key: key, factory: factory, locationName: locationName, cleanup: cleanup);
 
-		#region Move to 'oxy.ui' package.
+		#region Move to 'eon.ui' package.
 
-		// TODO_HIGH: Move to 'oxy.ui' package.
+		// TODO_HIGH: Move to 'eon.ui' package.
 
 		//protected void AddEventHandler(ref SynchronizationContextBoundEventHandler<EventHandler, EventArgs> location, EventHandler eventHandler)
 		//	=> _disposableImplementation.AddEventHandler(location: ref location, eventHandler: eventHandler);
@@ -500,9 +500,9 @@ namespace Eon {
 		protected internal void AddEventHandler(ref EventHandler location, EventHandler eventHandler)
 			=> _disposableImplementation.AddEventHandler(ref location, eventHandler);
 
-		#region Move to 'oxy.ui' package.
+		#region Move to 'eon.ui' package.
 
-		// TODO_HIGH: Move to 'oxy.ui' package.
+		// TODO_HIGH: Move to 'eon.ui' package.
 
 		//protected void RemoveEventHandler(ref SynchronizationContextBoundEventHandler<EventHandler, EventArgs> location, EventHandler eventHandler)
 		//	=> _disposableImplementation.RemoveEventHandler(ref location, eventHandler);

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Eon.Text;
+using System.Text;
 
 namespace Eon {
 
@@ -24,7 +24,7 @@ namespace Eon {
 			else {
 				if (itemFormatter == null)
 					itemFormatter = (locIndex, locItem, locFormatProvider) => locItem.FmtStr().G(formatProvider: formatProvider);
-				using (var acquiredBuffer = StringBuilderUtilities.AcquireBuffer()) {
+				using (var acquiredBuffer = EonStringBuilderUtilities.AcquireBuffer()) {
 					var outputBuilder = acquiredBuffer.StringBuilder;
 					//
 					var collectionSize = hnd.Object.Count;

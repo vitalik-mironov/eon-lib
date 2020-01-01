@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+					 targetNamespace="urn:eon-2020:security:tokens"
+					 attributeFormDefault="unqualified"
+					 elementFormDefault="qualified"
+					 version="1.0"
+					 xmlns:me="urn:eon-2020:security:tokens"
+					 xmlns:ox="urn:eon-2020:core"
+					 xmlns:ox.dependencies="urn:eon-2020:component-model:dependencies"
+					 xmlns:ox-crypto="urn:eon-2020:security:cryptography">
+
+	<xs:import namespace="urn:eon-2020:core"/>
+	<xs:import namespace="urn:eon-2020:component-model:dependencies"/>
+	<xs:import namespace="urn:eon-2020:security:cryptography"/>
+
+	<!-- ••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• -->
+	<!-- ••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• -->
+	<!-- •••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• COMPLEX TYPES •••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• -->
+	<!-- ••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• -->
+	<!-- ••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• -->
+
+	<xs:complexType name="BearerTokenData"	mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox:Object">
+				<xs:sequence>
+					<xs:element name="StyleId" type="ox:ST_UriBasedIdentifier" nillable="true" />
+					<xs:element name="Id" type="ox:ST_String" nillable="true" />
+					<xs:element name="Data" type="ox:ST_String" nillable="true" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="JwtProviderDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox.dependencies:DependencySupportDescriptionBase">
+				<xs:sequence>
+					<xs:element name="MinValidityPeriod" type="xs:duration" />
+					<xs:element name="MaxValidityPeriod" type="xs:duration" />
+					<xs:element name="DefaultIssuerId" type="ox:UriBasedIdentifier" nillable="true"/>
+					<xs:element name="DefaultIdentityNameScopeId" type="ox:UriBasedIdentifier" nillable="true"/>
+					<xs:element name="DefaultSigningAlgorithm" type="ox:ST_String" nillable="true"/>
+					<xs:element name="DefaultSigningKey" type="ox-crypto:ICryptographicKeyClause" nillable="true" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+</xs:schema>

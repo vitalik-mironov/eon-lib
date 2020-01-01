@@ -100,7 +100,7 @@ namespace Eon {
 								else {
 									var locBuffer = new List<T>();
 									for (var locY = locReferences.Count - 1; locY > -1; locY--) {
-										if (locReferences[ locY ].TryGetTarget(target: out var locDisposable) && !((locDisposable as IOxyDisposable)?.IsDisposeRequested ?? false)) {
+										if (locReferences[ locY ].TryGetTarget(target: out var locDisposable) && !((locDisposable as IEonDisposable)?.IsDisposeRequested ?? false)) {
 											if (locDisposable is T locDisposableStricted)
 												locBuffer.Add(item: locDisposableStricted);
 										}

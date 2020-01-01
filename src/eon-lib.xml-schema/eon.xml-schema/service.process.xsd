@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+					 targetNamespace="urn:eon-2020:service-process"
+					 attributeFormDefault="unqualified"
+					 elementFormDefault="qualified"
+					 version="1.0"
+					 xmlns:me="urn:eon-2020:service-process"
+					 xmlns:d="urn:eon-2020:core"
+					 xmlns:data-portable-0="urn:eon-2020:data"
+					 xmlns:ox.dependency="urn:eon-2020:component-model:dependencies">
+
+	<xs:import namespace="urn:eon-2020:core"/>
+	<xs:import namespace="urn:eon-2020:data"/>
+	<xs:import namespace="urn:eon-2020:component-model:dependencies"/>
+
+	<xs:complexType name="ServiceDescriptionBase" mixed="false" abstract="true">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox.dependency:DependencySupportDescriptionBase">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="ServiceProcessXAppDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="data-portable-0:DataXAppDescription">
+				<xs:sequence>
+					<xs:element name="HostedServicesRefSet" type="d:MetadataRefSet" nillable="true" minOccurs="1" maxOccurs="1"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+</xs:schema>

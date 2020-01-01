@@ -5,13 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-using DigitalFlare.ComponentModel.Properties;
-using DigitalFlare.Context;
-using DigitalFlare.Threading;
+using Eon.ComponentModel.Properties;
+using Eon.Context;
+using Eon.Threading;
 using Microsoft.EntityFrameworkCore;
-using static DigitalFlare.Transactions.TransactionUtilities;
+using static Eon.Transactions.TransactionUtilities;
 
-namespace DigitalFlare.Data.Persistence {
+namespace Eon.Data.Persistence {
 
 	public static partial class PersistenceUtilities {
 

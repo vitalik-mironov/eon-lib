@@ -6,7 +6,7 @@ namespace Eon {
 	/// Defines the base specs of lazy asynchronous operation.
 	/// </summary>
 	public interface IAsyncOperatorBase
-		:IOxyDisposable {
+		:IEonDisposable {
 
 		/// <summary>
 		/// Indicates whether the execution of this operator can be repeated.

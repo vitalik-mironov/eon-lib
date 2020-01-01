@@ -34,7 +34,7 @@ namespace Eon {
 		}
 
 		public static T AsReadOnly<T>(this T scope, bool isPermanentReadOnly)
-			where T : IOxyCloneable, IReadOnlyScope {
+			where T : IEonCloneable, IReadOnlyScope {
 			//
 			scope.EnsureNotNull(nameof(scope));
 			//

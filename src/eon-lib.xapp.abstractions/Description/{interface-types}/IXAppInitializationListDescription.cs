@@ -3,7 +3,7 @@
 namespace Eon.Description {
 
 	/// <summary>
-	/// Представляет описание (конфигурацию) списка инициализации  Oxy-приложения (см. <seealso cref="IXApp{TDescription}"/>).
+	/// Представляет описание (конфигурацию) списка инициализации  Eon-приложения (см. <seealso cref="IXApp{TDescription}"/>).
 	/// </summary>
 	public interface IXAppInitializationListDescription
 		:IDescription, IAbilityOption {

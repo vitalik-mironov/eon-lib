@@ -5,10 +5,10 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 
 using Eon;
 using Eon.Diagnostics.Logging;
-using Eon.Runtime.Serialization.Json;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -46,7 +46,7 @@ namespace Microsoft.Extensions.Configuration {
 			//
 			T result;
 			using (var reader = ToJsonReader(config: config, serviceProvider: serviceProvider)) {
-				var serializerSettings = JsonSerializationUtilities.CreateDefaultSerializerSettings();
+				var serializerSettings = EonJsonUtilities.CreateDefaultSerializerSettings();
 				serializerSettings.TypeNameHandling = TypeNameHandling.All;
 				serializerSettings.PreserveReferencesHandling = PreserveReferencesHandling.All;
 				var serializer = JsonSerializer.Create(settings: serializerSettings);
@@ -62,7 +62,7 @@ namespace Microsoft.Extensions.Configuration {
 			//
 			T result;
 			using (var reader = ToJsonReader(config: config, serviceProvider: serviceProvider)) {
-				var serializerSettings = JsonSerializationUtilities.CreateDefaultSerializerSettings();
+				var serializerSettings = EonJsonUtilities.CreateDefaultSerializerSettings();
 				serializerSettings.TypeNameHandling = TypeNameHandling.All;
 				serializerSettings.PreserveReferencesHandling = PreserveReferencesHandling.All;
 				if (!(configSettings is null)) {

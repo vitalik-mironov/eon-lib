@@ -1,7 +1,7 @@
 ﻿
 namespace Eon {
 
-	public interface IOxyCloneable {
+	public interface IEonCloneable {
 
 		object Clone();
 

@@ -3,7 +3,7 @@
 namespace Eon.Runtime.Options {
 
 	/// <summary>
-	/// Defines Oxy runtime option of <see cref="DescriptionTreeFactory"/>.
+	/// Defines EON runtime option of <see cref="DescriptionTreeFactory"/>.
 	/// </summary>
 	public sealed class DescriptionTreeFactoryOption
 		:RuntimeOptionBase {

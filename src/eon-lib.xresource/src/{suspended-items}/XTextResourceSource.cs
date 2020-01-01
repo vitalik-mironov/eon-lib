@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Globalization;
 
-using DigitalFlare.ComponentModel;
-using DigitalFlare.Globalization;
+using Eon.ComponentModel;
+using Eon.Globalization;
 
-namespace DigitalFlare.Resources.XResource {
+namespace Eon.Resources.XResource {
 
 	public class XTextResourceSource
 		:DisposableNotifyPropertyChangedBase, ILocalizable<string> {

@@ -1,5 +1,5 @@
 {
-	"$type": "DigitalFlare.Prochost.Internal.XClassB, oxy-prochost",
+	"$type": "Eon.Prochost.Internal.XClassB, oxy-prochost",
 	"Prop1": 10,
 	"Prop2": null,
 	"Prop4": "Cgo=",

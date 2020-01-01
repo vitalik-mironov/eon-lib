@@ -1,6 +1,6 @@
 ﻿#region Compilation conditional symbols
 
-#define DO_NOT_USE_OXY_LOGGING_API
+#define DO_NOT_USE_EON_LOGGING_API
 
 #endregion
 
@@ -58,7 +58,7 @@ namespace Eon {
 				else if (HasDeactivationRequested || !subscription.IsActive || !ReferenceEquals(subscription, TryReadDA(ref _appStartedSubscription)))
 					return TaskUtilities.FromCanceled();
 				else {
-#if !DO_NOT_USE_OXY_LOGGING_API
+#if !DO_NOT_USE_EON_LOGGING_API
 					var logMessagePrologue = $"Отложенная активация. ИД корреляции: {context.FullCorrelationId}.";
 					this
 						.IssueInformation(
@@ -66,7 +66,7 @@ namespace Eon {
 							message: "Получено уведомление о запуске приложения. Начало активации.",
 							severityLevel: SeverityLevel.Lowest);
 #endif
-#if DO_NOT_USE_OXY_LOGGING_API
+#if DO_NOT_USE_EON_LOGGING_API
 					TaskUtilities.RunOnDefaultScheduler(factory: () => ActivateAsync(ctx: null));
 #else
 					var doActivationTask = TaskUtilities.RunOnDefaultScheduler(factory: () => ActivateAsync(ctx: null));

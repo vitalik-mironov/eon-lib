@@ -129,7 +129,7 @@ namespace Eon.Diagnostics {
 						NumberingMarker = string.Empty,
 						Info = traversal.First.Value.Info
 					};
-			using (var resultBuffer = StringBuilderUtilities.AcquireBuffer()) {
+			using (var resultBuffer = EonStringBuilderUtilities.AcquireBuffer()) {
 				var singleInfoPartTextBuilder = new StringBuilder();
 				var singleInfoTextBuilder = new StringBuilder();
 				var currentTraverseNode = traversal.First;

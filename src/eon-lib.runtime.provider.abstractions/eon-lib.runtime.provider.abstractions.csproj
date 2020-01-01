@@ -5,7 +5,7 @@
     <AssemblyName>$(MSBuildProjectName)</AssemblyName>
 	<AssemblyTitle>$(AssemblyName)</AssemblyTitle>
 	<Title>EonLib.Runtime.Provider.Abstractions</Title>
-	<Description>EonLib. Oxy runtime provider base components and abstractions.</Description>
+	<Description>EonLib. EON runtime provider base components and abstractions.</Description>
   </PropertyGroup>
 
 	<Import Project="..\common-build.props" />

@@ -9,7 +9,7 @@ namespace Eon.ComponentModel {
 	/// Представляет управляющий элемент запуска/перезапуска/остановки компонента.
 	/// </summary>
 	public interface IRunControl
-		:IOxyDisposable {
+		:IEonDisposable {
 
 		/// <summary>
 		/// Опции работы элемента.

@@ -6,10 +6,10 @@ using Eon.Runtime.Serialization.Description;
 namespace Eon.Runtime.Description {
 
 	/// <summary>
-	/// Description (configuration) of the Oxy runtime app.
+	/// Description (configuration) of the EON runtime app.
 	/// </summary>
 	public interface IRuntimeXAppDescription
-		:IXAppDescription, IOxyRuntimeConfiguration {
+		:IXAppDescription, IEonRuntimeConfiguration {
 
 		/// <summary>
 		/// Возвращает описание соответствий пространств имён контрактов данных сборкам, в которых объявлены соответствующие типы контрактов данных (см. <seealso cref="IDataContractNamespaceAssemblyMapDescription"/>.

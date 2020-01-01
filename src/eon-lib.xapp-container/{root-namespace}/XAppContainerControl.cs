@@ -127,7 +127,7 @@ namespace Eon {
 			try {
 				var progress = state.Context.Progress();
 				var isAppStartForbidden = config.IsAppStartForbidden;
-				// Setup Oxy XApp runtime service.
+				// Setup EON XApp runtime service.
 				//
 				observeRunControlStopRequest();
 				await progress.ReportAsync("Setup app runtime service…").ConfigureAwait(false);
@@ -148,7 +148,7 @@ namespace Eon {
 					throw new EonException(message: $"No app startup context created.{Environment.NewLine}\tConfiguration:{config.FmtStr().GNLI2()}{Environment.NewLine}\tComponent:{this.FmtStr().GNLI2()}");
 				else if (!ReferenceEquals(objA: appStartupContext.ContainerControl, objB: this))
 					throw new EonException(message: $"Created app startup context not linked with this component (see property '{nameof(IXAppStartupContext)}.{nameof(IXAppStartupContext.ContainerControl)}').{Environment.NewLine}\tComponent:{this.FmtStr().GNLI2()}");
-				// Setup Oxy runtime XApp.
+				// Setup EON runtime XApp.
 				//
 				observeRunControlStopRequest();
 				await progress.ReportAsync("Setup runtime app…").ConfigureAwait(false);

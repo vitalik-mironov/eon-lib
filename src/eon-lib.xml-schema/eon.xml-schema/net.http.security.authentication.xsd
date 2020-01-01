@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+					 targetNamespace="urn:eon-2020:net:http:security:authentication"
+					 attributeFormDefault="unqualified"
+					 elementFormDefault="qualified"
+					 version="1.0"
+					 xmlns:me="urn:eon-2020:net:http:security:authentication"
+					 xmlns:ox="urn:eon-2020:core"
+					 xmlns:ox.http="urn:eon-2020:net:http"
+					 xmlns:ox-security="urn:eon-2020:security">
+
+	<xs:import namespace="urn:eon-2020:core"/>
+	<xs:import namespace="urn:eon-2020:security"/>
+	<xs:import namespace="urn:eon-2020:net:http"/>
+
+	<xs:complexType name="AuthenticationContextProvisionHandlerDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox.http:HandlerDescriptionBase">
+				<xs:sequence>
+					<xs:element name="BasicSchemeAuthenticator" type="ox:MetadataRef" nillable="true"/>
+					<xs:element name="BearerSchemeAuthenticator" type="ox:MetadataRef" nillable="true"/>
+					<xs:element name="BypassAuthentication" type="xs:boolean" />
+					<xs:element name="PreventAnonymous" type="xs:boolean" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+</xs:schema>

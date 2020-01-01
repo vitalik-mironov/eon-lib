@@ -27,13 +27,15 @@ namespace Eon {
 				return true;
 			else if (array1 is null || array2 is null || array1.Length != array2.Length)
 				return false;
-			var arrayLength = array1.Length;
-			var array1LowerBound = array1.GetLowerBound(0);
-			var array2LowerBound = array2.GetLowerBound(0);
-			var result = true;
-			for (var offset = 0; result && offset < arrayLength; offset++)
-				result = array1[ offset + array1LowerBound ] == array2[ offset + array2LowerBound ];
-			return result;
+			else {
+				var arrayLength = array1.Length;
+				var array1LowerBound = array1.GetLowerBound(0);
+				var array2LowerBound = array2.GetLowerBound(0);
+				var result = true;
+				for (var offset = 0; result && offset < arrayLength; offset++)
+					result = array1[ offset + array1LowerBound ] == array2[ offset + array2LowerBound ];
+				return result;
+			}
 		}
 
 		[MethodImpl(methodImplOptions: MethodImplOptions.AggressiveInlining)]

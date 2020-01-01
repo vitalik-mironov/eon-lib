@@ -5,7 +5,7 @@ using Eon.Threading.Tasks;
 namespace Eon.Pooling {
 
 	public interface IPool<out T>
-		:IOxyDisposable
+		:IEonDisposable
 		where T : class {
 
 		ITaskWrap<IUsing<T>> TakeAsync(IContext ctx = default);

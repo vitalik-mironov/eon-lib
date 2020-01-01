@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+						targetNamespace="urn:eon-2020:net:http:server:filters"
+						attributeFormDefault="unqualified"
+						elementFormDefault="qualified"
+						version="1.0"
+						xmlns:me="urn:eon-2020:net:http:server:filters"
+						xmlns:ox="urn:eon-2020:core"
+						xmlns:ox.http="urn:eon-2020:net:http"
+						xmlns:ox.dependency="urn:eon-2020:component-model:dependencies">
+
+	<xs:import namespace="urn:eon-2020:core"/>
+	<xs:import namespace="urn:eon-2020:net:http"/>
+	<xs:import namespace="urn:eon-2020:component-model:dependencies"/>
+
+	<!-- •••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• -->
+	<!-- ••••••••••••••••••••••••••••••• COMPLEX TYPES •••••••••••••••••••••••••••••••••••• -->
+	<!-- •••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• -->
+
+	<xs:complexType name="HttpFilterDescriptionBase" mixed="false" abstract="true">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox.dependency:DependencySupportDescriptionBase">
+				<xs:sequence>
+					<xs:element name="IsDisabled" type="xs:boolean" nillable="false" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+</xs:schema>

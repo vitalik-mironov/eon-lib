@@ -7,13 +7,13 @@ namespace Eon {
 
 	[DataContract]
 	public abstract class Cloneable
-		:IOxyCloneable {
+		:IEonCloneable {
 
 		protected Cloneable() { }
 
 		protected Cloneable(SerializationContext ctx) { }
 
-		object IOxyCloneable.Clone()
+		object IEonCloneable.Clone()
 			=> Clone();
 
 		public Cloneable Clone()
@@ -31,7 +31,7 @@ namespace Eon {
 
 		protected abstract void PopulateClone(ICloneContext cloneCtx, Cloneable clone);
 
-		object IOxyCloneable.Clone(ICloneContext cloneCtx)
+		object IEonCloneable.Clone(ICloneContext cloneCtx)
 			=> Clone(cloneCtx: cloneCtx);
 
 	}

@@ -1,6 +1,6 @@
 ﻿#region Compilation conditional symbols
 
-#define DO_NOT_USE_OXY_LOGGING_API
+#define DO_NOT_USE_EON_LOGGING_API
 
 #endregion
 
@@ -30,7 +30,7 @@ using vlt = Eon.Threading.VolatileUtilities;
 namespace Eon {
 
 	using IActivationList = IActivationList<IActivationListDescription>;
-#if !DO_NOT_USE_OXY_LOGGING_API
+#if !DO_NOT_USE_EON_LOGGING_API
 	using ILoggingAutoSubscriptionXInstance = ILoggingAutoSubscription<ILoggingAutoSubscriptionDescription>;
 #endif
 	using IXAppInitializationList = IXAppInitializationList<IXAppInitializationListDescription>;
@@ -85,7 +85,7 @@ namespace Eon {
 
 		IXAppLocalPublisher _appMessageFlowPublisher;
 
-#if !DO_NOT_USE_OXY_LOGGING_API
+#if !DO_NOT_USE_EON_LOGGING_API
 		ILoggingAutoSubscriptionXInstance _loggingAutoSubscription;
 #endif
 
@@ -260,7 +260,7 @@ namespace Eon {
 				}
 				// Автоподписка логирования.
 				//
-#if !DO_NOT_USE_OXY_LOGGING_API
+#if !DO_NOT_USE_EON_LOGGING_API
 				var loggingAutoSubscriptionDescription = Description.LoggingAutoSubscription;
 				if (loggingAutoSubscriptionDescription?.IsDisabled == false) {
 					var loggingAutoSubscription = default(ILoggingAutoSubscriptionXInstance);
@@ -329,20 +329,20 @@ namespace Eon {
 		// TODO: Put strings into the resources.
 		//
 		async Task P_DoStartAsync(IRunControlAttemptState state) {
-#if !DO_NOT_USE_OXY_LOGGING_API
+#if !DO_NOT_USE_EON_LOGGING_API
 			const string logMessagePrologue = "Запуск приложения.";
 #endif
 			state.EnsureNotNull(nameof(state));
 			//
 			var appMessageFlow = AppMessageFlow;
-#if !DO_NOT_USE_OXY_LOGGING_API
+#if !DO_NOT_USE_EON_LOGGING_API
 			this.IssueInformation(messagePrologue: logMessagePrologue, message: "Начало запуска приложения.", severityLevel: SeverityLevel.Medium);
 #endif
 			try {
 				await DoStartAsync(state: state).ConfigureAwait(false);
 			}
 			catch {
-#if !DO_NOT_USE_OXY_LOGGING_API
+#if !DO_NOT_USE_EON_LOGGING_API
 				if (exception is OperationCanceledException)
 					this.IssueWarning(messagePrologue: logMessagePrologue, message: "Запуск приложения прерван или отменен.", severityLevel: SeverityLevel.Medium);
 				else
@@ -357,7 +357,7 @@ namespace Eon {
 				throw;
 			}
 			if (HasAppShutdownRequested)
-#if DO_NOT_USE_OXY_LOGGING_API
+#if DO_NOT_USE_EON_LOGGING_API
 				return;
 #else
 				this.IssueInformation(messagePrologue: logMessagePrologue, message: "Запуск приложения завершён.", severityLevel: SeverityLevel.Medium);
@@ -376,7 +376,7 @@ namespace Eon {
 					//
 					throw new EonException(message: "Запуск приложения был успешно выполнен, но возник сбой публикации уведомления о запуске.", innerException: secondException is null ? exception : new AggregateException(exception, secondException));
 				}
-#if !DO_NOT_USE_OXY_LOGGING_API
+#if !DO_NOT_USE_EON_LOGGING_API
 				this.IssueInformation(messagePrologue: logMessagePrologue, message: "Запуск приложения успешно выполнен.", severityLevel: SeverityLevel.Medium);
 #endif
 			}
@@ -428,7 +428,7 @@ namespace Eon {
 			//
 			async Task doShutdownAsync(TaskCompletionSource<Nil> locOp) {
 				try {
-#if !DO_NOT_USE_OXY_LOGGING_API
+#if !DO_NOT_USE_EON_LOGGING_API
 					this.IssueInformation(
 						messagePrologue: "Выключение приложения.",
 						message: "Получен управляющий элемент остановки и выгрузки приложения.",
@@ -441,7 +441,7 @@ namespace Eon {
 					await BeforeShutdownAsync().ConfigureAwait(false);
 					//
 					await ReadDA(ref _runControl).StopAsync(finiteStop: true).ConfigureAwait(false);
-#if !DO_NOT_USE_OXY_LOGGING_API
+#if !DO_NOT_USE_EON_LOGGING_API
 					this
 						.IssueInformation(
 							messagePrologue: "Выключение приложения.",
@@ -452,7 +452,7 @@ namespace Eon {
 					var locUnhandledExceptionObserver = ReadDA(location: ref _unhandledExceptionObserver);
 					var locShutdownFinishedEventHandler = ReadDA(location: ref _eventHandler_AppShutdownFinished);
 					Dispose();
-#if !DO_NOT_USE_OXY_LOGGING_API
+#if !DO_NOT_USE_EON_LOGGING_API
 					this
 						.IssueInformation(
 							messagePrologue: "Выключение приложения.",
@@ -464,7 +464,7 @@ namespace Eon {
 					itrlck.SetNullBool(location: ref _appShutdownOp, comparand: locOp);
 					//
 					fireShutdownFinishedAsynchronously(locEventHandler: locShutdownFinishedEventHandler, locExceptionObserver: locUnhandledExceptionObserver);
-#if !DO_NOT_USE_OXY_LOGGING_API
+#if !DO_NOT_USE_EON_LOGGING_API
 					this
 						.IssueInformation(
 							messagePrologue: "Выключение приложения.",
@@ -473,7 +473,7 @@ namespace Eon {
 #endif
 				}
 				catch {
-#if !DO_NOT_USE_OXY_LOGGING_API
+#if !DO_NOT_USE_EON_LOGGING_API
 					this
 						.IssueError(
 							messagePrologue: "Выключение приложения.",
@@ -557,7 +557,7 @@ namespace Eon {
 				_runControl?.Dispose();
 				_appStartActivationList?.Dispose();
 				_appInitializationList?.Dispose();
-#if !DO_NOT_USE_OXY_LOGGING_API
+#if !DO_NOT_USE_EON_LOGGING_API
 				_loggingAutoSubscription?.Dispose();
 #endif
 				_appMessageFlowPublisher?.Dispose();
@@ -570,7 +570,7 @@ namespace Eon {
 			_appStartActivationList = null;
 			_containerControl = null;
 			_eventHandler_AppShutdownFinished = null;
-#if !DO_NOT_USE_OXY_LOGGING_API
+#if !DO_NOT_USE_EON_LOGGING_API
 			_loggingAutoSubscription = null;
 #endif
 			_runControl = null;

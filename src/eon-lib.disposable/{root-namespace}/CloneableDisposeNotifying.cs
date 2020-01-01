@@ -11,7 +11,7 @@ namespace Eon {
 
 	[DataContract]
 	public abstract class CloneableDisposeNotifying
-		:DisposeNotifying, IOxyCloneableOrigin {
+		:DisposeNotifying, IEonCloneableOrigin {
 
 		CloneableDisposeNotifying _cloneOrigin;
 
@@ -21,10 +21,10 @@ namespace Eon {
 		protected CloneableDisposeNotifying(SerializationContext context)
 			: base(context) { }
 
-		object IOxyCloneable.Clone()
+		object IEonCloneable.Clone()
 			=> Clone(cloneContext: null);
 
-		object IOxyCloneable.Clone(ICloneContext cloneContext)
+		object IEonCloneable.Clone(ICloneContext cloneContext)
 			=> Clone(cloneContext: cloneContext);
 
 		public CloneableDisposeNotifying Clone(ICloneContext cloneContext) {
@@ -66,7 +66,7 @@ namespace Eon {
 			}
 		}
 
-		object IOxyCloneableOrigin.CloneOrigin
+		object IEonCloneableOrigin.CloneOrigin
 			=> CloneOrigin;
 
 		protected override void Dispose(bool explicitDispose) {

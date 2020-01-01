@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+					 targetNamespace="urn:eon-2020:configuration:install"
+					 attributeFormDefault="unqualified"
+					 elementFormDefault="qualified"
+					 version="1.0"
+					 xmlns:me="urn:eon-2020:configuration:install"
+					 xmlns:ox="urn:eon-2020:core">
+
+	<xs:import namespace="urn:eon-2020:core"/>
+
+	<xs:complexType name="InstallationTargetSettingBase" mixed="false" abstract="true">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox:DisposableSlim">
+				<xs:sequence>
+					<xs:element name="Name" type="ox:ST_MetadataName" nillable="false" />
+					<xs:element name="DisplayName" type="ox:ST_NonEmptyString" nillable="false"  />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="InstallationTargetSetting" type="me:InstallationTargetSettingBase" nillable="true" />
+
+	<xs:complexType name="InstallationTargetSettingCollection" mixed="false" final="#all">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox:Collection2">
+				<xs:sequence>
+					<xs:element ref="me:InstallationTargetSetting" minOccurs="0" maxOccurs="unbounded" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="InstallationTargetStringSetting" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:InstallationTargetSettingBase">
+				<xs:sequence>
+					<xs:element name="Value" type="ox:ST_String" nillable="true" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="InstallationTargetUriSetting" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:InstallationTargetSettingBase">
+				<xs:sequence>
+					<xs:element name="Value" type="xs:anyURI" nillable="true" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="InstallationTargetConfiguration" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox:DisposableSlim">
+				<xs:sequence>
+					<xs:element name="Name" type="ox:ST_MetadataName" nillable="false" />
+					<xs:element name="DisplayName" type="ox:ST_NonEmptyString" nillable="false"  />
+					<xs:element name="Settings" type="me:InstallationTargetSettingCollection" nillable="true" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="InstallationTargetConfiguration" type="me:InstallationTargetConfiguration" nillable="true">
+		<xs:unique name="IX_SettingName">
+			<xs:selector xpath="me:Settings/me:InstallationTargetSetting"/>
+			<xs:field xpath="child::me:Name"/>
+		</xs:unique>
+	</xs:element>
+
+	<xs:complexType name="InstallationTargetConfigurationCollection" mixed="false" final="#all">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox:Collection2">
+				<xs:sequence>
+					<xs:element ref="me:InstallationTargetConfiguration" minOccurs="0" maxOccurs="unbounded" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="InstallationTargetsConfigurationsSet" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox:DisposableSlim">
+				<xs:sequence>
+					<xs:element name="Configurations" type="me:InstallationTargetConfigurationCollection" nillable="true" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="InstallationTargetsConfigurationsSet" type="me:InstallationTargetsConfigurationsSet" nillable="true">
+		<xs:unique name="IX_ConfigurationName">
+			<xs:selector xpath="me:Configurations/me:InstallationTargetConfiguration"/>
+			<xs:field xpath="child::me:Name"/>
+		</xs:unique>
+	</xs:element>
+
+</xs:schema>

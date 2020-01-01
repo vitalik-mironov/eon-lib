@@ -18,11 +18,11 @@ namespace Eon {
 		#endregion
 
 		public static T CloneAs<T>(this T cloneOrigin)
-			where T : IOxyCloneable
+			where T : IEonCloneable
 			=> (T)cloneOrigin?.Clone();
 
 		public static T CloneAs<T>(this T cloneOrigin, bool setCloneOrigin)
-			where T : IOxyCloneableOrigin {
+			where T : IEonCloneableOrigin {
 			if (cloneOrigin == null)
 				return default;
 			else
@@ -33,7 +33,7 @@ namespace Eon {
 		// TODO: Put strings into the resources.
 		//
 		public static T[ ] CloneAs<T>(this T[ ] array, CloneMode itemsCloneMode = CloneMode.Original)
-			where T : IOxyCloneable {
+			where T : IEonCloneable {
 			if (itemsCloneMode == CloneMode.Root) {
 				if (array is null)
 					return null;

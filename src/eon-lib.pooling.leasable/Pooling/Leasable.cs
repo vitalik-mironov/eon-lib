@@ -199,7 +199,7 @@ namespace Eon.Pooling {
 		/// <para>Обращение к свойству не подвержено влиянию состояния выгрузки.</para>
 		/// <para>Значения:</para>
 		/// <para>• [<see cref="long.MinValue"/>; <see langword="-1"/>]. Значение в этом диапазоне означает наличие как минимум одного захвата использования компонента (см. <see cref="UseIf(long, out Using{long})"/>).</para>
-		/// <para>• <see langword="0"/> — устаналивается при поступлении запроса выгрузки (см. <see cref="IOxyDisposable.IsDisposeRequested"/>).</para>
+		/// <para>• <see langword="0"/> — устаналивается при поступлении запроса выгрузки (см. <see cref="IEonDisposable.IsDisposeRequested"/>).</para>
 		/// <para>• [<see langword="1"/>; <see cref="long.MaxValue"/>]. Значение в этом диапазоне указывает момент времени, после наступления которого должен быть вызван обработчик сборки <see cref="TryCollect"/>. Чем больше значение в этом диапазоне, тем на более ранний момент оно указывает.</para>
 		/// </summary>
 		public long CollectionTimepoint

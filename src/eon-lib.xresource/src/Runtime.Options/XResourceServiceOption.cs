@@ -3,7 +3,7 @@
 namespace Eon.Runtime.Options {
 
 	/// <summary>
-	/// Defines Oxy runtime option of <see cref="IXResourceService"/> (see <see cref="XResourceUtilities.Service"/>).
+	/// Defines EON runtime option of <see cref="IXResourceService"/> (see <see cref="XResourceUtilities.Service"/>).
 	/// </summary>
 	public sealed class XResourceServiceOption
 		:RuntimeOptionBase {

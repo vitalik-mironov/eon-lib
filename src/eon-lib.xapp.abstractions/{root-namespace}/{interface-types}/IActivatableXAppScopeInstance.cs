@@ -23,7 +23,7 @@ namespace Eon {
 		/// <para>• Инициализирован (см. <see cref="IXInstance.State"/>).</para>
 		/// <para>• Активирован (см. <see cref="ActivateControl"/>, <see cref="IRunControl.IsStarted"/>).</para>
 		/// <para>• Отсутствие запроса деактивации (см. <see cref="ActivateControl"/>, <see cref="IRunControl.HasStopRequested"/>).</para>
-		/// <para>• Отсутствие запроса выгрузки (см. <see cref="IOxyDisposable.IsDisposeRequested"/>).</para>
+		/// <para>• Отсутствие запроса выгрузки (см. <see cref="IEonDisposable.IsDisposeRequested"/>).</para>
 		/// </summary>
 		bool IsActive { get; }
 

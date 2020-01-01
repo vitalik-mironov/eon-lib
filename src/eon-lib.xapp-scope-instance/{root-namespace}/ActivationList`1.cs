@@ -1,6 +1,6 @@
 ﻿#region Compilation conditional symbols
 
-#define DO_NOT_USE_OXY_LOGGING_API
+#define DO_NOT_USE_EON_LOGGING_API
 
 #endregion
 
@@ -47,7 +47,7 @@ namespace Eon {
 			List<IActivatableXAppScopeInstance> activatableItems = default;
 			try {
 				if (Description.OmitItemsActivation) {
-#if !DO_NOT_USE_OXY_LOGGING_API
+#if !DO_NOT_USE_EON_LOGGING_API
 					this
 						.IssueWarning(
 							message: $"Описанием (конфигурацией) данного списка указано не производить активацию входящих в этот список компонентов (см. '{nameof(Description)}.{nameof(Description.OmitItemsActivation)}')",
@@ -81,7 +81,7 @@ namespace Eon {
 		// TODO: Put strings into the resources.
 		//
 		protected override Task DoActivateAsync(IRunControlAttemptState state) {
-#if !DO_NOT_USE_OXY_LOGGING_API
+#if !DO_NOT_USE_EON_LOGGING_API
 			const string logMessagePrologue = "Активация.";
 #endif
 			//
@@ -110,7 +110,7 @@ namespace Eon {
 						// Активация компонента.
 						//
 						try {
-#if !DO_NOT_USE_OXY_LOGGING_API
+#if !DO_NOT_USE_EON_LOGGING_API
 							this
 								.IssueInformation(
 									messagePrologue: logMessagePrologue,
@@ -118,7 +118,7 @@ namespace Eon {
 									severityLevel: SeverityLevel.Lowest);
 #endif
 							if (!locActivatable.IsAutoActivationEnabled) {
-#if !DO_NOT_USE_OXY_LOGGING_API
+#if !DO_NOT_USE_EON_LOGGING_API
 								this
 									.IssueWarning(
 										messagePrologue: logMessagePrologue,
@@ -130,7 +130,7 @@ namespace Eon {
 							locActivatable
 								.ActivateControl
 								.StartAsync(options: TaskCreationOptions.AttachedToParent)
-#if !DO_NOT_USE_OXY_LOGGING_API
+#if !DO_NOT_USE_EON_LOGGING_API
 								.ContinueWith(
 									continuationAction:
 										locItemActivationTask => {
@@ -162,7 +162,7 @@ namespace Eon {
 							locActivatedItems.Add(locActivatable);
 						}
 						catch {
-#if !DO_NOT_USE_OXY_LOGGING_API
+#if !DO_NOT_USE_EON_LOGGING_API
 							this
 								.IssueError(
 									messagePrologue: logMessagePrologue,
@@ -193,7 +193,7 @@ namespace Eon {
 		// TODO: Put strings into the resources.
 		//
 		protected override Task DoDeactivateAsync() {
-#if !DO_NOT_USE_OXY_LOGGING_API
+#if !DO_NOT_USE_EON_LOGGING_API
 			const string logMessagePrologue = "Деактивация.";
 #endif
 			//
@@ -202,7 +202,7 @@ namespace Eon {
 			void doDeactivate() {
 				foreach (var activatedItem in EnumerateDA(location: ref _activatedItems)) {
 					try {
-#if !DO_NOT_USE_OXY_LOGGING_API
+#if !DO_NOT_USE_EON_LOGGING_API
 						this
 							.IssueInformation(
 								messagePrologue: logMessagePrologue,
@@ -212,7 +212,7 @@ namespace Eon {
 						activatedItem
 							.ActivateControl
 							.StopAsync(options: TaskCreationOptions.AttachedToParent)
-#if !DO_NOT_USE_OXY_LOGGING_API
+#if !DO_NOT_USE_EON_LOGGING_API
 							.ContinueWith(
 								continuationAction:
 									locDeactivationTask => {
@@ -242,7 +242,7 @@ namespace Eon {
 							;
 					}
 					catch {
-#if !DO_NOT_USE_OXY_LOGGING_API
+#if !DO_NOT_USE_EON_LOGGING_API
 						this
 							.IssueError(
 								messagePrologue: logMessagePrologue,

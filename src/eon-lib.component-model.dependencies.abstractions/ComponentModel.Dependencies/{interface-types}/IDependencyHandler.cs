@@ -5,7 +5,7 @@ namespace Eon.ComponentModel.Dependencies {
 	/// <summary>
 	/// Обработчик запроса функциональной зависимости.
 	/// </summary>
-	[Obsolete(error: false, message: "Use 'DigitalFlare.ComponentModel.Dependencies.IDependencyHandler2' instead.")]
+	[Obsolete(error: false, message: "Use 'Eon.ComponentModel.Dependencies.IDependencyHandler2' instead.")]
 	public interface IDependencyHandler
 		:IDisposable {
 

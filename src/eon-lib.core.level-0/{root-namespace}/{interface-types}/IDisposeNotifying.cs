@@ -3,10 +3,10 @@
 namespace Eon {
 
 	/// <summary>
-	/// Определяет расширеную версию программного интерфейса <seealso cref="IOxyDisposable"/>, поддерживающую события выгрузки объекта.
+	/// Определяет расширеную версию программного интерфейса <seealso cref="IEonDisposable"/>, поддерживающую события выгрузки объекта.
 	/// </summary>
 	public interface IDisposeNotifying
-		:IOxyDisposable {
+		:IEonDisposable {
 
 		/// <summary>
 		/// Событие, вызываемое перед выполнением явной выгрузки.

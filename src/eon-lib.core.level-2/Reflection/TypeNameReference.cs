@@ -79,14 +79,14 @@ namespace Eon.Reflection {
 		public const int NameMaxLength = PartMaxLength * 2 + 2;
 
 		/// <summary>
-		/// Значение: <see cref="TypeUtilities.TypeAssemblyQualifiedNamePartDelimiter"/>.
+		/// Значение: <see cref="EonTypeUtilities.TypeAssemblyQualifiedNamePartDelimiter"/>.
 		/// </summary>
-		public const char PartDelimiter = TypeUtilities.TypeAssemblyQualifiedNamePartDelimiter;
+		public const char PartDelimiter = EonTypeUtilities.TypeAssemblyQualifiedNamePartDelimiter;
 
 		/// <summary>
-		/// Значение: <seealso cref="TypeUtilities.TypeAssemblyQualifiedNamePartDelimiterString"/>.
+		/// Значение: <seealso cref="EonTypeUtilities.TypeAssemblyQualifiedNamePartDelimiterString"/>.
 		/// </summary>
-		public const string PartDelimiterString = TypeUtilities.TypeAssemblyQualifiedNamePartDelimiterString;
+		public const string PartDelimiterString = EonTypeUtilities.TypeAssemblyQualifiedNamePartDelimiterString;
 
 		public static readonly Regex SerializationStringRegex = new Regex(pattern: SerializationStringRegexPattern, options: RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
 
@@ -285,7 +285,7 @@ namespace Eon.Reflection {
 										ILocalizable<string> locResolvedTypeSingularText;
 										try {
 											if (_constructedFromTarget is null) {
-												locType = TypeUtilitiesCoreL2.GetType(typeName: Name, throwOnError: true);
+												locType = EonTypeUtilitiesCoreL2.GetType(typeName: Name, throwOnError: true);
 												InspectTarget(locType);
 											}
 											else

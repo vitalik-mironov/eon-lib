@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+					 targetNamespace="urn:eon-2020:security"
+					 attributeFormDefault="unqualified"
+					 elementFormDefault="qualified"
+					 version="1.0"
+					 xmlns:me="urn:eon-2020:security"
+					 xmlns:ox="urn:eon-2020:core"
+					 xmlns:ox.dependencies="urn:eon-2020:component-model:dependencies"
+					 xmlns:ox-security-tokens="urn:eon-2020:security:tokens"
+					 xmlns:ox-security-crypto="urn:eon-2020:security:cryptography">
+
+	<xs:import namespace="urn:eon-2020:core"/>
+	<xs:import namespace="urn:eon-2020:component-model:dependencies"/>
+	<xs:import namespace="urn:eon-2020:security:tokens"/>
+	<xs:import namespace="urn:eon-2020:security:cryptography"/>
+
+	<xs:complexType name="CertificateStoreLocation" final="#all" mixed="false">
+		<xs:simpleContent>
+			<xs:restriction base="ox:String">
+				<xs:enumeration value="LocalMachine"/>
+				<xs:enumeration value="CurrentUser"/>
+			</xs:restriction>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:complexType name="CertificateStoreName" final="#all" mixed="false">
+		<xs:simpleContent>
+			<xs:restriction base="ox:String">
+				<xs:enumeration value="Root"/>
+				<xs:enumeration value="My"/>
+				<xs:enumeration value="TrustedPeople"/>
+				<xs:enumeration value="CertificateAuthority"/>
+				<xs:enumeration value="TrustedPublisher"/>
+			</xs:restriction>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:simpleType name="ST_X509CertificateSearchBy" final="#all">
+		<xs:list>
+			<xs:simpleType>
+				<xs:restriction base="ox:ST_String">
+					<xs:enumeration value="Identity"/>
+					<xs:enumeration value="Issuer"/>
+					<xs:enumeration value="Subject"/>
+					<xs:enumeration value="Thumbprint"/>
+					<xs:enumeration value="EnhancedKeyUsages"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+
+	<xs:complexType name="X509CertificateSearchOptions" mixed="false" final="#all">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox:Object">
+				<xs:sequence>
+					<xs:element name="SearchBy" type="me:ST_X509CertificateSearchBy" minOccurs="0" maxOccurs="1" nillable="false" />
+					<xs:element name="SkipValidityCheck" type="xs:boolean" minOccurs="0" maxOccurs="1" nillable="false" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="X509CertificateIdentity" mixed="false">
+		<xs:annotation>
+			<xs:documentation>Тип, представляющий идентичность сертификата. Используется для идентификации сертификата.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox:Object">
+				<xs:sequence>
+					<xs:element name="Issuer" type="ox:String" minOccurs="0" maxOccurs="1" nillable="true">
+						<xs:annotation>
+							<xs:documentation>Точное имя издателя (IssuerDistinguishedName) сертификата.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Subject" type="ox:String" minOccurs="0" maxOccurs="1" nillable="true">
+						<xs:annotation>
+							<xs:documentation>Точное имя субъекта (SubjectDistinguishedName) сертификата.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Thumbprint" type="ox:CertificateThumbprint" minOccurs="0" maxOccurs="1" nillable="true">
+						<xs:annotation>
+							<xs:documentation>Отпечаток сертификата.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="EnhancedKeyUsages" type="ox:OidCollectionString" minOccurs="0" maxOccurs="1" nillable="true">
+						<xs:annotation>
+							<xs:documentation>Строка идентификаторов (OIDs) улучшенного использования ключа сертификата. Указывается в формате OID1,OID2,...,OIDn.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="X509CertificateIdentity" type="me:X509CertificateIdentity" nillable="true"/>
+
+	<xs:complexType name="X509CertificateStrongIdentity" mixed="false" abstract="true">
+		<xs:annotation>
+			<xs:documentation>Тип, представляющий идентичность сертификата. Используется для идентификации сертификата, включая его точное расположение в хранилище сертификатов.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent mixed="false">
+			<xs:restriction base="me:X509CertificateIdentity">
+				<xs:sequence>
+					<xs:element name="Issuer" type="ox:String"  nillable="false">
+						<xs:annotation>
+							<xs:documentation>Точное имя издателя (IssuerDistinguishedName) сертификата.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Subject" type="ox:String"  nillable="false">
+						<xs:annotation>
+							<xs:documentation>Точное имя субъекта (SubjectDistinguishedName) сертификата.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Thumbprint" type="ox:CertificateThumbprint"  nillable="false">
+						<xs:annotation>
+							<xs:documentation>Отпечаток сертификата.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="EnhancedKeyUsages" type="ox:OidCollectionString" minOccurs="0" maxOccurs="1" nillable="true">
+						<xs:annotation>
+							<xs:documentation>Строка идентификаторов (OIDs) улучшенного использования ключа сертификата. Указывается в формате OID1,OID2,...,OIDn.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="X509CertificateStrongLocationIdentity" mixed="false" final="#all">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:X509CertificateStrongIdentity">
+				<xs:sequence>
+					<xs:element name="StoreLocation" type="me:CertificateStoreLocation"  nillable="false">
+						<xs:annotation>
+							<xs:documentation>Расположение хранилища сертификатов.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="StoreName" type="me:CertificateStoreName"  nillable="false">
+						<xs:annotation>
+							<xs:documentation>Имя хранилища сертификатов.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="X509CertificateStrongLocationIdentity" type="me:X509CertificateStrongLocationIdentity" nillable="true"/>
+
+	<xs:complexType name="X509CertificateLocatorBase" mixed="false" abstract="true">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox:Object" />
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="X509CertificateFileLocator" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:X509CertificateLocatorBase">
+				<xs:sequence>
+					<xs:element name="FilePath" type="ox:ST_NonEmptyString" nillable="true" />
+					<xs:element name="Password" type="ox:ST_String" nillable="true" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="X509CertificateLocator" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:X509CertificateLocatorBase">
+				<xs:sequence>
+					<xs:element name="Identity" type="me:X509CertificateIdentity" />
+					<xs:element name="SearchOptions" type="me:X509CertificateSearchOptions" />
+					<xs:element name="StoreLocation" type="me:CertificateStoreLocation"/>
+					<xs:element name="StoreName" type="me:CertificateStoreName"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="X509CertificateLocator" type="me:X509CertificateLocator" nillable="true"/>
+	<xs:complexType name="X509CertificateLocatorCollection" mixed="false" final="#all">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox:Collection2">
+				<xs:sequence>
+					<xs:element ref="me:X509CertificateLocator" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="X509CertificateLocatorCollection" type="me:X509CertificateLocatorCollection" nillable="true"/>
+
+</xs:schema>

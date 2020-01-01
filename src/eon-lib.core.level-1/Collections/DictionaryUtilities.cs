@@ -85,7 +85,7 @@ namespace Eon.Collections {
 		/// <para>Второй аргумент метода — значение, полученное от <paramref name="factory"/>.</para>
 		/// </param>
 		/// <returns>Значение <typeparamref name="TValue"/>, соответствующее указанному ключу <paramref name="key"/>.</returns>
-		public static TValue GetOrAdd<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, IOxyDisposable dictionaryOwner, PrimitiveSpinLock spinLock, TKey key, Func<TKey, TValue> factory, Action<TKey, TValue> unclaimedValue = default) {
+		public static TValue GetOrAdd<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, IEonDisposable dictionaryOwner, PrimitiveSpinLock spinLock, TKey key, Func<TKey, TValue> factory, Action<TKey, TValue> unclaimedValue = default) {
 			dictionary.EnsureNotNull(nameof(dictionary));
 			dictionaryOwner.EnsureNotNull(nameof(dictionaryOwner));
 			spinLock.EnsureNotNull(nameof(spinLock));
@@ -331,7 +331,7 @@ namespace Eon.Collections {
 			return result;
 		}
 
-		public static async Task<TValue> GetOrAddAsync<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, IOxyDisposable owner, PrimitiveSpinLock spinLock, TKey key, Func<TKey, Task<TValue>> factory, Func<TKey, TValue, Task> unclaimedValue = default) {
+		public static async Task<TValue> GetOrAddAsync<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, IEonDisposable owner, PrimitiveSpinLock spinLock, TKey key, Func<TKey, Task<TValue>> factory, Func<TKey, TValue, Task> unclaimedValue = default) {
 			dictionary.EnsureNotNull(nameof(dictionary));
 			owner.EnsureNotNull(nameof(owner));
 			spinLock.EnsureNotNull(nameof(spinLock));

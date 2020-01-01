@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 
+using Eon.Data;
 using Eon.Threading.Tasks;
 
 using Microsoft.Extensions.Configuration;
@@ -37,18 +38,23 @@ namespace Eon.Prochost.Internal {
 		}
 
 		static async Task P_CallbackAsync((RunCallbackState state, string[ ] commandLineArgs) args) {
-			args.state.ArgProp($"{nameof(args)}.{nameof(args.state)}").EnsureNotNull();
+			args.state.PropArg($"{nameof(args)}.{nameof(args.state)}").EnsureNotNull();
 			//
+			if (Debugger.IsAttached)
+				Debugger.Break();
 			// Run cases for debug.
 			//
 			await Task.CompletedTask;
 		}
 
 		static async Task P_CallbackAsync(string[ ] commandLineArgs = default) {
+			if (Debugger.IsAttached)
+				Debugger.Break();
 			await Task.CompletedTask;
 			// Run cases for debug.
 			//
 			try {
+				throw new EntityNotFoundException();
 				//var hostBuilder = new HostBuilder();
 				//hostBuilder.UseDefaults(commandLineArgs: commandLineArgs);
 				//var host = hostBuilder.Build();
@@ -57,6 +63,7 @@ namespace Eon.Prochost.Internal {
 				// ...
 			}
 			catch (Exception exception) {
+				var exceptionText = exception.ToStringFull();
 				if (Debugger.IsAttached)
 					Debugger.Break();
 			}

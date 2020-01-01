@@ -155,7 +155,7 @@ namespace Eon.Data.Persistence.EfCore {
 			}
 
 			public void Complete()
-				=> itrlck.Get(location: ref _state).CompleteCallback(this);
+				=> itrlck.Get(location: ref _state).CompleteCallback(obj: this);
 
 			public void Reset()
 				=> itrlck.SetNull(location: ref _state);
@@ -302,6 +302,8 @@ namespace Eon.Data.Persistence.EfCore {
 			remove => RemoveEventHandler(ref _eventHandler_AdjustEfDbContext, value);
 		}
 
+		// TODO: Put strings into the resources.
+		//
 		public ITransactionScopeProxy BeginTx(IsolationLevel level) {
 			var efCtx = ReadDA(location: ref _efCtxLazy, considerDisposeRequest: true).Value;
 			P_TxScope scope = default;
@@ -318,11 +320,13 @@ namespace Eon.Data.Persistence.EfCore {
 							throw new EonException($"Specified transaction isolation level '{level}' is incompatible with this transaction scope isolation level '{currentScope.IsolationLevel}'.{Environment.NewLine}\tTx scope:{currentScope.FmtStr().GNLI2()}");
 						else if (!currentScope.InitializationDone)
 							throw new EonException(message: $"This transaction scope has not initialized yet.{Environment.NewLine}\tTx scope:{currentScope.FmtStr().GNLI2()}");
-						else if (currentScope.CommitIntention)
-#error (wip).
-							throw new EonException(message: $"This transaction scope have the commit intention. The nested scope cann't be started.{Environment.NewLine}\tTx scope:{currentScope.FmtStr().GNLI2()}");
-						else if (currentScope.CommitIntention || currentScope.DisposeStart)
+						else if (currentScope.DisposeStart)
 							throw new EonException(message: $"This transaction scope has unappropriate state to begin the nested scope.{Environment.NewLine}\tTx scope:{currentScope.FmtStr().GNLI2()}");
+						else if (currentScope.CommitIntention) {
+							try { currentScope.SetShouldRollback(value: true); }
+							catch (Exception exception) { throw new EonException(message: $"An exception occurred while handling this transaction scope.{Environment.NewLine}\tTx scope:{currentScope.FmtStr().GNLI2()}", innerException: exception); }
+							throw new EonException(message: $"This transaction scope have the commit intention. The nested scope cann't be started.{Environment.NewLine}To avoid the possible data inconsistency this transaction scope has been marked as to be rolled back.{Environment.NewLine}\tTx scope:{currentScope.FmtStr().GNLI2()}");
+						}
 						else
 							scope = new P_TxScope(outer: currentScope);
 					}

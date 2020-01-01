@@ -5,7 +5,7 @@ namespace Eon {
 	/// <summary>
 	/// Определяет расширенную версию <seealso cref="IDisposable"/>.
 	/// </summary>
-	public interface IOxyDisposable
+	public interface IEonDisposable
 		:IDisposable {
 
 		/// <summary>

@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+					 targetNamespace="urn:eon-2020:triggers"
+					 attributeFormDefault="unqualified"
+					 elementFormDefault="qualified"
+					 version="1.0"
+					 xmlns:me="urn:eon-2020:triggers"
+					 xmlns:ox="urn:eon-2020:core">
+
+	<xs:import namespace="urn:eon-2020:core"/>
+
+	<xs:complexType name="TriggerDescriptionBase" mixed="false" abstract="true">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox:DescriptionBase">
+				<xs:sequence>
+					<xs:element name="IsDisabled" type="xs:boolean"  />
+					<xs:element name="SignalOnActivation" type="xs:boolean" />
+					<xs:element name="SignalOnFirstActivationOnly" type="xs:boolean" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="PeriodTriggerDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:TriggerDescriptionBase">
+				<xs:sequence>
+					<xs:element name="Period" type="xs:duration"  />
+					<xs:element name="PeriodVariance" type="xs:duration"  />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="AggregateTriggerDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:TriggerDescriptionBase">
+				<xs:sequence>
+					<xs:element name="Triggers" type="ox:MetadataRefSet" nillable="true"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="FrequencyLimitTriggerDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:AggregateTriggerDescription">
+				<xs:sequence>
+					<xs:element name="SignalFrequencyLimit" type="xs:duration"  />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+</xs:schema>

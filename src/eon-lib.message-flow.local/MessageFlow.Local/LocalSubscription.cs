@@ -211,7 +211,7 @@ namespace Eon.MessageFlow.Local {
 											return locEventArgs.OnceCanceled;
 										}
 										catch (ObjectDisposedException) {
-											var locListenerAsIDisposable = locListener as IOxyDisposable;
+											var locListenerAsIDisposable = locListener as IEonDisposable;
 											if (locListenerAsIDisposable?.IsDisposeRequested ?? false)
 												return true;
 											else

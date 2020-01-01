@@ -1,6 +1,6 @@
 ﻿#region Compilation conditional symbols
 
-#define DO_NOT_USE_OXY_LOGGING_API
+#define DO_NOT_USE_EON_LOGGING_API
 
 #endregion
 
@@ -12,14 +12,14 @@ using Eon.MessageFlow.Local.Description;
 namespace Eon.Description {
 
 	/// <summary>
-	/// Base description (configuration) of any Oxy-app.
+	/// Base description (configuration) of any Eon-app.
 	/// </summary>
 	public interface IXAppDescription
 		:IDependencySupportDescription {
 
 		IXAppLocalPublisherDescription AppMessageFlowPublisher { get; set; }
 
-#if !DO_NOT_USE_OXY_LOGGING_API
+#if !DO_NOT_USE_EON_LOGGING_API
 
 		ILoggingAutoSubscriptionDescription LoggingAutoSubscription { get; set; }
 

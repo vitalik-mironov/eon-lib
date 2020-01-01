@@ -66,10 +66,7 @@ namespace Eon {
 			if (hnd.Value == null || !hnd.Value.ContainsGenericParameters())
 				return hnd;
 			else
-				throw
-					new ArgumentOutOfRangeException(
-						paramName: hnd.Name,
-						message: FormatXResource(typeof(ArgumentException), "ValueIsInvalid/Type/ContainsGenericParameters", hnd.Value));
+				throw new ArgumentOutOfRangeException(paramName: hnd.Name, message: FormatXResource(typeof(ArgumentException), "ValueIsInvalid/Type/ContainsGenericParameters", hnd.Value));
 		}
 
 		/// <summary>

@@ -261,7 +261,7 @@ namespace Eon.Resources.XResource {
 			var tree = LocateTree(source: GetSource(locator: locator), culture: culture, throwIfMissing: false);
 			var treeNodePath =
 				XResourceTree.PathDelimiterString
-				+ locator.FullName.Replace(oldChar: TypeUtilities.TypeNameDelimiter, newChar: XResourceTree.PathDelimiter)
+				+ locator.FullName.Replace(oldChar: EonTypeUtilities.TypeNameDelimiter, newChar: XResourceTree.PathDelimiter)
 				+ (string.IsNullOrEmpty(subpath)
 					? string.Empty
 					: (subpath.StartsWith(value: XResourceTree.PathDelimiterString) ? subpath : XResourceTree.PathDelimiterString + subpath));

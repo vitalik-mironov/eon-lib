@@ -90,7 +90,7 @@ namespace Eon {
 		}
 
 		public static ArgumentUtilitiesHandle<T> EnsureNotDisposeState<T>(this ArgumentUtilitiesHandle<T> hnd)
-			where T : IOxyDisposable {
+			where T : IEonDisposable {
 			//
 			if (hnd.Value == null)
 				return hnd;

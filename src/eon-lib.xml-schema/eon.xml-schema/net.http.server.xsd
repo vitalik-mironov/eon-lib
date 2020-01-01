@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+						targetNamespace="urn:eon-2020:net:http:server"
+						attributeFormDefault="unqualified"
+						elementFormDefault="qualified"
+						version="1.0"
+						xmlns:me="urn:eon-2020:net:http:server"
+						xmlns:ox="urn:eon-2020:core"
+						xmlns:ox.http="urn:eon-2020:net:http"
+						xmlns:ox.dependency="urn:eon-2020:component-model:dependencies">
+
+	<xs:import namespace="urn:eon-2020:core"/>
+	<xs:import namespace="urn:eon-2020:net:http"/>
+	<xs:import namespace="urn:eon-2020:component-model:dependencies"/>
+
+	<!-- •••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• -->
+	<!-- ••••••••••••••••••••••••••••••• COMPLEX TYPES •••••••••••••••••••••••••••••••••••• -->
+	<!-- •••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• -->
+
+	<xs:complexType name="HttpHostDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox.dependency:DependencySupportDescriptionBase">
+				<xs:sequence>
+					<xs:element name="RequireTransportSecurity" type="xs:boolean" nillable="false" />
+					<xs:element name="RequireLocalRequest" type="xs:boolean" nillable="false" />
+					<xs:element name="IncludeErrorDetailPolicy" type="ox:ST_System.Web.Http.IncludeErrorDetailPolicy" nillable="true" />
+					<xs:element name="MessageHandlers" type="ox:MetadataRefSet" nillable="true" />
+					<xs:element name="Filters" type="ox:MetadataRefSet" nillable="true" />
+					<xs:element name="CustomExceptionHandlerRequired" type="xs:boolean" nillable="false" />
+					<xs:element name="CustomExceptionLoggerRequired" type="xs:boolean" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="HttpHostingDescriptionBase" mixed="false" abstract="true">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox:DescriptionBase">
+				<xs:sequence>
+					<xs:element name="IsAutoActivationEnabled" type="xs:boolean" />
+					<xs:element name="Host" type="ox:MetadataRef" nillable="true" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="HttpSelfHostingDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:HttpHostingDescriptionBase">
+				<xs:sequence>
+					<xs:element name="BaseAddress" type="xs:anyURI" nillable="true" />
+					<xs:element name="ReceiveTimeout" type="xs:duration" nillable="true" />
+					<xs:element name="SendTimeout" type="xs:duration" nillable="true" />
+					<xs:element name="MaxReceivedMessageSize" type="ox:ST_NonNegativeLong" nillable="true" />
+					<xs:element name="MaxBufferSize" type="ox:ST_NonNegativeInt" nillable="true" />
+					<xs:element name="MaxConcurrentRequests" type="ox:ST_PositiveInt" nillable="true" />
+					<xs:element name="TransferMode" nillable="true">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="Buffered" />
+								<xs:enumeration value="Streamed" />
+								<xs:enumeration value="StreamedRequest" />
+								<xs:enumeration value="StreamedResponse" />
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+</xs:schema>

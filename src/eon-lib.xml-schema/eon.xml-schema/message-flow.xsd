@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+					 targetNamespace="urn:eon-2020:message-flow"
+					 attributeFormDefault="unqualified"
+					 elementFormDefault="qualified"
+					 version="1.0"
+					 xmlns:me="urn:eon-2020:message-flow"
+					 xmlns:ox="urn:eon-2020:core">
+
+	<xs:import namespace="urn:eon-2020:core"/>
+	
+</xs:schema>

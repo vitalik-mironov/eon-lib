@@ -1,6 +1,6 @@
 ﻿#region Compilation conditional symbols
 
-#define DO_NOT_USE_OXY_LOGGING_API
+#define DO_NOT_USE_EON_LOGGING_API
 
 #endregion
 
@@ -408,7 +408,7 @@ namespace Eon {
 					if (rethrowException)
 						throw new EonException(message: $"Ошибка запуска попытки активации.{Environment.NewLine}\tКомпонент:{this.FmtStr().GNLI2()}", innerException: exception);
 					else {
-#if !DO_NOT_USE_OXY_LOGGING_API
+#if !DO_NOT_USE_EON_LOGGING_API
 						this
 							.IssueError(
 								messagePrologue: logMessagePrologue,
@@ -450,7 +450,7 @@ namespace Eon {
 			var logMessagePrologue = $"Отложенная активация. ИД корреляции: {correlationId.FmtStr().G()}.";
 			if (activationTask.IsFaulted || activationTask.IsCanceled) {
 				if (activationTask.IsCanceled) {
-#if !DO_NOT_USE_OXY_LOGGING_API
+#if !DO_NOT_USE_EON_LOGGING_API
 					this
 						.IssueWarning(
 							messagePrologue: logMessagePrologue,
@@ -481,7 +481,7 @@ namespace Eon {
 						doRetryActivation = false;
 						retryActivationLogMessage = $"Повторной попытки активации компонента не будет, так как все попытки исчерпаны (кол-во попыток {retryOptions.MaxCount:d}).";
 					}
-#if !DO_NOT_USE_OXY_LOGGING_API
+#if !DO_NOT_USE_EON_LOGGING_API
 					this
 						.IssueError(
 							messagePrologue: logMessagePrologue,
@@ -514,7 +514,7 @@ namespace Eon {
 				}
 			}
 			else {
-#if !DO_NOT_USE_OXY_LOGGING_API
+#if !DO_NOT_USE_EON_LOGGING_API
 				this
 					.IssueInformation(
 						messagePrologue: logMessagePrologue,
@@ -544,7 +544,7 @@ namespace Eon {
 						return TaskUtilities.FromCanceled();
 					}
 					else {
-#if !DO_NOT_USE_OXY_LOGGING_API
+#if !DO_NOT_USE_EON_LOGGING_API
 						var logMessagePrologue = $"Отложенная активация. ИД корреляции: {ctx.FullCorrelationId}.";
 						this
 							.IssueInformation(

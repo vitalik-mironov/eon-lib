@@ -47,7 +47,7 @@ namespace Eon {
 		/// Возвращает признак, указывающий на наличие запроса остановки и выгрузки компонента.
 		/// <para>Возвращается <see langword="true"/>, если выполняется одно из условий:</para>
 		/// <para>• <see cref="App"/>: <see cref="IXApp{TDescription}.HasAppShutdownRequested"/>  == <see langword="true"/>;</para>
-		/// <para>• <see cref="App"/> == <see langword="null"/> и <see cref="IOxyDisposable.IsDisposeRequested"/> == <see langword="true"/>.</para>
+		/// <para>• <see cref="App"/> == <see langword="null"/> и <see cref="IEonDisposable.IsDisposeRequested"/> == <see langword="true"/>.</para>
 		/// <para>Обращение к свойству не подвержено влиянию состояния выгрузки.</para>
 		/// </summary>
 		public bool HasShutdownRequested {

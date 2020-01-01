@@ -7,7 +7,7 @@
 
 #endif
 
-#define DO_NOT_USE_OXY_LOGGING_API
+#define DO_NOT_USE_EON_LOGGING_API
 
 #endregion
 //
@@ -281,7 +281,7 @@ namespace Eon {
 				}
 				catch (Exception exception) {
 					if (!((exception is ObjectDisposedException && IsDisposeRequested) || exception.HasSingleBaseExceptionOf<OperationCanceledException>() || exception.IsObserved())) {
-#if !DO_NOT_USE_OXY_LOGGING_API
+#if !DO_NOT_USE_EON_LOGGING_API
 						this
 							.IssueError(
 								message: $"Сбой установки (замены) компонента, инициированной триггером.{Environment.NewLine}\tСобытие-инициатор:{locTriggerSignalProps.FmtStr().GNLI2()}",
@@ -318,7 +318,7 @@ namespace Eon {
 					var resetTask = TaskUtilities.RunOnDefaultScheduler(factory: async () => await doResetAsync(locCtx: locCtx).ConfigureAwait(false));
 					// Вывод результатов ресета в лог.
 					//
-#if !DO_NOT_USE_OXY_LOGGING_API
+#if !DO_NOT_USE_EON_LOGGING_API
 					resetTask
 						.ContinueWith(
 							continuationAction:
@@ -374,7 +374,7 @@ namespace Eon {
 							.Unwrap();
 						// Вывод результатов обработки сбоя в лог.
 						//
-#if !DO_NOT_USE_OXY_LOGGING_API
+#if !DO_NOT_USE_EON_LOGGING_API
 						failureResponseTask
 							.ContinueWith(
 								continuationAction:
@@ -448,7 +448,7 @@ namespace Eon {
 									if (!(component is null)) {
 										resetState.PreviousComponent = component;
 #if SIMULATE_RESET_FAILURE
-										throw new DigitalFlareApplicationException(message: "Dummy reset failure.");
+										throw new EonException(message: "Dummy reset failure.");
 #else
 										await OnFreeComponentAsync(component: component, ctx: locCtx).ConfigureAwait(false);
 										itrlck.SetNullBool(location: ref _component, comparand: component);

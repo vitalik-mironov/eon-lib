@@ -6,6 +6,6 @@ namespace Eon.Hosting {
 	/// Defines a hosted service (<see cref="IHostedService"/>) running XApp <see cref="IXApp{TDescription}"/>.
 	/// </summary>
 	public interface IXAppHostedService
-		:IOxyDisposable, IHostedService { }
+		:IEonDisposable, IHostedService { }
 
 }

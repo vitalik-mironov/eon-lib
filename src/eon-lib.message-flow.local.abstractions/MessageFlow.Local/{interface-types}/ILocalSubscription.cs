@@ -19,7 +19,7 @@ namespace Eon.MessageFlow.Local {
 
 		/// <summary>
 		/// Возвращает признак активности подписки.
-		/// <para>В общем случае активность подписки определяется её состоянием <seealso cref="State"/> и состоянием выгрузки (см. <seealso cref="IOxyDisposable.Disposing"/>, <seealso cref="IOxyDisposable.IsDisposed"/>).</para>
+		/// <para>В общем случае активность подписки определяется её состоянием <seealso cref="State"/> и состоянием выгрузки (см. <seealso cref="IEonDisposable.Disposing"/>, <seealso cref="IEonDisposable.IsDisposed"/>).</para>
 		/// <para>Обращение к свойству не подвержено влиянию состояния выгрузки.</para>
 		/// </summary>
 		bool IsActive { get; }

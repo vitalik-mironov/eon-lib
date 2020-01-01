@@ -10,7 +10,7 @@ namespace Eon {
 	/// </summary>
 	/// <typeparam name="T">Value type constraint.</typeparam>
 	public interface IVh<out T>
-		:IOxyDisposable {
+		:IEonDisposable {
 
 		/// <summary>
 		/// Indicates whether holder contains error (<see cref="Exception"/>.

@@ -415,7 +415,7 @@ namespace Eon.Description {
 		public string Serialize() {
 			var deserializationDataString = vlt.Read(ref _deserializationDataString);
 			if (deserializationDataString is null) {
-				using (var acquiredBuffer = StringBuilderUtilities.AcquireBuffer()) {
+				using (var acquiredBuffer = EonStringBuilderUtilities.AcquireBuffer()) {
 					var sb = acquiredBuffer.StringBuilder;
 					//
 					DoSerialize(sb: sb);

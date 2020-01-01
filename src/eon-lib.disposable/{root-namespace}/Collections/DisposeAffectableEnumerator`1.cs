@@ -18,13 +18,13 @@ namespace Eon.Collections {
 
 		readonly IEnumerator<T> _sourceEnumerator;
 
-		readonly IOxyDisposable _disposableOwner;
+		readonly IEonDisposable _disposableOwner;
 
 		readonly bool _considerDisposeRequest;
 
 		int _disposeStateFlag;
 
-		public DisposeAffectableEnumerator(IEnumerable<T> source, IOxyDisposable owner, bool considerDisposeRequest) {
+		public DisposeAffectableEnumerator(IEnumerable<T> source, IEonDisposable owner, bool considerDisposeRequest) {
 			source.EnsureNotNull(nameof(source));
 			owner.EnsureNotNull(nameof(owner));
 			//

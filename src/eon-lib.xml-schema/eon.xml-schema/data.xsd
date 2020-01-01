@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+					 targetNamespace="urn:eon-2020:data"
+					 attributeFormDefault="unqualified"
+					 elementFormDefault="qualified"
+					 version="1.0"
+					 xmlns:me="urn:eon-2020:data"
+					 xmlns:d="urn:eon-2020:core"
+					 xmlns:ox.dependencies="urn:eon-2020:component-model:dependencies"
+					 xmlns:ox-job="urn:eon-2020:job">
+
+	<xs:import namespace="urn:eon-2020:core"/>
+	<xs:import namespace="urn:eon-2020:component-model:dependencies"/>
+	<xs:import namespace="urn:eon-2020:component-model:dependencies" />
+	<xs:import namespace="urn:eon-2020:job" />
+
+	<xs:simpleType name="ST_DataContainerStates" final="#all">
+		<xs:restriction base="d:ST_String">
+			<xs:pattern value="((None|OpenSent|Opened|OpenFaulted|CloseSent|Closed|CloseFaulted){1}( (None|OpenSent|Opened|OpenFaulted|CloseSent|Closed|CloseFaulted){1}){0,6})"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="DataContainerDescriptionBase" mixed="false" abstract="true">
+		<xs:complexContent mixed="false">
+			<xs:extension base="d:DescriptionBase">
+				<xs:sequence>
+					<xs:element name="IsDataReadOnly" type="xs:boolean" nillable="false" minOccurs="0" maxOccurs="1"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="DataXAppDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="d:CustomXAppDescriptionBase">
+				<xs:sequence>
+					<xs:element name="DataContainerRef" type="d:MetadataRef" nillable="true" minOccurs="0" maxOccurs="1"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="StoreDescriptionBase" abstract="true" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox.dependencies:DependencySupportDescriptionBase">
+				<xs:sequence>
+					<xs:element name="ConnectionString" type="d:MetadataRef" nillable="true" />
+					<xs:element name="CommandExecutionTimeout" type="d:TimeoutDuration" nillable="true"/>
+					<xs:element name="LockTimeout" type="d:TimeoutDuration" nillable="true"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="StoreConnectionStringDescriptionBase" abstract="true" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="d:DescriptionBase">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="StoreConfigConnectionStringDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:StoreConnectionStringDescriptionBase">
+				<xs:sequence>
+					<xs:element name="ConnectionStringName" type="d:ST_String" nillable="true" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="StoreConnectionStringDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:StoreConnectionStringDescriptionBase">
+				<xs:sequence>
+					<xs:element name="ConnectionString" type="d:ST_String" nillable="true" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="DataContextDescriptionBase" mixed="false" abstract="true">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox.dependencies:DependencySupportDescriptionBase">
+				<xs:sequence>
+					<xs:element name="PreferNoTracking" type="xs:boolean" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="SqlStoreConnectionStringDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:StoreConnectionStringDescription">
+				<xs:sequence />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="SqlStoreConfigConnectionStringDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:StoreConfigConnectionStringDescription">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="SqlStoreDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:StoreDescriptionBase">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:simpleType name="StoreBackupType" final="#all">
+		<xs:restriction base="d:ST_NonEmptyString">
+			<xs:enumeration value="Full" />
+			<xs:enumeration value="Differential" />
+		</xs:restriction>
+	</xs:simpleType>
+
+</xs:schema>

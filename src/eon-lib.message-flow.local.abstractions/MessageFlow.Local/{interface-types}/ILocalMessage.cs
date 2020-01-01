@@ -6,7 +6,7 @@ namespace Eon.MessageFlow.Local {
 	/// Представляет сообщение.
 	/// </summary>
 	public interface ILocalMessage
-		:IOxyDisposable {
+		:IEonDisposable {
 
 		/// <summary>
 		/// Возвращает штамп-времени создания экземпляра сообщения в локальной среде.

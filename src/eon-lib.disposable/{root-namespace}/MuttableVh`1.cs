@@ -63,14 +63,14 @@ namespace Eon {
 				else
 					__ExplicitDispose = locValue => { };
 				//
-				if (typeof(IOxyCloneable).IsAssignableFrom(typeOfValue)) {
+				if (typeof(IEonCloneable).IsAssignableFrom(typeOfValue)) {
 					var valueParameter = Expression.Parameter(typeOfValue);
 					var cloneContextParameter = Expression.Parameter(typeof(ICloneContext));
 					__CloneValue = Expression.Lambda<Func<TValue, ICloneContext, TValue>>(
 						Expression.Call(
 							valueParameter,
 							typeOfValue.GetMethod(
-								nameof(IOxyCloneable.Clone),
+								nameof(IEonCloneable.Clone),
 								parameterTypes: new[ ] { cloneContextParameter.Type },
 								throwIfNotFound: true),
 							cloneContextParameter),
@@ -118,7 +118,7 @@ namespace Eon {
 				else
 					__ExplicitDispose = v => { };
 				//
-				if (typeof(IOxyCloneable).IsAssignableFrom(typeOfValue)) {
+				if (typeof(IEonCloneable).IsAssignableFrom(typeOfValue)) {
 					var cloneContextParameter = Expression.Parameter(typeof(ICloneContext));
 					__CloneValue = Expression.Lambda<Func<TValue, ICloneContext, TValue>>(
 						Expression.Condition(
@@ -126,9 +126,9 @@ namespace Eon {
 							valueParameter,
 							Expression.Convert(
 								Expression.Call(
-									Expression.Convert(valueParameter, typeof(IOxyCloneable)),
-									typeof(IOxyCloneable).GetMethod(
-										nameof(IOxyCloneable.Clone),
+									Expression.Convert(valueParameter, typeof(IEonCloneable)),
+									typeof(IEonCloneable).GetMethod(
+										nameof(IEonCloneable.Clone),
 										parameterTypes: new[ ] { cloneContextParameter.Type },
 										throwIfNotFound: true),
 									cloneContextParameter),

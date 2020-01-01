@@ -4,15 +4,16 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 using Eon.Diagnostics;
 using Eon.Linq;
-using Eon.Text;
 using Eon.Threading;
 
 using static Eon.Resources.XResource.XResourceUtilities;
+
 using itrlck = Eon.Threading.InterlockedUtilities;
 
 namespace Eon {
@@ -518,7 +519,7 @@ namespace Eon {
 		public static string GetExceptionIdentityString(this Exception exception) {
 			exception.EnsureNotNull(nameof(exception));
 			//
-			using (var acquiredBuffer = StringBuilderUtilities.AcquireBuffer()) {
+			using (var acquiredBuffer = EonStringBuilderUtilities.AcquireBuffer()) {
 				var sb = acquiredBuffer.StringBuilder;
 				sb.Append(exception.GetHashCode().ToString("d", CultureInfo.InvariantCulture));
 				foreach (var innerException in exception.SelectAllInner()) {

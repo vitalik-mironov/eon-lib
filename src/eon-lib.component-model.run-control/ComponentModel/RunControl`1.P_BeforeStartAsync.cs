@@ -12,7 +12,7 @@ namespace Eon.ComponentModel {
 			state.EnsureNotNull(nameof(state));
 			//
 			state.Context.ThrowIfCancellationRequested();
-			(Component as IOxyDisposable)?.EnsureNotDisposeState(considerDisposeRequest: true);
+			(Component as IEonDisposable)?.EnsureNotDisposeState(considerDisposeRequest: true);
 			var beforeStartTaskFactory = ReadDA(ref _beforeStartTaskFactory, considerDisposeRequest: true);
 			if (!(beforeStartTaskFactory is null)) {
 				var beforeStartTask = beforeStartTaskFactory(arg: state);

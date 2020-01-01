@@ -1,6 +1,6 @@
 ﻿#region Compilation conditional symbols
 
-#define DO_NOT_USE_OXY_LOGGING_API
+#define DO_NOT_USE_EON_LOGGING_API
 
 #endregion
 
@@ -34,7 +34,7 @@ namespace Eon {
 			var initializedItems = default(IXAppScopeInstance[ ]);
 			try {
 				if (IsDisabled) {
-#if !DO_NOT_USE_OXY_LOGGING_API
+#if !DO_NOT_USE_EON_LOGGING_API
 					this
 						.IssueWarning(
 							message: "Данный список инициализации приложения отключен. Инициализация компонентов, входящих в этот список, не выполняется.",

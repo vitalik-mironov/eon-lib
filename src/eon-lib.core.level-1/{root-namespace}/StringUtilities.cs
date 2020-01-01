@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.Serialization;
-
+using System.Text;
 using Eon.Text;
 
 using static Eon.Resources.XResource.XResourceUtilities;
@@ -187,7 +187,7 @@ namespace Eon {
 			if (strs is null)
 				return null;
 			else
-				using (var buffer = StringBuilderUtilities.AcquireBuffer()) {
+				using (var buffer = EonStringBuilderUtilities.AcquireBuffer()) {
 					var sb = buffer.StringBuilder;
 					if (skipEmptyStrings)
 						strs = strs.Where(locString => !string.IsNullOrEmpty(locString));
@@ -253,7 +253,7 @@ namespace Eon {
 				if (indent.Length == 1)
 					indent = new string(c: indent[ 0 ], count: indentSize.Value);
 				else {
-					using (var indentBuffer = StringBuilderUtilities.AcquireBuffer()) {
+					using (var indentBuffer = EonStringBuilderUtilities.AcquireBuffer()) {
 						var indentBuilder = indentBuffer.StringBuilder;
 						for (var i = 0; i < indentSize; i++)
 							indentBuilder.Append(indent);
@@ -262,7 +262,7 @@ namespace Eon {
 				}
 			}
 			//
-			using (var outputBuffer = StringBuilderUtilities.AcquireBuffer()) {
+			using (var outputBuffer = EonStringBuilderUtilities.AcquireBuffer()) {
 				var outputBuilder = outputBuffer.StringBuilder;
 				var lines = inputText.Split(separator: new string[ ] { lineSeparator }, options: inputTextSplitOptions.Value);
 				//
@@ -361,7 +361,7 @@ namespace Eon {
 			else {
 				string format;
 				var args = new List<object>();
-				using (var buffer = StringBuilderUtilities.AcquireBuffer()) {
+				using (var buffer = EonStringBuilderUtilities.AcquireBuffer()) {
 					var stringBuilder = buffer.StringBuilder;
 					foreach (var @string in strs) {
 						if (@string == null)
@@ -610,7 +610,7 @@ namespace Eon {
 			if (string.IsNullOrEmpty(@string) || count < 1)
 				return @string;
 			else
-				using (var acquiredBuffer = StringBuilderUtilities.AcquireBuffer()) {
+				using (var acquiredBuffer = EonStringBuilderUtilities.AcquireBuffer()) {
 					var sb = acquiredBuffer.StringBuilder;
 					sb.Append(@string);
 					for (var i = 0; i < count; i++)
@@ -623,7 +623,7 @@ namespace Eon {
 			if (string.IsNullOrWhiteSpace(value))
 				return value;
 			else {
-				using (var acquiredBuffer = StringBuilderUtilities.AcquireBuffer()) {
+				using (var acquiredBuffer = EonStringBuilderUtilities.AcquireBuffer()) {
 					var sb = acquiredBuffer.StringBuilder;
 					//
 					var previousChar = '-';

@@ -40,13 +40,13 @@ namespace Eon.Context {
 		string MediaType { get; }
 
 		/// <summary>
-		/// Создает настройки XMOxy-считывателя, характерные для данного контекста зугрузки.
+		/// Создает настройки XMEon-считывателя, характерные для данного контекста зугрузки.
 		/// </summary>
 		/// <returns>Объект <see cref="XmlReaderSettings"/>.</returns>
 		XmlReaderSettings CreateXmlReaderSettings();
 
 		/// <summary>
-		/// Создает XMOxy-сериализатор, характерный для данного контекста зугрузки.
+		/// Создает XMEon-сериализатор, характерный для данного контекста зугрузки.
 		/// </summary>
 		/// <param name="type">Тип объекта.</param>
 		/// <returns>Объект <see cref="XmlObjectSerializer"/>.</returns>

@@ -190,7 +190,7 @@ namespace Eon {
 			return originalValue;
 		}
 
-		public static T WriteDA<T>(IOxyDisposable disposable, ref T location, T value, T comparand)
+		public static T WriteDA<T>(IEonDisposable disposable, ref T location, T value, T comparand)
 			where T : class
 			=>
 			WriteDA(
@@ -200,7 +200,7 @@ namespace Eon {
 				value: value,
 				comparand: comparand);
 
-		public static T WriteDA<T>(IOxyDisposable disposable, ref T location, T value)
+		public static T WriteDA<T>(IEonDisposable disposable, ref T location, T value)
 			where T : class
 			=>
 			WriteDA(

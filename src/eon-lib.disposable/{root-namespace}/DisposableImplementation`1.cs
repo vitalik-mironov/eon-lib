@@ -829,7 +829,7 @@ namespace Eon {
 
 		#region Add/Remove event handler
 
-		#region Move to 'oxy.ui' package.
+		#region Move to 'eon.ui' package.
 
 		//public void AddEventHandler(ref SynchronizationContextBoundEventHandler<EventHandler, EventArgs> location, EventHandler eventHandler) {
 		//	if (eventHandler != null)
@@ -871,7 +871,7 @@ namespace Eon {
 				}
 		}
 
-		#region Move to 'oxy.ui' package.
+		#region Move to 'eon.ui' package.
 
 		//public void RemoveEventHandler(ref SynchronizationContextBoundEventHandler<EventHandler, EventArgs> location, EventHandler eventHandler) {
 		//	if (eventHandler != null)

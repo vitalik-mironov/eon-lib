@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
+using System.Text;
 
 using Eon.Collections;
 using Eon.Linq;
@@ -11,7 +12,6 @@ using Eon.Reflection;
 using Eon.Threading;
 
 using static Eon.Resources.XResource.XResourceUtilities;
-using static Eon.Text.StringBuilderUtilities;
 
 namespace Eon.ComponentModel.Dependencies {
 
@@ -252,7 +252,7 @@ namespace Eon.ComponentModel.Dependencies {
 		}
 
 		public override string ToString() {
-			using (var stringBuilderBuffer = AcquireBuffer()) {
+			using (var stringBuilderBuffer = EonStringBuilderUtilities.AcquireBuffer()) {
 				var sb = stringBuilderBuffer.StringBuilder;
 				sb.Append((TargetType?.Type).FmtStr());
 				sb.Append(' ');

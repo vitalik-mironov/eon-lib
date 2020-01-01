@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using Eon.Text;
+using System.Text;
 
 namespace Eon.IO {
 
@@ -17,7 +17,7 @@ namespace Eon.IO {
 		public static string EscapeInvalidFileNameChars(string fileName) {
 			if (string.IsNullOrEmpty(fileName))
 				return fileName;
-			using (var buf = StringBuilderUtilities.AcquireBuffer()) {
+			using (var buf = EonStringBuilderUtilities.AcquireBuffer()) {
 				var sb = buf.StringBuilder;
 				sb.Append(fileName);
 				for (var i = 0; i < __InvalidFileNameChars.Length; i++)

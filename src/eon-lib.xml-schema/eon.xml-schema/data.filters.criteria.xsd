@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+					 targetNamespace="urn:eon-2020:data:filters:criteria"
+					 attributeFormDefault="unqualified"
+					 elementFormDefault="qualified"
+					 version="1.0"
+					 xmlns:me="urn:eon-2020:data:filters:criteria"
+					 xmlns:d="urn:eon-2020:core"
+					 xmlns:reflection="urn:eon-2020:reflection"
+					 xmlns:criteria.operators="urn:eon-2020:data:filters:criteria:operators">
+
+	<xs:import namespace="urn:eon-2020:core"/>
+	<xs:import namespace="urn:eon-2020:data:filters:criteria:operators"/>
+	<xs:import namespace="urn:eon-2020:reflection"/>
+
+	<!--•••••••••••••••••••••••••••••••••••••••••-->
+	<!--••••••••••••• SIMPLE TYPES ••••••••••••••-->
+	<!--•••••••••••••••••••••••••••••••••••••••••-->
+
+	<!--•••••••••••••••••••••••••••••••••••••••••-->
+	<!--••••••••••••• COMPLEX TYPES •••••••••••••-->
+	<!--•••••••••••••••••••••••••••••••••••••••••-->
+
+	<xs:complexType name="TypeNameCriterion" mixed="false" final="#all">
+		<xs:complexContent mixed="false">
+			<xs:extension base="d:Object">
+				<xs:sequence>
+					<xs:element name="NameQualification" type="reflection:ST_TypeNameQualification" />
+					<xs:element name="Operator" type="criteria.operators:StringCriterionOperatorBase" nillable="true" />
+					<xs:element name="Operand" type="d:ST_String" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="TypeNameCriterion" type="me:TypeNameCriterion" nillable="true" />
+
+</xs:schema>

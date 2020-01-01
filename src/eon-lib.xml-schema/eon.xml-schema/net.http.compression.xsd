@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+						targetNamespace="urn:eon-2020:net:http:compression"
+						attributeFormDefault="unqualified"
+						elementFormDefault="qualified"
+						version="1.0"
+						xmlns:me="urn:eon-2020:net:http:compression"
+						xmlns:ox="urn:eon-2020:core"
+						xmlns:ox.http="urn:eon-2020:net:http"
+						xmlns:ox.dependency="urn:eon-2020:component-model:dependencies">
+
+	<xs:import namespace="urn:eon-2020:core"/>
+	<xs:import namespace="urn:eon-2020:component-model:dependencies"/>
+	<xs:import namespace="urn:eon-2020:net:http"/>
+
+	<xs:simpleType name="ST_CompressionHandlerMode" final="#all">
+		<xs:restriction base="ox:ST_String">
+			<xs:enumeration value="Client" />
+			<xs:enumeration value="Host" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="CompressionHandlerMode" type="me:ST_CompressionHandlerMode" nillable="true"/>
+
+	<!-- ••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• -->
+	<!-- ••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• -->
+	<!-- •••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• COMPLEX TYPES •••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• -->
+	<!-- ••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• -->
+	<!-- ••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• -->
+
+	<xs:complexType name="CompressionHandlerDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox.http:HandlerDescriptionBase">
+				<xs:sequence>
+					<xs:element name="Mode" type="me:ST_CompressionHandlerMode" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+</xs:schema>

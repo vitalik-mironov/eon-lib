@@ -3,9 +3,9 @@
 namespace Eon.Runtime {
 
 	/// <summary>
-	/// Info about the version of Oxy runtime.
+	/// Info about the version of EON runtime.
 	/// </summary>
-	public interface IOxyRuntimeVersionInfo {
+	public interface IEonRuntimeVersionInfo {
 
 		string CompanyProducerViewName { get; }
 

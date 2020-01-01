@@ -9,7 +9,7 @@ namespace Eon {
 
 	[DataContract]
 	public abstract class CloneableDisposable
-		:Disposable, IOxyCloneableOrigin {
+		:Disposable, IEonCloneableOrigin {
 
 		CloneableDisposable _cloneOrigin;
 
@@ -22,10 +22,10 @@ namespace Eon {
 		protected CloneableDisposable(SerializationContext ctx)
 			: base(ctx: ctx) { }
 
-		object IOxyCloneable.Clone()
+		object IEonCloneable.Clone()
 			=> Clone(null);
 
-		object IOxyCloneable.Clone(ICloneContext cloneCtx)
+		object IEonCloneable.Clone(ICloneContext cloneCtx)
 			=> Clone(cloneCtx: cloneCtx);
 
 		public CloneableDisposable Clone()
@@ -66,7 +66,7 @@ namespace Eon {
 			}
 		}
 
-		object IOxyCloneableOrigin.CloneOrigin
+		object IEonCloneableOrigin.CloneOrigin
 			=> CloneOrigin;
 
 		protected override void Dispose(bool explicitDispose) {

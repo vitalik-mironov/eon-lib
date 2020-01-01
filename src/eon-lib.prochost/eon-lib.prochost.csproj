@@ -21,6 +21,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\eon-lib.data\eon-lib.data.csproj" />
 	  <ProjectReference Include="..\eon-lib.hosting.default\eon-lib.hosting.default.csproj" />
 	</ItemGroup>
 

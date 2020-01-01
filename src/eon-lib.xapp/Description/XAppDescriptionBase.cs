@@ -1,6 +1,6 @@
 ﻿#region Compilation conditional symbols
 
-#define DO_NOT_USE_OXY_LOGGING_API
+#define DO_NOT_USE_EON_LOGGING_API
 
 #endregion
 
@@ -32,7 +32,7 @@ namespace Eon.Description {
 		[DataMember(Order = 0, Name = nameof(AppMessageFlowPublisher), IsRequired = true)]
 		MetadataReference<IXAppLocalPublisherDescription> _appMessageFlowPublisher;
 
-#if !DO_NOT_USE_OXY_LOGGING_API
+#if !DO_NOT_USE_EON_LOGGING_API
 		[DataMember(Order = 1, Name = nameof(LoggingAutoSubscription), IsRequired = true)]
 		MetadataReference<ILoggingAutoSubscriptionDescription> _loggingAutoSubscription;
 #endif
@@ -81,7 +81,7 @@ namespace Eon.Description {
 			}
 		}
 
-#if !DO_NOT_USE_OXY_LOGGING_API
+#if !DO_NOT_USE_EON_LOGGING_API
 		public ILoggingAutoSubscriptionDescription LoggingAutoSubscription
 			=> ReadDA(ref _loggingAutoSubscription).Resolve(this);
 #endif
@@ -146,7 +146,7 @@ namespace Eon.Description {
 			this.ArgProp(AppMessageFlowPublisher, nameof(AppMessageFlowPublisher)).EnsureNotNull();
 			this.ArgProp(AppInitializationList, nameof(AppInitializationList)).EnsureNotNull();
 			this.ArgProp(AppStartActivationList, nameof(AppStartActivationList)).EnsureNotNull();
-#if !DO_NOT_USE_OXY_LOGGING_API
+#if !DO_NOT_USE_EON_LOGGING_API
 			this.PropertyArg(ReadDA(ref _loggingAutoSubscription), nameof(LoggingAutoSubscription)).EnsureReachable(@base: this);
 #endif
 			this.ArgProp(AppVersion, nameof(AppVersion)).EnsureNotNull();
@@ -162,7 +162,7 @@ namespace Eon.Description {
 
 		protected override void Dispose(bool explicitDispose) {
 			_appMessageFlowPublisher = null;
-#if !DO_NOT_USE_OXY_LOGGING_API
+#if !DO_NOT_USE_EON_LOGGING_API
 			_loggingAutoSubscription = null;
 #endif
 			_appInitializationList = null;

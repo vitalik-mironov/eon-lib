@@ -6,12 +6,12 @@ using Eon.Threading;
 namespace Eon.Runtime {
 
 	/// <summary>
-	/// Configuration of Oxy runtime.
+	/// Configuration of EON runtime.
 	/// </summary>
-	public interface IOxyRuntimeConfiguration
-		:IAsReadOnly<IOxyRuntimeConfiguration>, IValidatable {
+	public interface IEonRuntimeConfiguration
+		:IAsReadOnly<IEonRuntimeConfiguration>, IValidatable {
 
-		string OxyDotDirectoryName { get; set; }
+		string EonDotDirectoryName { get; set; }
 
 		MetadataPathName ProviderAppSatelliteDescriptionPath { get; set; }
 

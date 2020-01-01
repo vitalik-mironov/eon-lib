@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
-using Eon.Text;
+using System.Text;
 
 namespace Eon.ComponentModel.Dependencies {
 
@@ -81,7 +81,7 @@ namespace Eon.ComponentModel.Dependencies {
 		// TODO: Put strings into the resources.
 		//
 		public override string ToString() {
-			using (var acquiredBuffer = StringBuilderUtilities.AcquireBuffer()) {
+			using (var acquiredBuffer = EonStringBuilderUtilities.AcquireBuffer()) {
 				var sb = acquiredBuffer.StringBuilder;
 				//
 				sb.Append($"{GetType().FmtStr().G()}:");

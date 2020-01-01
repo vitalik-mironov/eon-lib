@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 using Eon.Collections;
-using Eon.Text;
+
 using static Eon.Resources.XResource.XResourceUtilities;
 
 namespace Eon.Mathematics {
@@ -256,7 +257,7 @@ namespace Eon.Mathematics {
 			if (IsEmpty)
 				return "Н/Д";
 			else {
-				using (var buffer = StringBuilderUtilities.AcquireBuffer()) {
+				using (var buffer = EonStringBuilderUtilities.AcquireBuffer()) {
 					var sb = buffer.StringBuilder;
 					//
 					if ((options & StatsFormattingOptions.Count) == StatsFormattingOptions.Count) {

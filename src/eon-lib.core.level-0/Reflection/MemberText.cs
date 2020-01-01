@@ -3,8 +3,7 @@ using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-
-using Eon.Text;
+using System.Text;
 
 namespace Eon.Reflection {
 
@@ -12,7 +11,7 @@ namespace Eon.Reflection {
 
 		public static readonly string MethodSignatureParameterDelimiterText = ", ";
 
-		public const char TypeNameDelimiter = TypeUtilities.TypeNameDelimiter;
+		public const char TypeNameDelimiter = EonTypeUtilities.TypeNameDelimiter;
 
 		// TODO: Put strings into the resources.
 		//
@@ -25,7 +24,7 @@ namespace Eon.Reflection {
 			if (parameterTypes is null || parameterTypes.Length == 0)
 				return $"{(declaringType is null ? string.Empty : (declaringType.FullName + TypeNameDelimiter))}{name}()";
 			else {
-				using (var buffer = StringBuilderUtilities.AcquireBuffer()) {
+				using (var buffer = EonStringBuilderUtilities.AcquireBuffer()) {
 					var sb = buffer.StringBuilder;
 					if (declaringType != null) {
 						sb.Append(value: declaringType.FullName);

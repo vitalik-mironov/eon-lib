@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+					 targetNamespace="urn:eon-2020:description:description-package:data-flow"
+					 attributeFormDefault="qualified"
+					 elementFormDefault="qualified"
+					 version="1.0"
+					 xmlns:me="urn:eon-2020:description:description-package:data-flow"
+					 xmlns:ox="urn:eon-2020:core"
+					 xmlns:ox-metadata-tree="urn:eon-2020:metadata:tree">
+
+	<xs:import namespace="urn:eon-2020:core"/>
+	<xs:import namespace="urn:eon-2020:metadata:tree"/>
+
+	<xs:attribute name="set-from-param" type="ox:ST_MetadataPathName" />
+
+	<xs:complexType name="DescriptionTree" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox-metadata-tree:MetadataTreeNode">
+				<xs:sequence>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="DescriptionPackage" mixed="false" final="#all">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox:ReadOnlyScopeBase">
+				<xs:sequence>
+					<xs:element name="Identity" type="me:DescriptionPackageIdentity" nillable="true" />
+					<xs:element name="ReferencedDotNetAssemblies" type="ox:DotNetStrongAssemblyNameReferenceCollection" nillable="true" minOccurs="0"  />
+					<xs:element name="DefaultDescriptionRef" type="ox:MetadataRef" nillable="true" minOccurs="0" />
+					<xs:element name="Tree" type="me:DescriptionTree" nillable="true" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="DescriptionPackage" type="me:DescriptionPackage" nillable="true" final="#all" />
+
+	<xs:complexType name="DescriptionPackageLocator" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox:Object">
+				<xs:sequence>
+					<xs:element name="Data" type="ox:ST_NonEmptyString" nillable="true" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="DescriptionLocator" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="me:DescriptionPackageLocator">
+				<xs:sequence>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="DescriptionPackageIdentity" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox:Object">
+				<xs:sequence>
+					<xs:element name="Name" type="ox:ST_MetadataName" nillable="true" />
+					<xs:element name="PublisherScopeId" type="ox:UriBasedIdentifier" nillable="true" />
+					<xs:element name="Version" type="ox:ST_Version" nillable="true" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+</xs:schema>

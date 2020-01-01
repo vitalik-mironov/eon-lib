@@ -19,7 +19,7 @@ namespace Eon.Metadata {
 
 		public const int NameMaxLength = 256;
 
-		public const char FullyQualifiedNameComponentDelimiter = TypeUtilities.TypeAssemblyQualifiedNamePartDelimiter;
+		public const char FullyQualifiedNameComponentDelimiter = EonTypeUtilities.TypeAssemblyQualifiedNamePartDelimiter;
 
 		[DataMember(Name = nameof(AssemblyName), IsRequired = true, Order = 0)]
 		string _assemblyName;

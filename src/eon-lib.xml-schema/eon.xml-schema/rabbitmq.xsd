@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+					 targetNamespace="urn:eon-2020:rabbit-mq"
+					 attributeFormDefault="unqualified"
+					 elementFormDefault="qualified"
+					 version="1.0"
+					 xmlns:me="urn:eon-2020:rabbit-mq"
+					 xmlns:ox="urn:eon-2020:core">
+
+	<xs:import namespace="urn:eon-2020:core"/>
+
+	<xs:complexType name="RabbitMqConnectionProviderDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox:DescriptionBase">
+				<xs:sequence>
+					<xs:element name="HostUri" type="xs:anyURI" nillable="true"/>
+					<xs:element name="UserCredentialLocator" type="ox:MetadataRef" nillable="true"/>
+					<xs:element name="VirtualHost" type="ox:ST_String" nillable="true"/>
+					<xs:element name="ClientSslCertificateLocator" type="ox:MetadataRef" nillable="true"/>
+					<xs:element name="HostSslCertificateValidator" type="ox:MetadataRef" nillable="true"/>
+					<xs:element name="UseBackgroundThreadsForIO" type="xs:boolean" />
+					<xs:element name="ChannelOperationDefaultTimeout" type="ox:TimeoutDuration" />
+					<xs:element name="IsAutomaticRecoveryEnabled" type="xs:boolean" />
+					<xs:element name="IsTopologyRecoveryEnabled" type="xs:boolean" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+</xs:schema>

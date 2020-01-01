@@ -1,11 +1,11 @@
-﻿#define DO_NOT_USE_OXY_LOGGING_API
+﻿#define DO_NOT_USE_EON_LOGGING_API
 
 using System.Runtime.CompilerServices;
 using Eon.Diagnostics;
 
-#if !DO_NOT_USE_OXY_LOGGING_API
+#if !DO_NOT_USE_EON_LOGGING_API
 
-using DigitalFlare.Diagnostics.Logging;
+using Eon.Diagnostics.Logging;
 
 #endif
 
@@ -28,7 +28,7 @@ namespace Eon.Description {
 			source.EnsureNotNull(nameof(source));
 			description.EnsureNotNull(nameof(description));
 			//
-#if !DO_NOT_USE_OXY_LOGGING_API
+#if !DO_NOT_USE_EON_LOGGING_API
 			source
 				.IssueWarning(
 					messagePrologue: logMessagePrologue,
@@ -43,7 +43,7 @@ namespace Eon.Description {
 			source.EnsureNotNull(nameof(source));
 			description.EnsureNotNull(nameof(description));
 			//
-#if !DO_NOT_USE_OXY_LOGGING_API
+#if !DO_NOT_USE_EON_LOGGING_API
 			source
 				.IssueWarning(
 					messagePrologue: logMessagePrologue,

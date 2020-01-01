@@ -1,18 +1,20 @@
-﻿#define DO_NOT_USE_OXY_LOGGING_API
+﻿#define DO_NOT_USE_EON_LOGGING_API
 
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Eon.Collections;
-#if !DO_NOT_USE_OXY_LOGGING_API
+using System.Text;
 
-using DigitalFlare.Diagnostics.Logging;
+using Eon.Collections;
+#if !DO_NOT_USE_EON_LOGGING_API
+
+using Eon.Diagnostics.Logging;
 
 #endif
 using Eon.Linq;
 using Eon.Reflection;
-using Eon.Text;
 using Eon.Threading;
+
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Eon.ComponentModel.Dependencies {
@@ -247,7 +249,7 @@ namespace Eon.ComponentModel.Dependencies {
 			//
 			if (ctx.Specs.IsNewInstanceRequired && _prohibitNewInstanceRequest)
 				throw new EonException(message: $"Для данной области функциональной зависимости запрещены запросы на разрешение зависимости в новый экземпляр.{Environment.NewLine}\tОбласть:{this.FmtStr().GNLI2()}");
-#if DO_NOT_USE_OXY_LOGGING_API
+#if DO_NOT_USE_EON_LOGGING_API
 			if (ctx.IsAdvancedLoggingEnabled)
 				throw new NotSupportedException(message: $"В тек. версии расширенное логирование разрешения функциональной зависимости (см. {nameof(ctx)}.{nameof(ctx.IsAdvancedLoggingEnabled)}) не поддерживается.").SetErrorCode(code: GeneralErrorCodes.Operation.NotSupported);
 #else
@@ -363,7 +365,7 @@ namespace Eon.ComponentModel.Dependencies {
 								newDependencyInstancesDisposeRegistry.Register(resultInstanceAsDisposable);
 						}
 						//
-#if !DO_NOT_USE_OXY_LOGGING_API
+#if !DO_NOT_USE_EON_LOGGING_API
 						if (isContextAdvancedLoggingEnabled && !(resultDependencyInstance is null)) {
 							string loggingInformationMessage;
 							using (var acquiredBuffer = StringBuilderUtilities.AcquireBuffer()) {
@@ -413,7 +415,7 @@ namespace Eon.ComponentModel.Dependencies {
 					IDependencyHandler2[ ] involvedHandlerChain;
 					string involvedHandlerText(IDependencyHandler2 locHandler)
 						=> $"Объект:{locHandler.FmtStr().GNLI()}";
-					using (var buffer = StringBuilderUtilities.AcquireBuffer()) {
+					using (var buffer = EonStringBuilderUtilities.AcquireBuffer()) {
 						var sb = buffer.StringBuilder;
 						involvedHandlerChain = ctx.GetInvolvedHandlerChain();
 						var involvedExecutorsChainLimit = Math.Min(involvedExecutorsChainShowReportMaxCount, involvedHandlerChain.Length);

@@ -15,7 +15,7 @@ namespace Eon.Triggers {
 
 		/// <summary>
 		/// Выполняет однократный перевод триггера в сигнальное состояние.
-		/// <para>Если на момент вызова метода триггер отключен (см. <see cref="IAbilityOption.IsDisabled"/>) или для триггера поступил запрос выгрузки (см. <see cref="IOxyDisposable.IsDisposeRequested"/>), то перевод триггера в сигнальное состояние не выполняется.</para>
+		/// <para>Если на момент вызова метода триггер отключен (см. <see cref="IAbilityOption.IsDisabled"/>) или для триггера поступил запрос выгрузки (см. <see cref="IEonDisposable.IsDisposeRequested"/>), то перевод триггера в сигнальное состояние не выполняется.</para>
 		/// </summary>
 		/// <param name="signalProps">
 		/// Свойства сигнала: штамп времени, ИД корреляции и др.

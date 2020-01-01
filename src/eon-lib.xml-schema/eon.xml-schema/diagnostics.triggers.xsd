@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+					 targetNamespace="urn:eon-2020:diagnostics:triggers"
+					 attributeFormDefault="unqualified"
+					 elementFormDefault="qualified"
+					 version="1.0"
+					 xmlns:me="urn:eon-2020:diagnostics:triggers"
+					 xmlns:ox="urn:eon-2020:core"
+					 xmlns:ox-triggers="urn:eon-2020:triggers">
+
+	<xs:import namespace="urn:eon-2020:core"/>
+	<xs:import namespace="urn:eon-2020:triggers"/>
+
+	<xs:complexType name="UnhealthyHeartbeatTriggerDescription" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ox-triggers:TriggerDescriptionBase">
+				<xs:sequence>
+					<xs:element name="WatchScopeMetadata" type="ox:MetadataRef" nillable="true"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+</xs:schema>

@@ -1,16 +1,16 @@
-﻿#define DO_NOT_USE_OXY_LOGGING_API
+﻿#define DO_NOT_USE_EON_LOGGING_API
 
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 using Eon.Collections;
 
-#if !DO_NOT_USE_OXY_LOGGING_API
+#if !DO_NOT_USE_EON_LOGGING_API
 
-using DigitalFlare.Diagnostics.Logging;
+using Eon.Diagnostics.Logging;
 
 #endif
-using Eon.Text;
 using Eon.Threading;
 
 namespace Eon.ComponentModel.Dependencies {
@@ -104,7 +104,7 @@ namespace Eon.ComponentModel.Dependencies {
 			finally {
 				if (_isAdvancedLoggingEnabled) {
 					string contextDetailsText;
-					using (var acquiredBuffer = StringBuilderUtilities.AcquireBuffer()) {
+					using (var acquiredBuffer = EonStringBuilderUtilities.AcquireBuffer()) {
 						var sb = acquiredBuffer.StringBuilder;
 						sb.AppendLine("Параметры разрешения функциональной зависимости:");
 						sb.AppendLine(Specs.ToString().IndentLines());
@@ -112,7 +112,7 @@ namespace Eon.ComponentModel.Dependencies {
 						sb.AppendLine(Scope.ToString().IndentLines());
 						contextDetailsText = sb.ToString();
 					}
-#if !DO_NOT_USE_OXY_LOGGING_API
+#if !DO_NOT_USE_EON_LOGGING_API
 					if (error is null)
 						this.IssueInformation(
 							$"Разрешение функциональной зависимости (ИД контекста '{_sequentialId:d}').",

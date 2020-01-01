@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Globalization;
-using System.Net;
-using System.Net.Http;
 using System.Net.Sockets;
 using System.Reflection;
-
-using Eon.Text;
+using System.Text;
 
 using static Eon.Resources.XResource.XResourceUtilities;
 
@@ -187,7 +184,7 @@ namespace Eon {
 			else if (args.IsNullOrEmpty())
 				return "<отсутсвуют>";
 			else {
-				using (var acquiredBuffer = StringBuilderUtilities.AcquireBuffer()) {
+				using (var acquiredBuffer = EonStringBuilderUtilities.AcquireBuffer()) {
 					var sb = acquiredBuffer.StringBuilder;
 					sb.Append(args[ 0 ]);
 					for (var i = 1; i < args.Length; i++) {
