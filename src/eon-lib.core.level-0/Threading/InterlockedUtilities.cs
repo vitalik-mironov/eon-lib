@@ -287,7 +287,7 @@ namespace Eon.Threading {
 
 		public static bool UpdateBool<T>(ref T location, T value, T comparand)
 			where T : class
-			=> ReferenceEquals(comparand, Interlocked.CompareExchange(ref location, value, comparand));
+			=> ReferenceEquals(comparand, Interlocked.CompareExchange(location1: ref location, value: value, comparand: comparand));
 
 		public static T UpdateIfNull<T>(ref T location, T value)
 			where T : class

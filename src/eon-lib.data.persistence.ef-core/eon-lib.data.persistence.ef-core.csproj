@@ -16,8 +16,8 @@
 		<ProjectReference Include="..\eon-lib.data.persistence\eon-lib.data.persistence.csproj" />
 		<ProjectReference Include="..\eon-lib.ef-core\eon-lib.ef-core.csproj" />
 		<ProjectReference Include="..\eon-lib.pooling.pool\eon-lib.pooling.pool.csproj" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.0.0" />
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.1.3" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.3" />
 		<PackageReference Include="Microsoft.Build.Tasks.Git" Version="1.0.0-beta2-19367-01">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
