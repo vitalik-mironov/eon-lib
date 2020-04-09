@@ -63,9 +63,14 @@ namespace Eon.Pooling {
 						var newTaskProxy = default(TaskCompletionSource<IVh<T>>);
 						try {
 							newTaskProxy = new TaskCompletionSource<IVh<T>>(creationOptions: TaskCreationOptions.RunContinuationsAsynchronously);
-							if (itrlck.UpdateIfNullBool(ref _acquireTask, newTaskProxy.Task, out existingTask)) {
-								if (itrlck.Get(ref _releaseTask) is null)
+							if (itrlck.UpdateIfNullBool(location: ref _acquireTask, value: newTaskProxy.Task, current: out existingTask)) {
+								if (itrlck.Get(ref _releaseTask) is null) {
+									existingTask
+										.ContinueWith(
+											continuationAction: t => itrlck.SetNull(location: ref _acquireTask, comparand: t),
+											continuationOptions: TaskContinuationOptions.ExecuteSynchronously | TaskContinuationOptions.NotOnRanToCompletion);
 									doAcquireAsync(locContext: context).ContinueWithTryApplyResultTo(taskProxy: newTaskProxy);
+								}
 								else
 									newTaskProxy.TrySetException(exception: new EonException(message: $"Invalid acquisition attempt.  Release operation has been attempted already.{Environment.NewLine}\tLease ID:{_id.FmtStr().GNLI2()}"));
 								return existingTask;

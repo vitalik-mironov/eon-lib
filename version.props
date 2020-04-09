@@ -7,15 +7,15 @@
 	<PropertyGroup>
 		<SourceRevisionId></SourceRevisionId>
 		<!--//-->
-		<AssemblyVersion>4.0.1</AssemblyVersion>
-		<FileVersion>4.0.1</FileVersion>
-		<PackageVersion>4.0.1</PackageVersion>
+		<AssemblyVersion>4.0.3</AssemblyVersion>
+		<FileVersion>4.0.3</FileVersion>
+		<PackageVersion>4.0.3</PackageVersion>
 		<!--//-->
 		<InformationalVersion>$(FileVersion)</InformationalVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-		<PackageVersion>$(PackageVersion)-debug002</PackageVersion>
+		<PackageVersion>$(PackageVersion)-debug000</PackageVersion>
 	</PropertyGroup>
 
 </Project>

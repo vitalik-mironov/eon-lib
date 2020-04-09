@@ -781,7 +781,7 @@ namespace Eon {
 				if (exchange is null)
 					return created.Value;
 				else if (created.Exception is null) {
-					if (cleanup is null || created.Value == default)
+					if (cleanup is null || created.Value is null)
 						return exchange.Value;
 					else {
 						cleanup(obj: created.Value);
@@ -812,7 +812,7 @@ namespace Eon {
 				if (exchange is null)
 					return created.Value;
 				else if (created.Exception is null) {
-					if (cleanup is null || created.Value == default)
+					if (cleanup is null || created.Value is null)
 						return exchange.Value;
 					else {
 						cleanup(obj: created.Value);
