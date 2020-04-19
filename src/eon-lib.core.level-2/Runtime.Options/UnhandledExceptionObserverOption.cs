@@ -22,16 +22,14 @@ namespace Eon.Runtime.Options {
 
 		#endregion
 
-		readonly IUnhandledExceptionObserver _observer;
 
 		public UnhandledExceptionObserverOption(IUnhandledExceptionObserver observer) {
 			observer.EnsureNotNull(nameof(observer));
 			//
-			_observer = observer;
+			Observer = observer;
 		}
 
-		public IUnhandledExceptionObserver Observer
-			=> _observer;
+		public IUnhandledExceptionObserver Observer { get; }
 
 	}
 

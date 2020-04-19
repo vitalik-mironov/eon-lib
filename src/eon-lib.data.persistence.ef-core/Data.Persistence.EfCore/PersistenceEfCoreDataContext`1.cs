@@ -2,7 +2,6 @@
 using System.Collections.Immutable;
 using System.Data;
 using System.Diagnostics;
-using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -32,161 +31,6 @@ namespace Eon.Data.Persistence.EfCore {
 	public partial class PersistenceEfCoreDataContext<TEfDbContext>
 		:DependencySupport, IPersistenceDataContext<TEfDbContext>
 		where TEfDbContext : EfCoreDbContext {
-
-		#region Nested types
-
-		[DebuggerDisplay("{ToString(),nq}")]
-		sealed class P_TxScope
-			:ITransactionScopeProxy {
-
-			sealed class P_State {
-
-				public readonly bool InitializationDone;
-
-				public readonly IDbContextTransaction RealTx;
-
-				public readonly Action<P_TxScope> DisposeCallback;
-
-				public readonly Action<P_TxScope> CompleteCallback;
-
-				public readonly bool ShouldRollback;
-
-				public readonly bool CommitIntention;
-
-				public readonly bool DisposeStart;
-
-				internal P_State(bool initializationDone, IDbContextTransaction realTx, Action<P_TxScope> disposeCallback, Action<P_TxScope> completeCallback, bool shouldRollback = default, bool commitIntention = default, bool disposeStart = default) {
-					InitializationDone = initializationDone;
-					RealTx = realTx;
-					DisposeCallback = disposeCallback;
-					CompleteCallback = completeCallback;
-					ShouldRollback = shouldRollback;
-					CommitIntention = commitIntention;
-					DisposeStart = disposeStart;
-				}
-
-				internal P_State(
-					P_State other,
-					ArgumentPlaceholder<bool> initializationDone = default,
-					ArgumentPlaceholder<IDbContextTransaction> realTx = default,
-					ArgumentPlaceholder<Action<P_TxScope>> disposeCallback = default,
-					ArgumentPlaceholder<Action<P_TxScope>> completeCallback = default,
-					ArgumentPlaceholder<bool> shouldRollback = default,
-					ArgumentPlaceholder<bool> commitIntention = default,
-					ArgumentPlaceholder<bool> disposeStart = default) {
-					//
-					InitializationDone = initializationDone.Substitute(other.InitializationDone);
-					RealTx = realTx.Substitute(other.RealTx);
-					DisposeCallback = disposeCallback.Substitute(other.DisposeCallback);
-					CompleteCallback = completeCallback.Substitute(other.CompleteCallback);
-					ShouldRollback = shouldRollback.Substitute(other.ShouldRollback);
-					CommitIntention = commitIntention.Substitute(other.CommitIntention);
-					DisposeStart = disposeStart.Substitute(other.DisposeStart);
-				}
-
-			}
-
-			P_State _state;
-
-			public P_TxScope(IsolationLevel isolationLevel) {
-				Outer = null;
-				P_OuterShouldRollback = false;
-				NestingLevel = 0;
-				IsolationLevel = isolationLevel;
-			}
-
-			public P_TxScope(P_TxScope outer) {
-				Outer = outer;
-				P_OuterShouldRollback = outer.ShouldRollback;
-				NestingLevel = checked(outer.NestingLevel + 1);
-				IsolationLevel = outer.IsolationLevel;
-			}
-
-			public P_TxScope Outer { get; }
-
-			bool P_OuterShouldRollback { get; }
-
-			public int NestingLevel { get; }
-
-			public IsolationLevel IsolationLevel { get; }
-
-			public bool InitializationDone
-				=> itrlck.Get(location: ref _state)?.InitializationDone ?? false;
-
-			public bool CommitIntention
-				=> itrlck.Get(location: ref _state)?.CommitIntention ?? false;
-
-			public bool ShouldRollback
-				=> P_OuterShouldRollback || (itrlck.Get(location: ref _state)?.ShouldRollback ?? false);
-
-			public IDisposable RealScope
-				=> NopDisposable.Instance;
-
-			public IDbContextTransaction RealTx
-				=> itrlck.Get(location: ref _state)?.RealTx;
-
-			public bool DisposeStart
-				=> itrlck.Get(location: ref _state)?.DisposeStart ?? false;
-
-			internal void Initialize(Action<P_TxScope> disposeCallback, Action<P_TxScope> completeCallback, IDbContextTransaction realTx = default) {
-				if (!itrlck.UpdateBool(location: ref _state, value: new P_State(initializationDone: true, disposeCallback: disposeCallback, completeCallback: completeCallback, realTx: realTx), comparand: null))
-					throw new EonException("Initialization must be done once.");
-			}
-
-			internal void SetCommitIntention() {
-				for (; ; ) {
-					var current = itrlck.Get(location: ref _state);
-					if (current.DisposeStart)
-						throw new EonException(message: "Dispose has been called already.");
-					else if (current.CommitIntention || itrlck.UpdateBool(location: ref _state, comparand: current, value: new P_State(other: current, commitIntention: true)))
-						break;
-				}
-			}
-
-			internal void SetShouldRollback(bool value) {
-				if (!P_OuterShouldRollback)
-					for (; ; ) {
-						var current = itrlck.Get(location: ref _state);
-						if (current.DisposeStart)
-							throw new EonException(message: "Dispose has been called already.");
-						else if (current.ShouldRollback || current.ShouldRollback == value || itrlck.UpdateBool(location: ref _state, comparand: current, value: new P_State(other: current, shouldRollback: value)))
-							break;
-					}
-			}
-
-			public void Complete()
-				=> itrlck.Get(location: ref _state).CompleteCallback(obj: this);
-
-			public void Reset()
-				=> itrlck.SetNull(location: ref _state);
-
-			public void Dispose() {
-				for (; ; ) {
-					var currentState = itrlck.Get(location: ref _state);
-					if (currentState is null) {
-						if (itrlck.UpdateBool(location: ref _state, comparand: currentState, value: new P_State(initializationDone: false, realTx: null, completeCallback: null, disposeCallback: null, disposeStart: true)))
-							break;
-					}
-					else if (currentState.DisposeStart)
-						break;
-					else if (itrlck.UpdateBool(location: ref _state, comparand: currentState, value: new P_State(other: currentState, disposeCallback: null, completeCallback: null, realTx: null, disposeStart: true))) {
-						currentState.DisposeCallback?.Invoke(obj: this);
-						if (!currentState.ShouldRollback && currentState.CommitIntention)
-							currentState.RealTx?.Commit();
-						else
-							currentState.RealTx?.Rollback();
-						currentState.RealTx?.Dispose();
-						break;
-					}
-				}
-			}
-
-			public override string ToString()
-				=> $"(nesting-level: {NestingLevel.ToString("d", CultureInfo.InvariantCulture)}, commit-intention: {(CommitIntention ? "y" : "n")}, should-rollback: {(ShouldRollback ? "y" : "n")}, dispose-start: {(DisposeStart ? "y" : "n")}, isolation: {IsolationLevel})";
-
-		}
-
-		#endregion
 
 		#region Static members
 
@@ -228,7 +72,7 @@ namespace Eon.Data.Persistence.EfCore {
 
 		P_StorageOpCtx _storageOpCtx;
 
-		ImmutableStack<P_TxScope> _txScopes;
+		ImmutableStack<PersistenceEfCoreDataContextTxScope> _txScopes;
 
 		public PersistenceEfCoreDataContext(IPersistenceDataContextProvider<IPersistenceDataContext<TEfDbContext>> provider, DbContextOptions<TEfDbContext> efDbContextOptions, ILogger logger)
 			: base(outerDependencies: provider.EnsureNotNull(nameof(provider)).Value) {
@@ -245,7 +89,7 @@ namespace Eon.Data.Persistence.EfCore {
 			_isInitialized = false;
 			_efCtxLazy = new DisposableLazy<TEfDbContext>(factory: () => P_CreateAndAdjustEfDbContext(isReadOnly: false), ownsValue: true);
 			_logger = logger;
-			_txScopes = ImmutableStack<P_TxScope>.Empty;
+			_txScopes = ImmutableStack<PersistenceEfCoreDataContextTxScope>.Empty;
 		}
 
 		// TODO: Put strings into the resources.
@@ -306,14 +150,14 @@ namespace Eon.Data.Persistence.EfCore {
 		//
 		public ITransactionScopeProxy BeginTx(IsolationLevel level) {
 			var efCtx = ReadDA(location: ref _efCtxLazy, considerDisposeRequest: true).Value;
-			P_TxScope scope = default;
+			PersistenceEfCoreDataContextTxScope scope = default;
 			IDbContextTransaction realTx = default;
 			try {
 				for (; ; ) {
-					scope?.Dispose();
+					(scope as IDisposable)?.Dispose();
 					var current = ReadDA(location: ref _txScopes, considerDisposeRequest: true);
 					if (current.IsEmpty)
-						scope = new P_TxScope(isolationLevel: level);
+						scope = new PersistenceEfCoreDataContextTxScope(isolationLevel: level);
 					else {
 						var currentScope = current.Peek();
 						if (currentScope.IsolationLevel != level)
@@ -323,26 +167,34 @@ namespace Eon.Data.Persistence.EfCore {
 						else if (currentScope.DisposeStart)
 							throw new EonException(message: $"This transaction scope has unappropriate state to begin the nested scope.{Environment.NewLine}\tTx scope:{currentScope.FmtStr().GNLI2()}");
 						else if (currentScope.CommitIntention) {
-							try { currentScope.SetShouldRollback(value: true); }
-							catch (Exception exception) { throw new EonException(message: $"An exception occurred while handling this transaction scope.{Environment.NewLine}\tTx scope:{currentScope.FmtStr().GNLI2()}", innerException: exception); }
-							throw new EonException(message: $"This transaction scope have the commit intention. The nested scope cann't be started.{Environment.NewLine}To avoid the possible data inconsistency this transaction scope has been marked as to be rolled back.{Environment.NewLine}\tTx scope:{currentScope.FmtStr().GNLI2()}");
+							try { currentScope.SetShouldRollback(); }
+							catch (Exception exception) {
+								throw
+									new EonException(
+										message: $"An exception occurred while handling this transaction scope.{Environment.NewLine}\tTx scope:{currentScope.FmtStr().GNLI2()}", innerException: exception);
+							}
+							throw
+								new EonException(
+									message: $"This transaction scope have the commit intention. The nested scope cann't be started.{Environment.NewLine}To avoid the possible data inconsistency this transaction scope has been marked as to be rolled back.{Environment.NewLine}\tTx scope:{currentScope.FmtStr().GNLI2()}");
 						}
 						else
-							scope = new P_TxScope(outer: currentScope);
+							scope = new PersistenceEfCoreDataContextTxScope(outer: currentScope);
 					}
 					var changed = current.Push(scope);
 					if (UpdDABool(location: ref _txScopes, comparand: current, value: changed)) {
-						if (scope.NestingLevel == 0) {
+						if (scope.NestingLevel == 0)
 							try {
 								realTx = efCtx.Database.BeginTransaction(isolationLevel: level);
 								scope.Initialize(realTx: realTx, disposeCallback: disposeCallback, completeCallback: completionCallback);
 							}
 							catch {
-								realTx?.Dispose();
-								realTx = null;
+								if (!(realTx is null)) {
+									realTx.Rollback();
+									realTx.Dispose();
+									realTx = null;
+								}
 								throw;
 							}
-						}
 						else
 							scope.Initialize(realTx: null, disposeCallback: disposeCallback, completeCallback: completionCallback);
 						return scope;
@@ -354,7 +206,7 @@ namespace Eon.Data.Persistence.EfCore {
 					scope.Reset();
 					for (; ; ) {
 						var current = itrlck.Get(location: ref _txScopes);
-						if (current is null || current.IsEmpty || !ReferenceEquals(scope, current.Peek()))
+						if (current is null || current.IsEmpty || !ReferenceEquals(objA: scope, objB: current.Peek()))
 							break;
 						else {
 							var changed = current.Pop();
@@ -362,42 +214,42 @@ namespace Eon.Data.Persistence.EfCore {
 								break;
 						}
 					}
-					realTx?.Dispose();
-					scope.Dispose();
+					(scope as IDisposable)?.Dispose();
 				}
 				throw;
 			}
 			//
-			void completionCallback(P_TxScope locScope) {
+			void completionCallback(PersistenceEfCoreDataContextTxScope sc) {
 				var current = ReadDA(location: ref _txScopes, considerDisposeRequest: true);
-				if (current.IsEmpty || !ReferenceEquals(current.Peek(), locScope))
-					throw new EonException(message: $"Consistency violation.{txScopeStackString(locScope: locScope, locScopes: current).FmtStr().GNLI()}");
+				if (current.IsEmpty || !ReferenceEquals(current.Peek(), sc))
+					throw new EonException(message: $"Consistency violation.{txScopeStackString(locScope: sc, locScopes: current).FmtStr().GNLI()}");
 				else
-					locScope.SetCommitIntention();
+					sc.SetCommitIntention();
 			}
-			void disposeCallback(P_TxScope locScope) {
+			void disposeCallback(PersistenceEfCoreDataContextTxScope sc) {
 				var logger = _logger;
-				if (!(logger is null)) {
+				if (!(logger is null))
 					logger
 						.LogDebug(
 							eventId: GenericEventIds.ExplicitDispose,
-							message: $"Own tx scope explicit dispose call.{txScopeStackString(locScope).FmtStr().GNLI()}{Environment.NewLine}\tComponent:{Environment.NewLine}\t\t{{component}}",
+							message: $"Own tx scope explicit dispose call.{txScopeStackString(sc).FmtStr().GNLI()}{Environment.NewLine}\tComponent:{Environment.NewLine}\t\t{{component}}",
 							args: new object[ ] { ToString() });
-				}
 				for (; ; ) {
 					var current = ReadDA(location: ref _txScopes, considerDisposeRequest: true);
-					if (current.IsEmpty || !ReferenceEquals(current.Peek(), locScope))
-						throw new EonException(message: $"Consistency violation.{txScopeStackString(locScope: locScope, locScopes: current).FmtStr().GNLI()}");
+					if (current.IsEmpty || !ReferenceEquals(objA: current.Peek(), objB: sc))
+						throw new EonException(message: $"Consistency violation.{txScopeStackString(locScope: sc, locScopes: current).FmtStr().GNLI()}");
 					else {
 						var changed = current.Pop();
-						if (!changed.IsEmpty)
-							changed.Peek().SetShouldRollback(!locScope.CommitIntention || locScope.ShouldRollback);
+						if (!changed.IsEmpty && (!sc.CommitIntention || sc.ShouldRollback))
+							// Set 'ShouldRollback' flag for outer tx scope.
+							//
+							changed.Peek().SetShouldRollback();
 						if (UpdDABool(location: ref _txScopes, comparand: current, value: changed))
 							break;
 					}
 				}
 			}
-			string txScopeStackString(P_TxScope locScope, ImmutableStack<P_TxScope> locScopes = default)
+			string txScopeStackString(PersistenceEfCoreDataContextTxScope locScope, ImmutableStack<PersistenceEfCoreDataContextTxScope> locScopes = default)
 				=> $"Tx scope:{locScope.FmtStr().GNLI()}{Environment.NewLine}Tx scope stack:{string.Join(separator: $",{Environment.NewLine}", values: ((locScopes ?? itrlck.Get(location: ref _txScopes))?.Select(k => k.ToString())).EmptyIfNull()).FmtStr().GNLI()}";
 		}
 
@@ -526,7 +378,7 @@ namespace Eon.Data.Persistence.EfCore {
 
 		protected override void FireBeforeDispose(bool explicitDispose) {
 			if (explicitDispose)
-				itrlck.Get(location: ref _txScopes)?.Observe(z => z.RealTx?.Dispose());
+				itrlck.Get(location: ref _txScopes)?.Observe(z => z.Finish(noCallback: true, shouldRollback: true));
 			//
 			base.FireBeforeDispose(explicitDispose);
 		}

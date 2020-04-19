@@ -126,16 +126,12 @@ namespace Eon {
 			T originalValue;
 			ensureAllowedDisposeState(considerDisposeRequest: true);
 			originalValue = Interlocked.CompareExchange(location1: ref location, value: value, comparand: comparand);
-			if (ReferenceEquals(originalValue, comparand) && !ReferenceEquals(value, originalValue)) {
-				// Установлено другое значение.
+			if (ReferenceEquals(objA: originalValue, objB: comparand) && !ReferenceEquals(objA: value, objB: originalValue)) {
+				// Value in location changed.
 				//
-				try {
-					ensureAllowedDisposeState(considerDisposeRequest: true);
-				}
+				try { ensureAllowedDisposeState(considerDisposeRequest: true); }
 				catch (ObjectDisposedException) {
 					if (isDisposed())
-						// Поскольку выгрузка завершена...
-						//
 						Interlocked.Exchange(ref location, null);
 					throw;
 				}
