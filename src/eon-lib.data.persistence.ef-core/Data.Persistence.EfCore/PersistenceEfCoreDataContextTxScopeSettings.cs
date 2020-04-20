@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 
 using Newtonsoft.Json;
 
-namespace Eon.MessageFlow.Local {
+namespace Eon.Data.Persistence.EfCore {
 
 	[DataContract]
 	public class PersistenceEfCoreDataContextTxScopeSettings
