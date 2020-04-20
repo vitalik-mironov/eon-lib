@@ -195,8 +195,13 @@ namespace Eon.Data.Persistence.EfCore {
 								}
 								throw;
 							}
-						else
-							scope.Initialize(realTx: null, disposeCallback: disposeCallback, completeCallback: completionCallback);
+						else {
+							var firstOuterFinishing = scope.OuterSet.FirstOrDefault(o => o.FinishingStart);
+							if (firstOuterFinishing is null)
+								scope.Initialize(realTx: null, disposeCallback: disposeCallback, completeCallback: completionCallback);
+							else
+								throw new EonException(message: $"This outer transaction scope has unappropriate state to begin the nested scope.{Environment.NewLine}\tOuter tx scope:{firstOuterFinishing.FmtStr().GNLI2()}{Environment.NewLine}\tNested tx scope:{scope.FmtStr().GNLI2()}");
+						}
 						return scope;
 					}
 				}

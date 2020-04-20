@@ -109,6 +109,16 @@ namespace Eon.Data.Persistence.EfCore {
 		public bool FinishingStart
 			=> itrlck.Get(location: ref _state)?.FinishingStart ?? false;
 
+		public IEnumerable<PersistenceEfCoreDataContextTxScope> OuterSet {
+			get {
+				var current = Outer;
+				while(!(current is null)) {
+					yield return current;
+					current = current.Outer;
+				}
+			}
+		}
+
 		public void Initialize(Action<PersistenceEfCoreDataContextTxScope> disposeCallback, Action<PersistenceEfCoreDataContextTxScope> completeCallback, IDbContextTransaction realTx = default) {
 			for (; ; ) {
 				var current = itrlck.Get(location: ref _state);
