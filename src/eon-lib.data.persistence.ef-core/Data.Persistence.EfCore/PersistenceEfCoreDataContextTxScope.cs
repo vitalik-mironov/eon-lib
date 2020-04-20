@@ -4,7 +4,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.CompilerServices;
-
+using Eon.MessageFlow.Local;
 using Eon.Transactions;
 
 using Microsoft.EntityFrameworkCore.Storage;
@@ -106,7 +106,7 @@ namespace Eon.Data.Persistence.EfCore {
 		public IDbContextTransaction RealTx
 			=> itrlck.Get(location: ref _state)?.RealTx;
 
-		public bool DisposeStart
+		public bool FinishingStart
 			=> itrlck.Get(location: ref _state)?.FinishingStart ?? false;
 
 		public void Initialize(Action<PersistenceEfCoreDataContextTxScope> disposeCallback, Action<PersistenceEfCoreDataContextTxScope> completeCallback, IDbContextTransaction realTx = default) {
@@ -160,9 +160,11 @@ namespace Eon.Data.Persistence.EfCore {
 
 		public void Finish(bool noCallback, bool shouldRollback) {
 			for (; ; ) {
-				var stringRepresentation = ToString();
 				var state = itrlck.Get(location: ref _state);
-				if (state is null) {
+				var stringRepresentation = ToString();
+				if (!ReferenceEquals(objA: state, objB: itrlck.Get(location: ref _state)))
+					continue;
+				else if (state is null) {
 					if (itrlck.UpdateBool(location: ref _state, comparand: state, value: new P_State(initializationDone: false, realTx: null, completeCallback: null, disposeCallback: null, finishingStart: true)))
 						break;
 				}
@@ -180,7 +182,7 @@ namespace Eon.Data.Persistence.EfCore {
 							try {
 								if (!(shouldRollback || caughtExceptions.Count != 0 || state.ShouldRollback) && state.CommitIntention)
 									realTx.Commit();
-								else
+								else if (!PersistenceEfCoreDataContextTxScopeSettings.Default.RollbackThroughDispose)
 									realTx.Rollback();
 							}
 							catch (Exception exception) { caughtExceptions.Add(exception); }
@@ -198,7 +200,7 @@ namespace Eon.Data.Persistence.EfCore {
 		}
 
 		public override string ToString()
-			=> $"(identity: 0x{RuntimeHashCodeHex}, nesting-level: {NestingLevel.ToString("d", CultureInfo.InvariantCulture)}, commit-intention: {(CommitIntention ? "y" : "n")}, should-rollback: {(ShouldRollback ? "y" : "n")}, dispose-start: {(DisposeStart ? "y" : "n")}, isolation: {IsolationLevel})";
+			=> $"(identity: 0x{RuntimeHashCodeHex}, nesting-level: {NestingLevel.ToString("d", CultureInfo.InvariantCulture)}, commit-intention: {(CommitIntention ? "y" : "n")}, should-rollback: {(ShouldRollback ? "y" : "n")}, finishing-start: {(FinishingStart ? "y" : "n")}, isolation: {IsolationLevel})";
 
 	}
 

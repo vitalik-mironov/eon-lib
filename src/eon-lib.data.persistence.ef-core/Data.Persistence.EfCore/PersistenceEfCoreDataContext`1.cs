@@ -164,7 +164,7 @@ namespace Eon.Data.Persistence.EfCore {
 							throw new EonException($"Specified transaction isolation level '{level}' is incompatible with this transaction scope isolation level '{currentScope.IsolationLevel}'.{Environment.NewLine}\tTx scope:{currentScope.FmtStr().GNLI2()}");
 						else if (!currentScope.InitializationDone)
 							throw new EonException(message: $"This transaction scope has not initialized yet.{Environment.NewLine}\tTx scope:{currentScope.FmtStr().GNLI2()}");
-						else if (currentScope.DisposeStart)
+						else if (currentScope.FinishingStart)
 							throw new EonException(message: $"This transaction scope has unappropriate state to begin the nested scope.{Environment.NewLine}\tTx scope:{currentScope.FmtStr().GNLI2()}");
 						else if (currentScope.CommitIntention) {
 							try { currentScope.SetShouldRollback(); }

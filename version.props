@@ -7,9 +7,9 @@
 	<PropertyGroup>
 		<SourceRevisionId></SourceRevisionId>
 		<!--//-->
-		<AssemblyVersion>4.1.0</AssemblyVersion>
-		<FileVersion>4.1.0</FileVersion>
-		<PackageVersion>4.1.0</PackageVersion>
+		<AssemblyVersion>4.2.0</AssemblyVersion>
+		<FileVersion>4.2.0</FileVersion>
+		<PackageVersion>4.2.0</PackageVersion>
 		<!--//-->
 		<InformationalVersion>$(FileVersion)</InformationalVersion>
 	</PropertyGroup>

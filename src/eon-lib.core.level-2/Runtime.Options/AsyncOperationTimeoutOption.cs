@@ -22,16 +22,14 @@ namespace Eon.Runtime.Options {
 
 		#endregion
 
-		readonly TimeoutDuration _timeout;
 
 		public AsyncOperationTimeoutOption(TimeoutDuration timeout) {
 			timeout.EnsureNotNull(nameof(timeout)).EnsureNotInfinite();
 			//
-			_timeout = timeout;
+			Timeout = timeout;
 		}
 
-		public TimeoutDuration Timeout
-			=> _timeout;
+		public TimeoutDuration Timeout { get; }
 
 	}
 
